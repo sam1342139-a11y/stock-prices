@@ -1,2 +1,6 @@
 .dryrun/
 __pycache__/
+*.tmp
+# Raw market data (FinMind / exchange data) is NOT published: terms do not clearly allow public redistribution.
+# Kept locally and in the GitHub Actions cache only.
+tw-models/data/

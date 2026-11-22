@@ -1,0 +1,78 @@
+{
+ "generated_at_utc": "2026-11-22 09:22:37",
+ "problems": [],
+ "sources": [
+  {
+   "name": "FinMind（加權指數、三大法人買賣金額、融資餘額，歷史）",
+   "url": "https://api.finmindtrade.com/api/v4/data"
+  },
+  {
+   "name": "證交所 OpenAPI（每日累加）",
+   "url": "https://openapi.twse.com.tw/"
+  },
+  {
+   "name": "Twelve Data（SOXX、美元兌台幣日收盤）",
+   "url": "https://api.twelvedata.com/time_series"
+  }
+ ],
+ "date": "2026-11-20",
+ "total": 9,
+ "max_total": 10,
+ "suggested_exposure_pct": [
+  20,
+  40
+ ],
+ "rule": "每項 0 綠／1 黃／2 紅；總分 0～2 建議持股 80～100%，3～5 分 50～70%，6 分以上 20～40%。規則見 docs/TW_MODELS.md",
+ "worsened_vs_previous_day": [],
+ "items": {
+  "taiex_ma200": {
+   "name": "加權指數 vs 200 日均線",
+   "score": 2,
+   "color": "紅",
+   "value": -13.23,
+   "date": "2026-11-20",
+   "threshold": "綠：在 200 日均線之上且均線上升（20 日內上升超過 0.1%）；黃：在均線之上但走平或下降，或低於均線 0～3%；紅：低於均線超過 3%",
+   "taiex": 36033.3,
+   "ma200": 41527.34,
+   "ma200_20d_change_pct": 3.17
+  },
+  "foreign_20d": {
+   "name": "外資近 20 日累計買賣超",
+   "score": 2,
+   "color": "紅",
+   "value": -10947.8,
+   "date": "2026-11-20",
+   "threshold": "綠：> 0；黃：-1650 億～0；紅：< -1650 億（門檻由 2019–2023 第 10 百分位校正）",
+   "unit": "億元"
+  },
+  "margin_vs_index": {
+   "name": "融資近 20 日變化 vs 指數",
+   "score": 1,
+   "color": "黃",
+   "value": -32.46,
+   "date": "2026-11-20",
+   "threshold": "紅：指數跌且融資增加；綠：指數漲且融資增加不超過 2%；其餘（兩者同向等）黃",
+   "index_20d_pct": -23.15
+  },
+  "usdtwd_20d": {
+   "name": "美元兌台幣近 20 日",
+   "score": 2,
+   "color": "紅",
+   "value": 1.22,
+   "date": "2026-11-19",
+   "threshold": "綠：台幣升值超過 1%（美元兌台幣下跌）；黃：±1% 內；紅：台幣貶值超過 1%",
+   "usdtwd": 33.01
+  },
+  "soxx_ma200": {
+   "name": "SOXX vs 200 日均線",
+   "score": 2,
+   "color": "紅",
+   "value": -14.27,
+   "date": "2026-11-19",
+   "threshold": "綠：高於 200 日均線超過 2%；黃：均線上下 2% 內；紅：低於均線超過 2%",
+   "soxx": 137.95,
+   "ma200": 160.91
+  }
+ },
+ "footer": "模型依公開資料與固定規則產生，回測不代表未來，非投資建議。"
+}

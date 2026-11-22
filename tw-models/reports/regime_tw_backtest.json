@@ -1,0 +1,254 @@
+{
+ "generated_at_utc": "2026-11-22 09:27:02",
+ "problems": [],
+ "sources": [
+  {
+   "name": "FinMind（加權指數、三大法人買賣金額、融資餘額，歷史）",
+   "url": "https://api.finmindtrade.com/api/v4/data"
+  },
+  {
+   "name": "證交所 OpenAPI（每日累加）",
+   "url": "https://openapi.twse.com.tw/"
+  },
+  {
+   "name": "Twelve Data（SOXX、美元兌台幣日收盤）",
+   "url": "https://api.twelvedata.com/time_series"
+  }
+ ],
+ "model": "regime_tw",
+ "title": "台股水位燈號（依水位調整持股 vs 滿倉）",
+ "notes": [
+  "比較「依水位燈號調整 0050 持股比例」與「一直滿倉 0050」。",
+  "持股比例取各級距中點：0～2 分 90%、3～5 分 60%、6 分以上 30%；比例偏離超過 5 個百分點才調整。",
+  "「固定比例」= 一直維持水位版在同一期間的平均持股比例（樣本內 63.9%、樣本外 64.8%），用來檢驗燈號是否真的有擇時效果：水位版要贏固定比例版，才代表燈號有用。",
+  "注意：固定比例用的是「同一期間事後算出的平均比例」，實務上事前無法知道，只作為檢驗用的比較組。",
+  "「現金年息1.5%」版本：未投入的現金每個交易日計息（年息 ÷ 252）；其餘版本現金不計利息。",
+  "訊號用當天收盤後資料，隔天開盤成交；含手續費、證交稅（ETF 0.1%）、滑價 0.1%。"
+ ],
+ "periods": {
+  "in_sample": {
+   "from": "2019-01-01",
+   "to": "2023-12-31",
+   "label": "樣本內（2019–2023，用來訂規則）",
+   "results": {
+    "水位調整": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 79.67,
+     "cagr_pct": 12.92,
+     "max_drawdown_pct": -16.43,
+     "sharpe": 1.13,
+     "trades": 59,
+     "win_rate_pct": 62.7,
+     "avg_holding_days": 648.0,
+     "annual_turnover_x": 3.75,
+     "fees_ntd": 73661,
+     "final_nav": 1796690,
+     "yearly_return_pct": {
+      "2019": 23.39,
+      "2020": 26.41,
+      "2021": 12.98,
+      "2022": -9.87,
+      "2023": 13.12
+     }
+    },
+    "固定比例": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 71.34,
+     "cagr_pct": 11.82,
+     "max_drawdown_pct": -23.1,
+     "sharpe": 0.99,
+     "trades": 5,
+     "win_rate_pct": 100.0,
+     "avg_holding_days": 508.2,
+     "annual_turnover_x": 0.05,
+     "fees_ntd": 1306,
+     "final_nav": 1713442,
+     "yearly_return_pct": {
+      "2019": 22.72,
+      "2020": 20.94,
+      "2021": 14.05,
+      "2022": -13.91,
+      "2023": 17.58
+     }
+    },
+    "水位調整（現金年息1.5%）": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 84.42,
+     "cagr_pct": 13.53,
+     "max_drawdown_pct": -15.82,
+     "sharpe": 1.18,
+     "trades": 59,
+     "win_rate_pct": 62.7,
+     "avg_holding_days": 648.0,
+     "annual_turnover_x": 3.75,
+     "fees_ntd": 74695,
+     "final_nav": 1844181,
+     "yearly_return_pct": {
+      "2019": 23.92,
+      "2020": 26.96,
+      "2021": 13.45,
+      "2022": -9.07,
+      "2023": 13.63
+     }
+    },
+    "固定比例（現金年息1.5%）": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 75.87,
+     "cagr_pct": 12.42,
+     "max_drawdown_pct": -22.6,
+     "sharpe": 1.04,
+     "trades": 5,
+     "win_rate_pct": 100.0,
+     "avg_holding_days": 534.4,
+     "annual_turnover_x": 0.05,
+     "fees_ntd": 1331,
+     "final_nav": 1758694,
+     "yearly_return_pct": {
+      "2019": 23.31,
+      "2020": 21.67,
+      "2021": 14.68,
+      "2022": -13.4,
+      "2023": 18.03
+     }
+    },
+    "0050": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 118.55,
+     "cagr_pct": 17.6,
+     "max_drawdown_pct": -33.95,
+     "sharpe": 0.97,
+     "trades": 0,
+     "win_rate_pct": null,
+     "avg_holding_days": null,
+     "annual_turnover_x": 0.0,
+     "fees_ntd": 854,
+     "final_nav": 2185466,
+     "yearly_return_pct": {
+      "2019": 36.34,
+      "2020": 31.14,
+      "2021": 21.92,
+      "2022": -21.37,
+      "2023": 27.51
+     }
+    }
+   }
+  },
+  "out_of_sample": {
+   "from": "2024-01-01",
+   "to": "2026-11-20",
+   "label": "樣本外（2024～今，用來驗證）",
+   "results": {
+    "水位調整": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 97.57,
+     "cagr_pct": 27.91,
+     "max_drawdown_pct": -17.89,
+     "sharpe": 1.56,
+     "trades": 54,
+     "win_rate_pct": 72.2,
+     "avg_holding_days": 309.9,
+     "annual_turnover_x": 5.67,
+     "fees_ntd": 61657,
+     "final_nav": 1975706,
+     "yearly_return_pct": {
+      "2024": 24.14,
+      "2025": 24.95,
+      "2026": 27.37
+     }
+    },
+    "固定比例": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 97.17,
+     "cagr_pct": 27.82,
+     "max_drawdown_pct": -19.15,
+     "sharpe": 1.43,
+     "trades": 5,
+     "win_rate_pct": 100.0,
+     "avg_holding_days": 392.4,
+     "annual_turnover_x": 0.1,
+     "fees_ntd": 1338,
+     "final_nav": 1971695,
+     "yearly_return_pct": {
+      "2024": 31.49,
+      "2025": 23.62,
+      "2026": 21.3
+     }
+    },
+    "水位調整（現金年息1.5%）": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 100.48,
+     "cagr_pct": 28.59,
+     "max_drawdown_pct": -17.5,
+     "sharpe": 1.59,
+     "trades": 54,
+     "win_rate_pct": 72.2,
+     "avg_holding_days": 309.9,
+     "annual_turnover_x": 5.66,
+     "fees_ntd": 62092,
+     "final_nav": 2004821,
+     "yearly_return_pct": {
+      "2024": 24.72,
+      "2025": 25.69,
+      "2026": 27.9
+     }
+    },
+    "固定比例（現金年息1.5%）": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 101.02,
+     "cagr_pct": 28.72,
+     "max_drawdown_pct": -18.91,
+     "sharpe": 1.47,
+     "trades": 5,
+     "win_rate_pct": 100.0,
+     "avg_holding_days": 413.0,
+     "annual_turnover_x": 0.1,
+     "fees_ntd": 1388,
+     "final_nav": 2010158,
+     "yearly_return_pct": {
+      "2024": 32.16,
+      "2025": 24.26,
+      "2026": 22.4
+     }
+    },
+    "0050": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 170.19,
+     "cagr_pct": 43.24,
+     "max_drawdown_pct": -27.51,
+     "sharpe": 1.43,
+     "trades": 0,
+     "win_rate_pct": null,
+     "avg_holding_days": null,
+     "annual_turnover_x": 0.0,
+     "fees_ntd": 854,
+     "final_nav": 2701863,
+     "yearly_return_pct": {
+      "2024": 50.3,
+      "2025": 36.86,
+      "2026": 31.34
+     }
+    }
+   }
+  }
+ }
+}

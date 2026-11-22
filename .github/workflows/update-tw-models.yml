@@ -1,0 +1,34 @@
+name: update-tw-models
+# 台股模型資料：平日台灣 18:30（UTC 10:30）累加當天資料，接著更新 SOXX／美元兌台幣與台股水位燈號
+on:
+  schedule:
+    - cron: '30 10 * * 1-5'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: append today's data
+        run: python3 tw-models/update_daily.py
+        env:
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+      - name: US market series (SOXX, USD/TWD)
+        run: python3 tw-models/fetch_us_market.py
+        env:
+          TWELVEDATA_KEY: ${{ secrets.TWELVEDATA_KEY }}
+      - name: regime_tw
+        run: python3 tw-models/regime_tw.py
+      - name: save result
+        run: |
+          git config user.name "data-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add tw-models/
+          git commit -m "update tw-models" || exit 0
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            sleep $((i * 10))
+          done
+          exit 1

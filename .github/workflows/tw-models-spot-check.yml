@@ -1,0 +1,10 @@
+name: tw-models-spot-check
+# 驗收用：手動執行，抽查幾天資料與證交所網站是否一致（只發出少量請求），結果寫在執行紀錄
+on:
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tw-models/spot_check.py

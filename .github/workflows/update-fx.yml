@@ -1,0 +1,28 @@
+name: update-fx
+# 匯率位置：週二～六台灣 06:45（UTC 22:45，週一～五）
+on:
+  schedule:
+    - cron: '45 22 * * 1-5'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 fx/fetch_fx.py
+        env:
+          TWELVEDATA_KEY: ${{ secrets.TWELVEDATA_KEY }}
+      - name: save result
+        run: |
+          git config user.name "data-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add fx/
+          git commit -m "update fx" || exit 0
+          # 多個排程可能同時寫入 main：先合併最新版本再推送，失敗就稍等重試
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            sleep $((i * 10))
+          done
+          exit 1

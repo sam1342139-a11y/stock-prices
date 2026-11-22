@@ -1,0 +1,33 @@
+name: update-tw
+# 台股每日資料：平日台灣 17:30 執行（UTC 09:30）；最新日期還沒出來的話，18:00（UTC 10:00）再試一次
+on:
+  schedule:
+    - cron: '30 9 * * 1-5'
+    - cron: '0 10 * * 1-5'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: fetch
+        run: |
+          if [ "${{ github.event.schedule }}" = "0 10 * * 1-5" ]; then
+            python3 tw/fetch_tw.py --if-stale
+          else
+            python3 tw/fetch_tw.py
+          fi
+      - name: save result
+        run: |
+          git config user.name "data-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add tw/
+          git commit -m "update tw" || exit 0
+          # 多個排程可能同時寫入 main：先合併最新版本再推送，失敗就稍等重試
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            sleep $((i * 10))
+          done
+          exit 1

@@ -94,7 +94,16 @@ def info(code):
 
 
 # ---------------------------------------------------------------- D. swing
+_SWING_CACHE, _LONG_CACHE = {}, {}
+
+
 def swing_rank(d, cfg):
+    if d not in _SWING_CACHE:
+        _SWING_CACHE[d] = _swing_rank(d, cfg)
+    return _SWING_CACHE[d]
+
+
+def _swing_rank(d, cfg):
     sc = cfg["swing"]
     cand, mom, trend, flow, rev = [], {}, {}, {}, {}
     for c in universe_codes():
@@ -132,10 +141,19 @@ def last_of_week(cal):
     return out
 
 
-def swing_strategy(cfg, exit_rule, red_rule, regime):
+def first_of_month(cal):
+    """Set of trading days that are the first trading day of their month."""
+    return {b for a, b in zip([None] + cal[:-1], cal) if a is None or a[:7] != b[:7]}
+
+
+def swing_strategy(cfg, exit_rule, red_rule, regime, freq="week", buffer=0, min_hold=0):
+    """D swing. Low-turnover options (docs/TW_MODELS.md §D):
+    freq "week" = rank on the last trading day of each week; "month" = rank on the first trading day of each month.
+    buffer N > 0: no fixed 20-day time exit; on ranking days a holding is sold only if it fell out of the top N.
+    min_hold N > 0: no exit before N trading days held, except stop-loss (A: -8%; B: 30% trailing) and the red-light rule."""
     sc = cfg["swing"]
     cal = T.calendar()
-    fridays = last_of_week(cal)
+    rank_days = last_of_week(cal) if freq == "week" else first_of_month(cal)
     top_n = sc["top_n"]
 
     def strat(d, br):
@@ -146,20 +164,25 @@ def swing_strategy(cfg, exit_rule, red_rule, regime):
             if i is None:
                 continue
             px = f.s.close_adj[i]
+            young = min_hold and p["days"] < min_hold
             if exit_rule == "A":
                 if px <= p["entry_px"] * (1 - sc["exit_a"]["stop_loss_pct"] / 100):
                     orders.append(B.Sell(c, 1.0, "停損 −8%")); selling.add(c)
+                elif young:
+                    continue
                 elif px < f.ma(i, sc["exit_a"]["ma_days"]):
                     orders.append(B.Sell(c, 1.0, "跌破 20 日均線")); selling.add(c)
-                elif p["days"] >= sc["exit_a"]["max_hold_days"]:
+                elif not buffer and p["days"] >= sc["exit_a"]["max_hold_days"]:
                     orders.append(B.Sell(c, 1.0, "持有滿 20 個交易日")); selling.add(c)
             else:
                 dd = px / p["peak"] - 1
                 if dd <= -sc["exit_b"]["trail_all_pct"] / 100:
                     orders.append(B.Sell(c, 1.0, "從高點回落 30% 全賣")); selling.add(c)
+                elif young:
+                    continue
                 elif dd <= -sc["exit_b"]["trail_half_pct"] / 100 and not p["half_sold"]:
                     orders.append(B.Sell(c, 0.5, "從高點回落 20% 賣一半")); p["half_sold"] = True
-        if d in fridays:
+        if d in rank_days:
             ranked, score, _, _ = swing_rank(d, cfg)
             red = red_rule and regime.get(d, {}).get("total", 0) >= 6
             n = sc["red_light_top_n"] if red else top_n
@@ -168,6 +191,11 @@ def swing_strategy(cfg, exit_rule, red_rule, regime):
                 for c in list(br.pos):
                     if c not in keep and c not in selling:
                         orders.append(B.Sell(c, 1.0, "水位紅燈，只持有前 3 名")); selling.add(c)
+            elif buffer:
+                keep = set(ranked[:buffer])
+                for c, p in list(br.pos.items()):
+                    if c not in keep and c not in selling and not (min_hold and p["days"] < min_hold):
+                        orders.append(B.Sell(c, 1.0, "跌出前 %d 名" % buffer)); selling.add(c)
             held = [c for c in br.pos if c not in selling]
             slots = n - len(held)
             nav = br.nav(d)
@@ -212,6 +240,12 @@ def fin_rows(code):
 
 
 def long_rank(d, cfg):
+    if d not in _LONG_CACHE:
+        _LONG_CACHE[d] = _long_rank(d, cfg)
+    return _LONG_CACHE[d]
+
+
+def _long_rank(d, cfg):
     lc = cfg["long"]
     y = int(d[:4])
     five_ago = "%04d%s" % (y - 5, d[4:])
@@ -298,6 +332,23 @@ def long_strategy(cfg):
             return []
         w = 1.0 / len(picks)
         return B.target_orders(br, d, {c: w for c in picks}, "每季換股")
+    return strat
+
+
+def combo_strategy(cfg, w_etf=0.7):
+    """0050 w_etf + long list (1 - w_etf), rebalanced to target weights on the long model's quarterly days."""
+    days = set(rebalance_days(cfg))
+    cal = T.calendar()
+    nxt = {a: b for a, b in zip(cal, cal[1:])}
+
+    def strat(d, br):
+        if nxt.get(d) not in days:
+            return []
+        picks, _, _, _, _ = long_rank(d, cfg)
+        tg = {"0050": w_etf}
+        for c in picks:
+            tg[c] = tg.get(c, 0) + (1 - w_etf) / len(picks)
+        return B.target_orders(br, d, tg, "每季再平衡")
     return strat
 
 
@@ -423,6 +474,7 @@ def write_latest():
     C.write_json("tw-models/latest/swing.json", {
         "date": d, "trade_on": "下一個交易日開盤", "regime_total": reg["total"] if reg else None,
         "red_light": red, "note": "水位紅燈（總分 ≥ 6）時只列前 3 名" if red else "前 %d 名等權重" % n,
+        "caution": "回測未勝過 0050，僅供觀察",
         "stop_rule": "停損價 = 訊號日收盤 × 0.92（實際以進場價 −8% 計）；或收盤跌破 20 日均線；或持有滿 20 個交易日",
         "list": lst,
         "changes": {"new": [c for c in cur if c not in prev_codes], "dropped": [c for c in prev_codes if c not in cur]},

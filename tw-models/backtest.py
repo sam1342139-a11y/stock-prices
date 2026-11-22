@@ -33,7 +33,8 @@ class Broker:
         self.pos = {}       # code -> dict(shares, cost, entry_date, entry_px, peak, days, half_sold)
         self.trades = []    # closed (or partially closed) trades
         self.sell_notional = 0.0
-        self.fees = 0.0
+        self.fees = 0.0     # commission + tax
+        self.slip = 0.0     # slippage cost (price impact vs open)
 
     def _comm(self, notional):
         return notional * self.bt["commission_rate"] * self.bt["commission_discount"]
@@ -55,8 +56,10 @@ class Broker:
             return True
         if not self.traded_on(code, date):
             return False  # suspended: retry next day
-        px = T.prices(code).open_adj[T.prices(code).idx[date]] * (1 - self.bt["slippage"])
+        op = T.prices(code).open_adj[T.prices(code).idx[date]]
+        px = op * (1 - self.bt["slippage"])
         sh = p["shares"] * frac
+        self.slip += sh * (op - px)
         gross = sh * px
         fee = self._comm(gross) + self._tax(code, gross)
         self.cash += gross - fee
@@ -83,6 +86,7 @@ class Broker:
         if value < 1:
             return
         sh = value / px
+        self.slip += sh * (px - s.open_adj[s.idx[date]])
         fee = self._comm(value)
         self.cash -= value + fee
         self.fees += fee
@@ -146,7 +150,7 @@ def run(strategy, start, end, bt=None, delisted=None):
         exposure.append((nv - br.cash) / nv if nv else 0)
         # 3) new signals
         pending += strategy(d, br) or []
-    return {"curve": curve, "trades": br.trades, "sell_notional": br.sell_notional, "fees": br.fees,
+    return {"curve": curve, "trades": br.trades, "sell_notional": br.sell_notional, "fees": br.fees, "slippage": br.slip,
             "initial": float(bt["initial_capital"]), "exposure": exposure}
 
 
@@ -205,6 +209,10 @@ def metrics(res):
         "avg_holding_days": round(sum(t["days"] for t in full) / len(full), 1) if full else None,
         "annual_turnover_x": round(res["sell_notional"] / avg_nav / years, 2) if years else None,
         "fees_ntd": round(res["fees"]),
+        "costs_ntd": round(res["fees"] + res.get("slippage", 0)),
+        # share of the pre-cost gain eaten by costs (commission + tax + slippage); None if there was no pre-cost gain
+        "cost_share_pct": (round((res["fees"] + res.get("slippage", 0)) / (navs[-1] - res["initial"] + res["fees"] + res.get("slippage", 0)) * 100, 1)
+                           if navs[-1] - res["initial"] + res["fees"] + res.get("slippage", 0) > 0 else None),
         "final_nav": round(navs[-1]),
         "yearly_return_pct": yearly,
     }
@@ -287,7 +295,8 @@ def _markdown(model, title, out, notes, imgs, problems):
         L += ["## 說明"] + ["- " + n for n in notes] + [""]
     rows = [("總報酬", "total_return_pct", "%"), ("年化報酬", "cagr_pct", "%"), ("最大回撤", "max_drawdown_pct", "%"),
             ("夏普值", "sharpe", ""), ("交易次數", "trades", ""), ("勝率", "win_rate_pct", "%"),
-            ("平均持有天數", "avg_holding_days", ""), ("年週轉率", "annual_turnover_x", " 倍")]
+            ("平均持有天數", "avg_holding_days", ""), ("年週轉率", "annual_turnover_x", " 倍"),
+            ("成本占報酬比例", "cost_share_pct", "%")]
     for per, p in out["periods"].items():
         res = p["results"]
         names = list(res.keys())

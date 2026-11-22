@@ -1,0 +1,124 @@
+{
+ "generated_at_utc": "2026-11-22 08:39:25",
+ "problems": [],
+ "sources": [
+  {
+   "name": "CBOE VIX 每日收盤歷史檔",
+   "url": "https://cdn-api.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
+  },
+  {
+   "name": "FRED VIXCLS（CBOE 抓不到時備援）",
+   "url": "https://fred.stlouisfed.org/series/VIXCLS"
+  },
+  {
+   "name": "Twelve Data SPY、SOXX 日收盤",
+   "url": "https://api.twelvedata.com/time_series"
+  },
+  {
+   "name": "FRED T10Y3M 10 年減 3 個月公債利差",
+   "url": "https://fred.stlouisfed.org/series/T10Y3M"
+  },
+  {
+   "name": "FRED BAMLH0A0HYM2 高收益債選擇權調整利差",
+   "url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+  },
+  {
+   "name": "FRED UNRATE 失業率",
+   "url": "https://fred.stlouisfed.org/series/UNRATE"
+  },
+  {
+   "name": "紐約聯準會殖利率曲線衰退機率模型（公式）",
+   "url": "https://www.newyorkfed.org/research/capital_markets/ycfaq"
+  }
+ ],
+ "date_tw": "2026-11-22",
+ "total": 6,
+ "level": "黃",
+ "max_possible": 14,
+ "items_scored": 7,
+ "rule": "每項 0 綠／1 黃／2 紅；總分 0～3 綠、4～6 黃、7 以上紅。規則見 docs/REGIME.md",
+ "compared_with": null,
+ "turned_yellow": [],
+ "turned_red": [],
+ "items": {
+  "vix": {
+   "name": "VIX 恐慌指數",
+   "value": 35.89,
+   "date": "2026-11-20",
+   "score": 2,
+   "color": "紅",
+   "threshold": "<18 綠；18～25 黃；>25 紅",
+   "source": "CBOE 官方 VIX 每日收盤"
+  },
+  "spy_ma200": {
+   "name": "SPY 相對 200 日均線",
+   "value": -5.86,
+   "date": "2026-11-20",
+   "score": 2,
+   "color": "紅",
+   "threshold": "綠：在均線之上且均線上升；黃：在均線之上但均線走平或下降，或低於均線 0～3%；紅：低於均線超過 3%（均線上升 = 200 日均線比 20 個交易日前高 0.1% 以上）",
+   "source": "Twelve Data SPY",
+   "unit": "%（SPY 高於均線的幅度）",
+   "spy": 689.81,
+   "ma200": 732.76,
+   "ma200_20d_change_pct": 0.79,
+   "ma200_rising": true
+  },
+  "t10y3m": {
+   "name": "10 年減 3 個月利差",
+   "value": 0.6,
+   "date": "2026-11-20",
+   "score": 0,
+   "color": "綠",
+   "threshold": ">0.5 綠；0～0.5 黃；<0 紅",
+   "source": "FRED T10Y3M",
+   "unit": "百分點"
+  },
+  "hy_spread": {
+   "name": "高收益債利差",
+   "value": 3.52,
+   "date": "2026-11-19",
+   "score": 0,
+   "color": "綠",
+   "threshold": "<4 綠；4～5.5 黃；>5.5 紅",
+   "source": "FRED BAMLH0A0HYM2",
+   "unit": "百分點"
+  },
+  "recession_prob": {
+   "name": "12 個月衰退機率",
+   "value": 13.4,
+   "date": "2026-10",
+   "score": 0,
+   "color": "綠",
+   "threshold": "P = Φ(−0.5333 − 0.6330 × T10Y3M 月平均)；<20% 綠；20～35% 黃；>35% 紅",
+   "source": "依 FRED T10Y3M 計算",
+   "unit": "%",
+   "t10y3m_month_avg": 0.905
+  },
+  "sahm": {
+   "name": "Sahm 規則",
+   "value": 0.0,
+   "date": "2026-10",
+   "score": 0,
+   "color": "綠",
+   "threshold": "近 3 月平均失業率 − 前 12 個月中最低的 3 月平均；<0.3 綠；0.3～0.5 黃；≥0.5 紅",
+   "source": "FRED UNRATE",
+   "unit": "百分點",
+   "unrate_3m_avg": 4.13,
+   "prior_12m_low": 4.13
+  },
+  "soxx_vs_spy": {
+   "name": "SOXX 相對 SPY 近 20 日",
+   "value": -13.35,
+   "date": "2026-11-20",
+   "score": 2,
+   "color": "紅",
+   "threshold": "SOXX 20 日報酬 − SPY 20 日報酬；>0 綠；−5%～0 黃；<−5% 紅",
+   "source": "Twelve Data SOXX、SPY",
+   "unit": "百分點",
+   "soxx_20d_pct": -22.58,
+   "spy_20d_pct": -9.23,
+   "from": "2026-10-23"
+  }
+ }
+}

@@ -1,0 +1,44 @@
+{
+ "generated_at_utc": "2026-11-22 08:39:20",
+ "problems": [
+  "財報日曆抓取失敗，未估算：Twelve Data 403: /earnings_calendar is available exclusively with grow or pro or ultra or venture or enterprise plans. Consider upgrading your API Key now at https://twelvedata.com/pricing"
+ ],
+ "sources": [
+  {
+   "name": "Twelve Data Earnings Calendar",
+   "url": "https://api.twelvedata.com/earnings_calendar"
+  }
+ ],
+ "today_tw": "2026-11-22",
+ "symbols": [
+  "AAPL",
+  "AMAT",
+  "AMD",
+  "ARM",
+  "ASML",
+  "ASX",
+  "AVGO",
+  "AMZN",
+  "CRWD",
+  "GOOG",
+  "INTC",
+  "KLAC",
+  "LITE",
+  "MSFT",
+  "MU",
+  "NVDA",
+  "SNDK",
+  "SOXX",
+  "SPCX",
+  "SPY",
+  "TSLA",
+  "TSM",
+  "ENTG",
+  "NBIS",
+  "BE",
+  "SOXL"
+ ],
+ "earnings": [],
+ "next_7_days": [],
+ "next_14_days": []
+}

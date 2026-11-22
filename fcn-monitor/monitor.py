@@ -13,6 +13,7 @@
     FCN_PRODUCTS="$(cat products.json)" python3 fcn-monitor/monitor.py --dry-run
 """
 import datetime, json, os, smtplib, sys
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.header import Header
 
@@ -121,11 +122,89 @@ def render(asof, results, swaps):
     return subject, "\n".join(L), counts
 
 
-def send(subject, body):
+COLORS = {"red": "#b3392e", "preview": "#c97a12", "blue": "#2f6fa3", "yellow": "#b8930f"}
+
+
+def pct(v, good_if_positive=True):
+    color = "#2f8f5b" if (v >= 0) == good_if_positive else "#b3392e"
+    return f'<span style="color:{color};font-weight:700">{v:+.1f}%</span>'
+
+
+def render_html(asof, results, swaps):
+    """手機好讀版：每檔商品一張卡片，標的用小表格，數字靠右對齊。"""
+    h = ['<div style="font-family:-apple-system,Helvetica,Arial,sans-serif;font-size:15px;color:#161b22;max-width:560px">',
+         f'<div style="font-size:18px;font-weight:700;margin:4px 0 2px">FCN 每日燈號</div>',
+         f'<div style="color:#69707d;font-size:13px;margin-bottom:10px">{asof} 美股收盤價</div>',
+         '<div style="font-size:12px;color:#69707d;background:#f3f4f6;border-radius:8px;padding:8px 10px;margin-bottom:14px;line-height:1.6">'
+         '🔵 全部達 KO　🟠 低於 KI 預覽（歐式 KI，到期才比價）<br>🔴 到期比價跌破 KI　🟡 持有中</div>']
+
+    soon = [r for r in results if r.get("days_left") is not None and 0 <= r["days_left"] <= SOON_DAYS]
+    if soon:
+        h.append('<div style="background:#fdf3f2;border-radius:8px;padding:8px 10px;margin-bottom:14px;font-size:14px">'
+                 f'<b>⏰ {SOON_DAYS} 天內到期</b><br>')
+        for r in sorted(soon, key=lambda r: r["days_left"]):
+            h.append(f'{LIGHTS[r["light"]][0]} {r["code"]}　{r["maturity"]}（剩 {r["days_left"]} 天）<br>')
+        h.append('</div>')
+
+    th = 'style="text-align:right;color:#69707d;font-weight:400;font-size:12px;padding:3px 4px"'
+    for r in sorted(results, key=lambda r: (ORDER.index(r["light"]) if r["light"] else -1, r.get("worst_ki", 0))):
+        if r["light"] is None:
+            h.append(f'<div style="margin-bottom:12px">⚪ <b>{r["code"]}</b>：抓不到價格（{", ".join(r["missing"])}）</div>')
+            continue
+        icon, label = LIGHTS[r["light"]]
+        tag = "" if r["type"] == "FCN" else f' <span style="font-size:12px;color:#69707d">［{r["type"]}］</span>'
+        warn = "　⚠️ 接近 KI" if r["light"] == "yellow" and r["worst_ki"] < NEAR_KI else ""
+        days = f'（剩 {r["days_left"]} 天）' if r.get("days_left") is not None else ""
+        h.append(f'<div style="border:1px solid #d7dbe3;border-left:5px solid {COLORS[r["light"]]};border-radius:10px;padding:10px 12px;margin-bottom:12px">'
+                 f'<div style="font-size:16px;font-weight:700">{icon} {r["code"]}{tag}</div>'
+                 f'<div style="font-size:13px;color:{COLORS[r["light"]]};font-weight:700">{label}{warn}</div>'
+                 f'<div style="font-size:13px;color:#69707d;margin:2px 0 6px">到期 {r["maturity"] or "未填"}{days}</div>'
+                 f'<table style="width:100%;border-collapse:collapse;font-size:14px">'
+                 f'<tr><th style="text-align:left;color:#69707d;font-weight:400;font-size:12px;padding:3px 4px">標的</th>'
+                 f'<th {th}>收盤</th><th {th}>離 KI</th><th {th}>距 KO</th></tr>')
+        for l in r["legs"]:
+            ko_txt = "✓ 已達" if l["to_ko"] <= 0 else "%+.1f%%" % l["to_ko"]
+            h.append(f'<tr style="border-top:1px solid #eef0f3"><td style="padding:4px;font-weight:700">{l["t"]}</td>'
+                     f'<td style="padding:4px;text-align:right">{l["price"]:.2f}</td>'
+                     f'<td style="padding:4px;text-align:right">{pct(l["to_ki"])}</td>'
+                     f'<td style="padding:4px;text-align:right">{ko_txt}</td></tr>')
+        h.append('</table>')
+        if r["missing"]:
+            h.append(f'<div style="font-size:12px;color:#b3392e">⚠️ 抓不到價格：{", ".join(r["missing"])}</div>')
+        h.append('</div>')
+
+    if swaps:
+        h.append('<div style="font-size:16px;font-weight:700;margin:18px 0 6px">已換股部位</div>'
+                 '<table style="width:100%;border-collapse:collapse;font-size:14px">'
+                 f'<tr><th style="text-align:left;color:#69707d;font-weight:400;font-size:12px;padding:3px 4px">商品／標的</th>'
+                 f'<th {th}>收盤</th><th {th}>換股價</th><th {th}>損益</th></tr>')
+        for s in sorted(swaps, key=lambda s: s.get("pnl", 0)):
+            if s["price"] is None:
+                h.append(f'<tr><td style="padding:4px">{s["code"]} {s["t"]}</td><td colspan="3" style="padding:4px;text-align:right">抓不到價格</td></tr>')
+                continue
+            h.append(f'<tr style="border-top:1px solid #eef0f3"><td style="padding:4px"><b>{s["t"]}</b><br>'
+                     f'<span style="font-size:12px;color:#69707d">{s["code"]}</span></td>'
+                     f'<td style="padding:4px;text-align:right">{s["price"]:.2f}</td>'
+                     f'<td style="padding:4px;text-align:right">{s["strike"]:.2f}</td>'
+                     f'<td style="padding:4px;text-align:right">{pct(s["pnl"])}</td></tr>')
+        h.append('</table>')
+
+    h.append('<div style="font-size:11px;color:#69707d;margin-top:16px;line-height:1.6">'
+             '「離 KI」正數代表還在 KI 之上；「距 KO」代表還要漲多少才到 KO。<br>'
+             '以每日收盤價估算，未計入 KO 記憶（曾觸價）；實際以商品條件書與「FCN 持股燈號追蹤」網頁為準。</div></div>')
+    return "".join(h)
+
+
+def send(subject, body, html=None):
     user = os.environ["GMAIL_USER"].strip()
     pw = os.environ["GMAIL_APP_PASSWORD"].replace(" ", "").strip()
     to = [a.strip() for a in (os.environ.get("MAIL_TO") or user).split(",") if a.strip()]
-    msg = MIMEText(body, "plain", "utf-8")
+    if html:
+        msg = MIMEMultipart("alternative")
+        msg.attach(MIMEText(body, "plain", "utf-8"))
+        msg.attach(MIMEText(html, "html", "utf-8"))
+    else:
+        msg = MIMEText(body, "plain", "utf-8")
     msg["Subject"] = Header(subject, "utf-8")
     msg["From"] = user
     msg["To"] = ", ".join(to)
@@ -157,10 +236,14 @@ def main():
     print("監控中 %d 檔、已到期略過 %d 檔、換股追蹤 %d 檔，燈號統計：%s"
           % (len(active), len(products) - len(active) - len(swapped), len(swapped),
              {k: v for k, v in counts.items() if v}))
+    html = render_html(asof, results, swaps)
     if dry:
         print("=" * 40); print(subject); print(body)
+        if os.environ.get("HTML_OUT"):  # 本機預覽：把 HTML 版存成檔案
+            with open(os.environ["HTML_OUT"], "w", encoding="utf-8") as f:
+                f.write(html)
         return
-    send(subject, body)
+    send(subject, body, html)
     print("已寄出")
 
 

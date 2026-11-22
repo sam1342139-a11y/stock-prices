@@ -12,14 +12,16 @@
 | `latest.json` | **每日股價資料**，FCN 程式讀的就是這個檔案 | ❌ 不要改，系統會自動更新；**位置也不要移動**，否則 FCN 程式會讀不到 |
 | `fetch_prices.py` | 抓股價的程式，從 Twelve Data 下載收盤價後寫進 `latest.json` | 要改請找 Claude |
 | `.github/workflows/update-prices.yml` | 自動排程設定：決定**什麼時候**執行抓股價程式 | 要改請找 Claude |
+| `macro/` | **總經數據**：利率、公債殖利率、VIX、CPI、失業率、美元兌台幣，每日自動更新，詳見資料夾內的 README | 要改請找 Claude |
+| `.github/workflows/update-macro.yml` | 總經數據的自動排程 | 要改請找 Claude |
 
-> 未來新增功能時，每個功能會各放一個資料夾，例如 `fcn-monitor/`（FCN 燈號監控）、`macro/`（總經數據）、`briefing/`（晨間簡報），並在這張表裡補上說明。
+> 未來新增功能時，每個功能會各放一個資料夾，例如 `fcn-monitor/`（FCN 燈號監控）、`briefing/`（晨間簡報），並在這張表裡補上說明。
 
 ---
 
 ## ⏰ 自動更新時間
 
-- **台灣時間每週二到週六早上 06:30** 自動執行，也就是美股每個交易日收盤後。
+- **台灣時間每週二到週六早上 06:30** 自動抓股價，07:20 抓總經數據，也就是美股每個交易日收盤後。
 - 想立刻手動更新：GitHub 上方點 **Actions** → 左邊點 **update-prices** → 右邊點 **Run workflow**。
 - 美國假日休市時沒有新資料，`latest.json` 會維持前一個交易日的價格。
 

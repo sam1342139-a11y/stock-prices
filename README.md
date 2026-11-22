@@ -15,7 +15,10 @@
 | `macro/` | **總經數據**：利率、公債殖利率、VIX、CPI、失業率、美元兌台幣，每日自動更新，詳見資料夾內的 README | 要改請找 Claude |
 | `.github/workflows/update-macro.yml` | 總經數據的自動排程 | 要改請找 Claude |
 
-> 未來新增功能時，每個功能會各放一個資料夾，例如 `fcn-monitor/`（FCN 燈號監控）、`briefing/`（晨間簡報），並在這張表裡補上說明。
+| `fcn-monitor/` | **FCN 每日燈號監控**：算出每檔商品離敲出、敲入的距離，寄 Email 通知；商品條件存在 GitHub 密鑰，詳見資料夾內的 README | 要改請找 Claude |
+| `.github/workflows/fcn-monitor.yml` | FCN 燈號監控的自動排程（每日股價抓完後接著執行） | 要改請找 Claude |
+
+> 未來新增功能時，每個功能會各放一個資料夾，例如 `briefing/`（晨間簡報），並在這張表裡補上說明。
 
 ---
 

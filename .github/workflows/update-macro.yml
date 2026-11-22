@@ -1,10 +1,13 @@
 name: update-macro
-# 每個平日 UTC 23:20（台灣時間週二～週六 07:20）抓總經數據
-# 刻意跟每日股價排程（06:30）錯開，避免兩個排程同時寫入造成衝突
+# 每個平日 UTC 22:40（台灣時間週二～週六 06:40）抓總經數據，美股收盤後
+# 與每日股價排程（06:30）共用同一個 concurrency 群組：兩者排隊依序執行，不會同時寫入造成衝突
 on:
   schedule:
-    - cron: '20 23 * * 1-5'
+    - cron: '40 22 * * 1-5'
   workflow_dispatch:
+concurrency:
+  group: write-main
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:

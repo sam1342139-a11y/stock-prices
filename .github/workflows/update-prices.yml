@@ -3,6 +3,10 @@ on:
   schedule:
     - cron: '30 22 * * 1-5'
   workflow_dispatch:
+# 與總經排程共用同一個群組：兩者排隊依序執行，避免同時寫入 main 造成推送失敗
+concurrency:
+  group: write-main
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:

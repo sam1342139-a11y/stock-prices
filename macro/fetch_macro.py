@@ -1,8 +1,11 @@
 """每日抓取總經數據，寫入 macro/macro.json。
 
-資料來源：
-- FRED（美國聯準會聖路易分行資料庫）：免金鑰
-- Twelve Data：美元兌台幣即時匯率（有 TWELVEDATA_KEY 才抓，沒有就跳過）
+資料來源（每個指標的 source 欄位會註明實際來源）：
+- DGS2、DGS10：美國財政部 Daily Treasury Par Yield Curve（官方，前一交易日）
+- VIXCLS：CBOE 官方 VIX 每日收盤歷史檔
+  以上三項官方來源抓不到時，自動退回 FRED
+- 其餘指標：FRED（美國聯準會聖路易分行資料庫，免金鑰）
+- USDTWD：Twelve Data 美元兌台幣每日收盤（有 TWELVEDATA_KEY 才抓，沒有就跳過）
 """
 import csv, datetime, io, json, os, sys, urllib.request, urllib.parse
 
@@ -42,6 +45,50 @@ def fred(series_id, start):
     return rows
 
 
+TREASURY_URL = ("https://home.treasury.gov/resource-center/data-chart-center/interest-rates/"
+                "daily-treasury-rates.csv/{year}/all?type=daily_treasury_yield_curve"
+                "&field_tdr_date_value={year}&page&_format=csv")
+TREASURY_COLS = {"DGS2": "2 Yr", "DGS10": "10 Yr"}
+CBOE_VIX_URL = "https://cdn-api.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
+
+
+def mdy(d):
+    """美國日期 MM/DD/YYYY → YYYY-MM-DD"""
+    return datetime.datetime.strptime(d.strip(), "%m/%d/%Y").date().isoformat()
+
+
+def treasury(series_id, today):
+    """財政部每日公債殖利率曲線。檔案按年份分開，年初資料不夠時一併抓前一年。"""
+    col = TREASURY_COLS[series_id]
+    rows = {}
+    for year in (today.year, today.year - 1):
+        for r in csv.DictReader(io.StringIO(get(TREASURY_URL.format(year=year)))):
+            v = (r.get(col) or "").strip()
+            if v:
+                rows[mdy(r["Date"])] = float(v)
+        if len(rows) >= KEEP + 1:
+            break
+    return sorted(rows.items())
+
+
+def cboe_vix():
+    """CBOE 官方 VIX 每日收盤（CLOSE 欄位）。"""
+    rows = []
+    for r in csv.DictReader(io.StringIO(get(CBOE_VIX_URL))):
+        try:
+            rows.append((mdy(r["DATE"]), round(float(r["CLOSE"]), 2)))
+        except (KeyError, ValueError):
+            continue
+    return sorted(rows)[-(KEEP + 1):]
+
+
+OFFICIAL = {
+    "DGS2":   ("美國財政部 Daily Treasury Par Yield Curve", lambda today: treasury("DGS2", today)),
+    "DGS10":  ("美國財政部 Daily Treasury Par Yield Curve", lambda today: treasury("DGS10", today)),
+    "VIXCLS": ("CBOE 官方 VIX 每日收盤", lambda today: cboe_vix()),
+}
+
+
 def usdtwd_live():
     key = os.environ.get("TWELVEDATA_KEY", "").strip()
     if not key:
@@ -72,11 +119,24 @@ def main():
     out, problems = {}, []
 
     for sid, name, unit, note in FRED_SERIES:
+        rows, source = None, "FRED"
+        if sid in OFFICIAL:  # 先抓官方來源，抓不到才退回 FRED
+            official_name, fetch_official = OFFICIAL[sid]
+            try:
+                rows = fetch_official(today)
+                if not rows:
+                    raise RuntimeError("沒有資料")
+                source = official_name
+            except Exception as e:
+                problems.append(f"{sid} 官方來源失敗，改用 FRED: {e}")
+                rows = None
         try:
-            rows = fred(sid, start)
+            if rows is None:
+                rows = fred(sid, start)
             if not rows:
                 raise RuntimeError("沒有資料")
             item = summarize(name, unit, note, rows)
+            item["source"] = source
             if sid == "CPIAUCSL" and len(rows) >= 13:
                 item["yoy_pct"] = round((rows[-1][1] / rows[-13][1] - 1) * 100, 2)
                 item["note"] += f"；最新年增率 {item['yoy_pct']}%"
@@ -88,6 +148,7 @@ def main():
         rows = usdtwd_live()
         if rows:
             out["USDTWD"] = summarize("美元兌台幣", "台幣", "Twelve Data 每日收盤匯率", rows)
+            out["USDTWD"]["source"] = "Twelve Data"
     except Exception as e:
         problems.append(f"USDTWD: {e}")
 

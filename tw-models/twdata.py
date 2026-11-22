@@ -55,6 +55,27 @@ def universe():
     return _read(os.path.join(DATA, "universe.csv"))
 
 
+def delisted():
+    """{code: delisted_date} for universe members delisted after the data start."""
+    return {r["code"]: r["delisted_date"] for r in universe() if r.get("delisted_date")}
+
+
+def survivorship_note():
+    """Plain-language note for backtest reports about delisted stocks."""
+    d = delisted()
+    have = [c for c in d if prices(c).dates]
+    txt = "股票池包含 %d 檔 2019 年後下市的上市股票（其中 %d 檔取得價格資料），以降低倖存者偏差。" % (len(d), len(have))
+    p = os.path.join(DATA, "meta", "backfill_report.json")
+    if os.path.exists(p):
+        probs = json.load(open(p, encoding="utf-8")).get("problems", [])
+        miss = [x for x in probs if "無法確認是上市或上櫃" in x]
+        if miss:
+            txt += miss[0] + "；因此報酬可能略為高估。"
+    if len(have) < len(d):
+        txt += "部分下市股票取不到價格，報酬可能高估。"
+    return txt
+
+
 def is_etf(code):
     return code.startswith("00")
 

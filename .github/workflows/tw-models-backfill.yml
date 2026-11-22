@@ -1,0 +1,45 @@
+name: tw-models-backfill
+# One-time historical backfill from FinMind into the Actions cache (not committed).
+# Runs hourly; each run uses <= 50 minutes (~480 requests, under the free 600/hour limit) and resumes from saved progress.
+# Once everything is fetched, each hourly run exits within seconds.
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+concurrency:
+  group: tw-models-data
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: restore raw data
+        uses: actions/cache/restore@v4
+        with:
+          path: tw-models/data
+          key: tw-models-data-${{ github.run_id }}
+          restore-keys: tw-models-data-
+      - name: check progress
+        id: chk
+        run: |
+          python3 - <<'PY'
+          import json, os
+          p = "tw-models/data/meta/backfill_state.json"
+          s = json.load(open(p)) if os.path.exists(p) else {}
+          done = bool(s) and all(v == 0 for v in s.get("remaining", {"x": 1}).values())
+          open(os.environ["GITHUB_OUTPUT"], "a").write("done=%s\n" % ("true" if done else "false"))
+          print("remaining:", s.get("remaining"))
+          PY
+      - name: backfill batch
+        if: steps.chk.outputs.done != 'true'
+        run: python3 tw-models/fetch_history.py --budget-min 48
+        env:
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+      - name: save raw data
+        if: steps.chk.outputs.done != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: tw-models/data
+          key: tw-models-data-${{ github.run_id }}

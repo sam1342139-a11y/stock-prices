@@ -61,6 +61,7 @@
 ### 台股模型（tw-models/）
 - **完整規則見 `docs/TW_MODELS.md`**；參數在 `tw-models/config.json`
 - 歷史資料（2019 起，暖身資料 2014 起）：FinMind 一次性回補（證交所網站會封鎖雲端主機的大量抓取）；之後每日 18:30 用證交所 OpenAPI 累加
+- **原始資料不公開**（FinMind 條款未明確允許公開轉載）：存在 GitHub Actions 快取，只公開計算結果與報告；回補排程 `tw-models-backfill` 每小時接續一批
 - 回測引擎 `tw-models/backtest.py`：隔天開盤成交、手續費 ×0.6 折、證交稅、滑價 0.1%、含息、樣本內 2019–2023／樣本外 2024～今分開報告
 - 台股水位燈號 `tw-models/latest/regime_tw.json`：5 項指標、總分換建議持股水位；回測報告 `docs/BACKTEST_regime_tw.md`
 - 驗收抽查：GitHub Actions → tw-models-spot-check → Run workflow

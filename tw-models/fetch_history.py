@@ -28,7 +28,7 @@ import common as C
 START = "2019-01-01"
 WARMUP_START = "2014-01-01"  # extra history for 200-day MAs and 5-year percentiles (E)
 API = "https://api.finmindtrade.com/api/v4/data"
-PACE = 6.2
+PACE = 6.1
 DATASETS = ["prices", "dividends", "per", "inst", "revenue"]
 
 
@@ -36,7 +36,19 @@ def data_dir():
     return os.path.dirname(C.out_path("tw-models/data/x"))
 
 
+_last_call = [0.0]
+
+
+def pace():
+    """Keep request *starts* at least PACE seconds apart (~590/hour), counting response time."""
+    wait = PACE - (time.time() - _last_call[0])
+    if wait > 0:
+        time.sleep(wait)
+    _last_call[0] = time.time()
+
+
 def fm(dataset, **params):
+    pace()
     tok = os.environ.get("FINMIND_TOKEN", "").strip()
     if not tok:
         raise RuntimeError("FINMIND_TOKEN 未設定")
@@ -140,10 +152,8 @@ def fetch_market(end, problems):
         rows = fm("TaiwanStockPrice", data_id="TAIEX", start_date=WARMUP_START, end_date=end)
         write_plain(os.path.join(base, "taiex.csv"), ["date", "open", "high", "low", "close"],
                     [[r["date"], g(r["open"]), g(r["max"]), g(r["min"]), g(r["close"])] for r in rows])
-        time.sleep(PACE)
         rows = fm("TaiwanStockTotalReturnIndex", data_id="TAIEX", start_date=WARMUP_START, end_date=end)
         write_plain(os.path.join(base, "taiex_tri.csv"), ["date", "close"], [[r["date"], g(r["price"])] for r in rows])
-        time.sleep(PACE)
         rows = fm("TaiwanStockTotalInstitutionalInvestors", start_date=WARMUP_START, end_date=end)
         agg = {}
         for r in rows:
@@ -153,20 +163,16 @@ def fetch_market(end, problems):
                 agg.setdefault(r["date"], {"foreign": 0, "trust": 0, "dealer": 0})[key] += int(r["buy"]) - int(r["sell"])
         write_plain(os.path.join(base, "inst_total.csv"), ["date", "foreign", "trust", "dealer"],
                     [[d, v["foreign"], v["trust"], v["dealer"]] for d, v in sorted(agg.items())])
-        time.sleep(PACE)
         rows = fm("TaiwanStockTotalMarginPurchaseShortSale", start_date=WARMUP_START, end_date=end)
         write_plain(os.path.join(base, "margin_total.csv"), ["date", "margin_balance"],
                     [[r["date"], r["TodayBalance"]] for r in rows if r["name"] == "MarginPurchaseMoney"])
-        time.sleep(PACE)
     except Exception as e:
         problems.append("市場層級資料抓取失敗：%s" % e)
 
 
 def build_universe(problems):
     info = fm("TaiwanStockInfo")
-    time.sleep(PACE)
     delist = fm("TaiwanStockDelisting")
-    time.sleep(PACE)
     twse = {}
     for r in info:
         if r["type"] != "twse":
@@ -240,7 +246,6 @@ def main():
                 os.makedirs(os.path.dirname(state_path), exist_ok=True)
                 json.dump(state, open(state_path, "w"), indent=0)
                 print("  %s %d/%d  (requests this run %d)" % (ds, len(done), len(codes), n), flush=True)
-            time.sleep(PACE)
     state["updated_utc"] = C.utc_now().strftime("%Y-%m-%d %H:%M:%S")
     state["remaining"] = {ds: len(codes) - len(set(state["done"].get(ds, []))) for ds in DATASETS}
     os.makedirs(os.path.dirname(state_path), exist_ok=True)

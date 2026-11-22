@@ -2,7 +2,7 @@
 
 > 模型依公開資料與固定規則產生，回測不代表未來，非投資建議。
 
-產生時間（UTC）：2026-11-22 09:27　｜　原始數字：`tw-models/reports/regime_tw_backtest.json`
+產生時間（UTC）：2026-11-22 09:29　｜　原始數字：`tw-models/reports/regime_tw_backtest.json`
 
 ## 說明
 - 比較「依水位燈號調整 0050 持股比例」與「一直滿倉 0050」。

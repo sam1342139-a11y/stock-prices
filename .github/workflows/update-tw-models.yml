@@ -1,16 +1,38 @@
 name: update-tw-models
-# 台股模型資料：平日台灣 18:30（UTC 10:30）累加當天資料，接著更新 SOXX／美元兌台幣與台股水位燈號
+# Taiwan model data: weekdays 18:30 Taiwan (UTC 10:30). Appends today's data, refreshes SOXX/USD-TWD and regime_tw.
+# Raw data is NOT committed (FinMind terms do not clearly allow public redistribution); it lives in the Actions cache.
+# Only computed outputs (tw-models/latest/) are committed.
 on:
   schedule:
     - cron: '30 10 * * 1-5'
   workflow_dispatch:
 permissions:
   contents: write
+concurrency:
+  group: tw-models-data
+  cancel-in-progress: false
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: restore raw data
+        uses: actions/cache/restore@v4
+        with:
+          path: tw-models/data
+          key: tw-models-data-${{ github.run_id }}
+          restore-keys: tw-models-data-
+      - name: check backfill
+        id: chk
+        run: |
+          python3 - <<'PY'
+          import json, os
+          p = "tw-models/data/meta/backfill_state.json"
+          s = json.load(open(p)) if os.path.exists(p) else {}
+          done = bool(s) and all(v == 0 for v in s.get("remaining", {"x": 1}).values())
+          open(os.environ["GITHUB_OUTPUT"], "a").write("ready=%s\n" % ("true" if done else "false"))
+          print("backfill complete:", done)
+          PY
       - name: append today's data
         run: python3 tw-models/update_daily.py
         env:
@@ -20,13 +42,21 @@ jobs:
         env:
           TWELVEDATA_KEY: ${{ secrets.TWELVEDATA_KEY }}
       - name: regime_tw
+        if: steps.chk.outputs.ready == 'true'
         run: python3 tw-models/regime_tw.py
-      - name: save result
+      - name: save raw data
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: tw-models/data
+          key: tw-models-data-${{ github.run_id }}
+      - name: commit computed outputs only
+        if: steps.chk.outputs.ready == 'true'
         run: |
           git config user.name "data-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add tw-models/
-          git commit -m "update tw-models" || exit 0
+          git add tw-models/latest/
+          git commit -m "update tw-models outputs" || exit 0
           for i in 1 2 3 4 5; do
             git pull --rebase origin main && git push && exit 0
             sleep $((i * 10))

@@ -61,7 +61,8 @@ def main():
     problems = []
     codes = {r["code"] for r in C.read_csv("tw-models/data/universe.csv")}
     if not codes:
-        raise SystemExit("tw-models/data/universe.csv 不存在，請先執行 fetch_history.py")
+        print("tw-models/data/universe.csv 不存在（歷史回補尚未開始），今天先略過")
+        return
     day = C.http_json(URL_DAY)
     date = roc(day[0]["Date"])
     ym = date[:7]

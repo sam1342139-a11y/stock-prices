@@ -1,6 +1,6 @@
 # 系統設定說明（SETUP）
 
-> 每次修改系統都要同步更新這份文件。最後更新：2026-11-23（新增台股模型第二階段：波段、長期、舊篩選法；季報與除權息每季自動重抓）
+> 每次修改系統都要同步更新這份文件。最後更新：2026-11-23（台股模型後續回測：波段低換手版、0050＋長期組合；波段名單加註僅供觀察）
 
 本存放庫 `sam1342139-a11y/stock-prices` 是**公開的**。
 **只放市場公開資料，不放任何客戶或個人持股資料；不放密碼或 API 金鑰。**
@@ -66,6 +66,7 @@
 - 回測引擎 `tw-models/backtest.py`：隔天開盤成交、手續費 ×0.6 折、證交稅、滑價 0.1%、含息、樣本內 2019–2023／樣本外 2024～今分開報告
 - 台股水位燈號 `tw-models/latest/regime_tw.json`：5 項指標、總分換建議持股水位；回測報告 `docs/BACKTEST_regime_tw.md`
 - 選股模型 `tw-models/models.py`：D 波段（每週五名單、紅燈只列前 3 名）、E 長期（每季換股、同產業最多 3 檔）、F 舊篩選法（33 檔、每月前 8 名，只做回測）；回測報告 `docs/BACKTEST_swing.md`、`BACKTEST_long.md`、`BACKTEST_old_screen.md`、`BACKTEST_comparison.md`
+- 後續回測 `tw-models/extra_backtests.py`：波段低換手版 `docs/BACKTEST_swing_lowturn.md`、0050 70%＋長期 30% 組合 `docs/BACKTEST_combo.md`（手動執行，不排程）
 - 季報（`fin`）與除權息（`dividends`）在每個季報法定期限後（4/1、5/16、8/15、11/15）由回補排程自動重抓一次（約 2,440 次請求、5 小時左右），期間模型照常產生
 - 驗收抽查：GitHub Actions → tw-models-spot-check → Run workflow
 
@@ -126,3 +127,4 @@
 - #8 停用財報日曆自動排程（改用財經M平方），保留手動執行；刪除 Claude Code 這邊的「晨間簡報」排程（改由專案負責）
 - #9 台股模型第一階段：A 歷史資料、B 回測引擎、C 台股水位燈號；docs/TW_MODELS.md
 - 台股模型第二階段：D 波段、E 長期、F 舊篩選法；季報資料；每週五名單
+- 台股模型後續回測：波段低換手版、組合回測、成本占報酬比例；swing.json 加註「回測未勝過 0050，僅供觀察」

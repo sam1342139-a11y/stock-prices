@@ -9,6 +9,7 @@
 | 檔案 / 資料夾 | 用途 | 可以手動改嗎 |
 |---|---|---|
 | `README.md` | 就是這份說明文件（中文目錄） | 可以 |
+| `CLAUDE.md` | Claude 的工作規則（一律用繁體中文回覆、不放客戶資料等） | 可以 |
 | `latest.json` | **每日股價資料**，FCN 程式讀的就是這個檔案 | ❌ 不要改，系統會自動更新；**位置也不要移動**，否則 FCN 程式會讀不到 |
 | `fetch_prices.py` | 抓股價的程式，從 Twelve Data 下載收盤價後寫進 `latest.json` | 要改請找 Claude |
 | `.github/workflows/update-prices.yml` | 自動排程設定：決定**什麼時候**執行抓股價程式 | 要改請找 Claude |

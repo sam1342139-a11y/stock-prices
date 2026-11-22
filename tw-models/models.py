@@ -512,7 +512,55 @@ def write_latest():
         "rule": "每季（1、4、7、10 月 15 日後第一個交易日）換股；前 8 名等權重，同產業最多 3 檔；股利再投入",
         "list": L, "changes": {"new": [c for c in cl if c not in prev_l], "dropped": [c for c in prev_l if c not in cl]},
         "footer": FOOTER}, problems, SOURCES)
+    write_core_satellite(cfg, d, sig, L, days, problems)
     print("swing", d, cur, "| long", sig, cl)
+
+
+def next_rebalance_date(cfg, d):
+    """Next quarterly rebalance day after d (first weekday after the 15th; TWSE holidays not known in advance)."""
+    lc = cfg["long"]
+    y, m = int(d[:4]), int(d[5:7])
+    for yy in (y, y + 1):
+        for mm in lc["rebalance_months"]:
+            x = datetime.date(yy, mm, lc["rebalance_day"]) + datetime.timedelta(days=1)
+            while x.weekday() >= 5:
+                x += datetime.timedelta(days=1)
+            if x.isoformat() > d:
+                return x.isoformat()
+
+
+def write_core_satellite(cfg, d, sig, long_list, days, problems):
+    """tw-models/latest/core_satellite.json: 0050 70% + long list 30% (equal weight), quarterly rebalance."""
+    w_etf = 0.7
+    n = len(long_list)
+    alloc = [{"code": "0050", "name": "元大台灣50", "role": "核心", "weight_pct": round(w_etf * 100, 2)}]
+    for x in long_list:
+        alloc.append({"code": x["code"], "name": x["name"], "industry": x.get("industry"), "role": "衛星（長期名單）",
+                      "weight_pct": round((1 - w_etf) * 100 / n, 2) if n else 0})
+    rep = C.read_json("tw-models/reports/combo_backtest.json", {}) or {}
+    summary = {}
+    for per, p in (rep.get("periods") or {}).items():
+        res = p.get("results", {})
+        summary[per] = {"label": p.get("label"), "from": p.get("from"), "to": p.get("to")}
+        for name, key in (("0050 70%＋長期 30%", "core_satellite"), ("0050", "etf_0050"), ("長期 100%", "long_100")):
+            m = res.get(name) or {}
+            summary[per][key] = {"total_return_pct": m.get("total_return_pct"), "max_drawdown_pct": m.get("max_drawdown_pct"),
+                                 "sharpe": m.get("sharpe")}
+    probs = list(problems)
+    if not summary:
+        probs.append("找不到 tw-models/reports/combo_backtest.json，回測摘要從缺")
+    past = [x for x in days if x > sig]
+    C.write_json("tw-models/latest/core_satellite.json", {
+        "date": d,
+        "rule": "0050 占 70%、長期名單占 30%（平均分配）；每季（1、4、7、10 月 15 日後第一個交易日，與長期換股同一天）再平衡回目標比例",
+        "target_allocation": alloc,
+        "long_list_signal_date": sig,
+        "last_rebalance": past[0] if past else None,
+        "next_rebalance": next_rebalance_date(cfg, d),
+        "next_rebalance_note": "以 15 日後第一個平日估計；遇國定假日順延到下一個交易日",
+        "backtest_summary": summary,
+        "backtest_report": "docs/BACKTEST_combo.md",
+        "footer": FOOTER}, probs, SOURCES)
 
 
 if __name__ == "__main__":

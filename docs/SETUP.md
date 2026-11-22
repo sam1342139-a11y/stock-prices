@@ -1,6 +1,6 @@
 # 系統設定說明（SETUP）
 
-> 每次修改系統都要同步更新這份文件。最後更新：2026-11-23（台股模型後續回測：波段低換手版、0050＋長期組合；波段名單加註僅供觀察）
+> 每次修改系統都要同步更新這份文件。最後更新：2026-11-23（新增 core_satellite.json；水位燈號改為「參考水位」）
 
 本存放庫 `sam1342139-a11y/stock-prices` 是**公開的**。
 **只放市場公開資料，不放任何客戶或個人持股資料；不放密碼或 API 金鑰。**
@@ -26,7 +26,7 @@
 | **市場風險燈號** | 週二～六 07:00 | `regime/fetch_regime.py` | `regime/regime.json`、`regime/history.csv`、`regime/spy_history.csv` |
 | **台股每日資料** | 平日 17:30（沒抓到最新日期，18:00 再試一次） | `tw/fetch_tw.py` | `tw/latest.csv`、`tw/revenue.csv`、`tw/meta.json` |
 | **台股模型資料＋水位燈號** | 平日 18:30 | `tw-models/update_daily.py`、`fetch_us_market.py`、`regime_tw.py` | `tw-models/data/daily/`、`tw-models/latest/regime_tw.json` |
-| **波段／長期名單** | 每週五 18:30 排程內（約 18:45 完成）；手動執行也會產生 | `tw-models/models.py --latest` | `tw-models/latest/swing.json`、`long.json` |
+| **波段／長期名單** | 每週五 18:30 排程內（約 18:45 完成）；手動執行也會產生 | `tw-models/models.py --latest` | `tw-models/latest/swing.json`、`long.json`、`core_satellite.json` |
 
 排程設定都在 `.github/workflows/`。所有排程寫入 main 時都會「先合併最新版本再推送，失敗重試 5 次」，避免互相衝突。
 共用工具在 `lib/common.py`。
@@ -64,7 +64,7 @@
 - 歷史資料（2019 起，暖身資料 2014 起）：FinMind 一次性回補（證交所網站會封鎖雲端主機的大量抓取）；之後每日 18:30 用證交所 OpenAPI 累加
 - **原始資料不公開**（FinMind 條款未明確允許公開轉載）：存在 GitHub Actions 快取，只公開計算結果與報告；回補排程 `tw-models-backfill` 每小時接續一批
 - 回測引擎 `tw-models/backtest.py`：隔天開盤成交、手續費 ×0.6 折、證交稅、滑價 0.1%、含息、樣本內 2019–2023／樣本外 2024～今分開報告
-- 台股水位燈號 `tw-models/latest/regime_tw.json`：5 項指標、總分換建議持股水位；回測報告 `docs/BACKTEST_regime_tw.md`
+- 台股水位燈號 `tw-models/latest/regime_tw.json`：5 項指標、總分換「參考水位」（樣本外擇時效果與固定比例幾乎相同：97.6% vs 97.2%）；回測報告 `docs/BACKTEST_regime_tw.md`
 - 選股模型 `tw-models/models.py`：D 波段（每週五名單、紅燈只列前 3 名）、E 長期（每季換股、同產業最多 3 檔）、F 舊篩選法（33 檔、每月前 8 名，只做回測）；回測報告 `docs/BACKTEST_swing.md`、`BACKTEST_long.md`、`BACKTEST_old_screen.md`、`BACKTEST_comparison.md`
 - 後續回測 `tw-models/extra_backtests.py`：波段低換手版 `docs/BACKTEST_swing_lowturn.md`、0050 70%＋長期 30% 組合 `docs/BACKTEST_combo.md`（手動執行，不排程）
 - 季報（`fin`）與除權息（`dividends`）在每個季報法定期限後（4/1、5/16、8/15、11/15）由回補排程自動重抓一次（約 2,440 次請求、5 小時左右），期間模型照常產生
@@ -128,3 +128,4 @@
 - #9 台股模型第一階段：A 歷史資料、B 回測引擎、C 台股水位燈號；docs/TW_MODELS.md
 - 台股模型第二階段：D 波段、E 長期、F 舊篩選法；季報資料；每週五名單
 - 台股模型後續回測：波段低換手版、組合回測、成本占報酬比例；swing.json 加註「回測未勝過 0050，僅供觀察」
+- 新增 core_satellite.json（0050 70%＋長期 30%）；regime_tw.json 的建議持股水位改為參考水位

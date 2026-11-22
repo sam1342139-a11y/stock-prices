@@ -132,8 +132,10 @@ def write_latest(cfg, allres, problems):
     changed = [NAMES[k] for k in ITEMS if prev and res["items"][k][0] > prev["items"][k][0]]
     C.write_json("tw-models/latest/regime_tw.json", {
         "date": d, "total": res["total"], "max_total": 10,
-        "suggested_exposure_pct": [int(lv["exposure"][0] * 100), int(lv["exposure"][1] * 100)],
-        "rule": "每項 0 綠／1 黃／2 紅；總分 0～2 建議持股 80～100%，3～5 分 50～70%，6 分以上 20～40%。規則見 docs/TW_MODELS.md",
+        "reference_exposure_pct": [int(lv["exposure"][0] * 100), int(lv["exposure"][1] * 100)],
+        "reference_exposure_label": "參考水位（回測擇時效果不明顯）",
+        "timing_note": "樣本外（2024～今）水位調整 97.6% vs 固定比例 97.2%，擇時效果與固定持股比例幾乎相同；見 docs/BACKTEST_regime_tw.md",
+        "rule": "每項 0 綠／1 黃／2 紅；總分 0～2 參考水位 80～100%，3～5 分 50～70%，6 分以上 20～40%。規則見 docs/TW_MODELS.md",
         "worsened_vs_previous_day": changed,
         "items": items,
         "footer": "模型依公開資料與固定規則產生，回測不代表未來，非投資建議。",

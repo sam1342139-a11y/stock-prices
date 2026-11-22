@@ -1,0 +1,249 @@
+{
+ "generated_at_utc": "2026-11-22 22:29:54",
+ "problems": [],
+ "sources": [
+  {
+   "name": "FinMind（歷史股價、本益比、法人、月營收、除權息、季報）",
+   "url": "https://api.finmindtrade.com/api/v4/data"
+  },
+  {
+   "name": "證交所 OpenAPI（每日累加）",
+   "url": "https://openapi.twse.com.tw/"
+  }
+ ],
+ "model": "swing",
+ "title": "D. 波段（swing）",
+ "notes": [
+  "訊號用當天收盤後資料，隔天開盤成交；手續費 ×0.6 折、證交稅（一般股 0.3%、ETF 0.1%）、滑價 0.1%；含息（還原權息價）；現金不計利息。",
+  "樣本內（2019–2023）與樣本外（2024～今）各自從 100 萬元開始；規則在樣本內訂好後，未依樣本外結果調整。",
+  "每週最後一個交易日收盤後排名，下一個交易日開盤進場；前 8 名等權重，有空位才補。",
+  "股票池包含 43 檔 2019 年後下市的上市股票（其中 43 檔取得價格資料），以降低倖存者偏差。",
+  "全額交割股的歷史名單取不到，未排除（股價 > 10 元、20 日均量 > 1,000 張已排除大多數）。"
+ ],
+ "periods": {
+  "in_sample": {
+   "from": "2019-01-01",
+   "to": "2023-12-31",
+   "label": "樣本內（2019–2023，用來訂規則）",
+   "results": {
+    "出場A（−8%停損/破20MA/滿20日）": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 83.73,
+     "cagr_pct": 13.45,
+     "max_drawdown_pct": -54.08,
+     "sharpe": 0.64,
+     "trades": 833,
+     "win_rate_pct": 34.2,
+     "avg_holding_days": 9.4,
+     "annual_turnover_x": 21.35,
+     "fees_ntd": 805049,
+     "final_nav": 1837301,
+     "yearly_return_pct": {
+      "2019": -2.36,
+      "2020": 84.02,
+      "2021": 34.46,
+      "2022": -33.04,
+      "2023": 13.58
+     }
+    },
+    "出場B（高點回落20%半/30%全）": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 117.35,
+     "cagr_pct": 17.47,
+     "max_drawdown_pct": -30.79,
+     "sharpe": 0.92,
+     "trades": 66,
+     "win_rate_pct": 51.5,
+     "avg_holding_days": 151.8,
+     "annual_turnover_x": 0.82,
+     "fees_ntd": 29999,
+     "final_nav": 2173476,
+     "yearly_return_pct": {
+      "2019": 21.64,
+      "2020": 16.6,
+      "2021": 57.89,
+      "2022": -25.98,
+      "2023": 31.12
+     }
+    },
+    "出場A＋紅燈只留前3": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 103.92,
+     "cagr_pct": 15.93,
+     "max_drawdown_pct": -40.31,
+     "sharpe": 0.77,
+     "trades": 747,
+     "win_rate_pct": 36.1,
+     "avg_holding_days": 9.2,
+     "annual_turnover_x": 19.33,
+     "fees_ntd": 686445,
+     "final_nav": 2039154,
+     "yearly_return_pct": {
+      "2019": -2.07,
+      "2020": 58.17,
+      "2021": 29.91,
+      "2022": -16.02,
+      "2023": 20.67
+     }
+    },
+    "出場B＋紅燈只留前3": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 102.11,
+     "cagr_pct": 15.71,
+     "max_drawdown_pct": -27.21,
+     "sharpe": 0.78,
+     "trades": 212,
+     "win_rate_pct": 44.3,
+     "avg_holding_days": 49.6,
+     "annual_turnover_x": 4.46,
+     "fees_ntd": 155041,
+     "final_nav": 2021122,
+     "yearly_return_pct": {
+      "2019": 23.59,
+      "2020": 17.29,
+      "2021": 21.26,
+      "2022": -6.17,
+      "2023": 22.54
+     }
+    },
+    "0050": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 118.55,
+     "cagr_pct": 17.6,
+     "max_drawdown_pct": -33.95,
+     "sharpe": 0.97,
+     "trades": 0,
+     "win_rate_pct": null,
+     "avg_holding_days": null,
+     "annual_turnover_x": 0.0,
+     "fees_ntd": 854,
+     "final_nav": 2185466,
+     "yearly_return_pct": {
+      "2019": 36.34,
+      "2020": 31.14,
+      "2021": 21.92,
+      "2022": -21.37,
+      "2023": 27.51
+     }
+    }
+   }
+  },
+  "out_of_sample": {
+   "from": "2024-01-01",
+   "to": "2026-11-20",
+   "label": "樣本外（2024～今，用來驗證）",
+   "results": {
+    "出場A（−8%停損/破20MA/滿20日）": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 40.08,
+     "cagr_pct": 12.96,
+     "max_drawdown_pct": -44.65,
+     "sharpe": 0.56,
+     "trades": 507,
+     "win_rate_pct": 31.8,
+     "avg_holding_days": 8.6,
+     "annual_turnover_x": 22.06,
+     "fees_ntd": 311756,
+     "final_nav": 1400825,
+     "yearly_return_pct": {
+      "2024": -17.49,
+      "2025": 18.8,
+      "2026": 42.92
+     }
+    },
+    "出場B（高點回落20%半/30%全）": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 30.99,
+     "cagr_pct": 10.25,
+     "max_drawdown_pct": -28.38,
+     "sharpe": 0.54,
+     "trades": 68,
+     "win_rate_pct": 48.5,
+     "avg_holding_days": 90.8,
+     "annual_turnover_x": 1.54,
+     "fees_ntd": 24400,
+     "final_nav": 1309884,
+     "yearly_return_pct": {
+      "2024": 21.86,
+      "2025": 1.44,
+      "2026": 5.96
+     }
+    },
+    "出場A＋紅燈只留前3": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 86.12,
+     "cagr_pct": 25.18,
+     "max_drawdown_pct": -33.24,
+     "sharpe": 0.97,
+     "trades": 458,
+     "win_rate_pct": 34.3,
+     "avg_holding_days": 8.6,
+     "annual_turnover_x": 20.2,
+     "fees_ntd": 312504,
+     "final_nav": 1861158,
+     "yearly_return_pct": {
+      "2024": -14.45,
+      "2025": 33.36,
+      "2026": 63.12
+     }
+    },
+    "出場B＋紅燈只留前3": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 129.07,
+     "cagr_pct": 34.94,
+     "max_drawdown_pct": -27.08,
+     "sharpe": 1.27,
+     "trades": 144,
+     "win_rate_pct": 41.7,
+     "avg_holding_days": 44.5,
+     "annual_turnover_x": 5.04,
+     "fees_ntd": 93443,
+     "final_nav": 2290696,
+     "yearly_return_pct": {
+      "2024": 9.8,
+      "2025": 18.61,
+      "2026": 75.89
+     }
+    },
+    "0050": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 170.19,
+     "cagr_pct": 43.24,
+     "max_drawdown_pct": -27.51,
+     "sharpe": 1.43,
+     "trades": 0,
+     "win_rate_pct": null,
+     "avg_holding_days": null,
+     "annual_turnover_x": 0.0,
+     "fees_ntd": 854,
+     "final_nav": 2701863,
+     "yearly_return_pct": {
+      "2024": 50.3,
+      "2025": 36.86,
+      "2026": 31.34
+     }
+    }
+   }
+  }
+ }
+}

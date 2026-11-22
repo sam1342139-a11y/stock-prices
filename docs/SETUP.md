@@ -1,6 +1,6 @@
 # 系統設定說明（SETUP）
 
-> 每次修改系統都要同步更新這份文件。最後更新：2026-11-22（新增台股模型第一階段：歷史資料、回測引擎、台股水位燈號）
+> 每次修改系統都要同步更新這份文件。最後更新：2026-11-23（新增台股模型第二階段：波段、長期、舊篩選法；季報與除權息每季自動重抓）
 
 本存放庫 `sam1342139-a11y/stock-prices` 是**公開的**。
 **只放市場公開資料，不放任何客戶或個人持股資料；不放密碼或 API 金鑰。**
@@ -26,6 +26,7 @@
 | **市場風險燈號** | 週二～六 07:00 | `regime/fetch_regime.py` | `regime/regime.json`、`regime/history.csv`、`regime/spy_history.csv` |
 | **台股每日資料** | 平日 17:30（沒抓到最新日期，18:00 再試一次） | `tw/fetch_tw.py` | `tw/latest.csv`、`tw/revenue.csv`、`tw/meta.json` |
 | **台股模型資料＋水位燈號** | 平日 18:30 | `tw-models/update_daily.py`、`fetch_us_market.py`、`regime_tw.py` | `tw-models/data/daily/`、`tw-models/latest/regime_tw.json` |
+| **波段／長期名單** | 每週五 18:30 排程內（約 18:45 完成）；手動執行也會產生 | `tw-models/models.py --latest` | `tw-models/latest/swing.json`、`long.json` |
 
 排程設定都在 `.github/workflows/`。所有排程寫入 main 時都會「先合併最新版本再推送，失敗重試 5 次」，避免互相衝突。
 共用工具在 `lib/common.py`。
@@ -64,6 +65,8 @@
 - **原始資料不公開**（FinMind 條款未明確允許公開轉載）：存在 GitHub Actions 快取，只公開計算結果與報告；回補排程 `tw-models-backfill` 每小時接續一批
 - 回測引擎 `tw-models/backtest.py`：隔天開盤成交、手續費 ×0.6 折、證交稅、滑價 0.1%、含息、樣本內 2019–2023／樣本外 2024～今分開報告
 - 台股水位燈號 `tw-models/latest/regime_tw.json`：5 項指標、總分換建議持股水位；回測報告 `docs/BACKTEST_regime_tw.md`
+- 選股模型 `tw-models/models.py`：D 波段（每週五名單、紅燈只列前 3 名）、E 長期（每季換股、同產業最多 3 檔）、F 舊篩選法（33 檔、每月前 8 名，只做回測）；回測報告 `docs/BACKTEST_swing.md`、`BACKTEST_long.md`、`BACKTEST_old_screen.md`、`BACKTEST_comparison.md`
+- 季報（`fin`）與除權息（`dividends`）在每個季報法定期限後（4/1、5/16、8/15、11/15）由回補排程自動重抓一次（約 2,440 次請求、5 小時左右），期間模型照常產生
 - 驗收抽查：GitHub Actions → tw-models-spot-check → Run workflow
 
 ### 市場風險燈號（regime/）
@@ -122,3 +125,4 @@
 - #7 新增 CLAUDE.md：Claude 工作規則（一律繁體中文回覆、資料安全、修改流程）
 - #8 停用財報日曆自動排程（改用財經M平方），保留手動執行；刪除 Claude Code 這邊的「晨間簡報」排程（改由專案負責）
 - #9 台股模型第一階段：A 歷史資料、B 回測引擎、C 台股水位燈號；docs/TW_MODELS.md
+- 台股模型第二階段：D 波段、E 長期、F 舊篩選法；季報資料；每週五名單

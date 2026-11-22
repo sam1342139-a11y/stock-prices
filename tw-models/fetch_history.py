@@ -11,6 +11,7 @@ Layout (tw-models/data/):
   inst/<code>.csv.gz                 date,foreign,trust,dealer        (net shares)
   revenue/<code>.csv.gz              ym,revenue,announced,available    (available = max(announced, 10th of next month))
   dividends/<code>.csv.gz            ex_date,kind,amount,before_price,reference_price
+  fin/<code>.csv.gz                  quarter_end,revenue,gross_profit,available   (available = legal deadline)
   market/taiex.csv                   date,open,high,low,close
   market/taiex_tri.csv               date,close                        (total return index)
   market/inst_total.csv              date,foreign,trust,dealer         (net buy amount, NTD)
@@ -29,7 +30,7 @@ START = "2019-01-01"
 WARMUP_START = "2014-01-01"  # extra history for 200-day MAs and 5-year percentiles (E)
 API = "https://api.finmindtrade.com/api/v4/data"
 PACE = 6.1
-DATASETS = ["prices", "dividends", "per", "inst", "revenue"]
+DATASETS = ["prices", "dividends", "per", "inst", "revenue", "fin"]
 
 
 def data_dir():
@@ -142,7 +143,26 @@ def get_dividends(code, end):
         for r in rows]
 
 
-FETCH = {"prices": get_prices, "per": get_per, "inst": get_inst, "revenue": get_revenue, "dividends": get_dividends}
+QDEADLINE = {"03-31": (0, "05-15"), "06-30": (0, "08-14"), "09-30": (0, "11-14"), "12-31": (1, "03-31")}
+
+
+def get_fin(code, end):
+    """Quarterly revenue and gross profit. available = legal filing deadline (no look-ahead)."""
+    rows = fm("TaiwanStockFinancialStatements", data_id=code, start_date="2013-01-01", end_date=end)
+    q = {}
+    for r in rows:
+        if r["type"] in ("Revenue", "GrossProfit"):
+            q.setdefault(r["date"], {})[r["type"]] = r["value"]
+    out = []
+    for d, v in sorted(q.items()):
+        add, md = QDEADLINE.get(d[5:], (0, None))
+        if not md:
+            continue
+        out.append([d, g(v.get("Revenue")), g(v.get("GrossProfit")), "%04d-%s" % (int(d[:4]) + add, md)])
+    return ["quarter_end", "revenue", "gross_profit", "available"], out
+
+
+FETCH = {"fin": get_fin, "prices": get_prices, "per": get_per, "inst": get_inst, "revenue": get_revenue, "dividends": get_dividends}
 
 
 # ---------- market-level ----------
@@ -201,6 +221,30 @@ def build_universe(problems):
     return [r[0] for r in rows]
 
 
+REFRESH_DATASETS = ("fin", "dividends")  # re-fetched after each quarterly-report deadline (new reports, new dividends)
+
+
+def latest_deadline(today):
+    """Most recent day after a quarterly-report legal deadline (5/15, 8/14, 11/14, 3/31) that is <= today."""
+    y = today.year
+    days = [datetime.date(yy, m, d) for yy in (y - 1, y) for m, d in ((4, 1), (5, 16), (8, 15), (11, 15))]
+    return max(x for x in days if x <= today).isoformat()
+
+
+def apply_refresh(state, codes):
+    """After the first full download, reset fin/dividends once per quarter so the hourly backfill re-fetches them."""
+    ld = latest_deadline(C.tw_today())
+    ref = state.setdefault("refreshed", {})
+    for ds in REFRESH_DATASETS:
+        complete = len(set(state["done"].get(ds, []))) >= len(codes)
+        if complete and ds not in ref:
+            ref[ds] = ld
+        elif complete and ref[ds] < ld:
+            state["done"][ds] = []
+            ref[ds] = ld
+            print("quarterly refresh: re-fetch %s (deadline %s)" % (ds, ld))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
@@ -224,6 +268,7 @@ def main():
         if not state.get("market_done"):
             fetch_market(end, problems)
             state["market_done"] = end
+        apply_refresh(state, codes)
     datasets = a.only.split(",") if a.only else DATASETS
     n = 0
     for ds in datasets:
@@ -248,6 +293,8 @@ def main():
                 print("  %s %d/%d  (requests this run %d)" % (ds, len(done), len(codes), n), flush=True)
     state["updated_utc"] = C.utc_now().strftime("%Y-%m-%d %H:%M:%S")
     state["remaining"] = {ds: len(codes) - len(set(state["done"].get(ds, []))) for ds in DATASETS}
+    if not a.codes and all(v == 0 for v in state["remaining"].values()):
+        state["initial_complete"] = True  # stays True during quarterly refreshes (models keep running)
     os.makedirs(os.path.dirname(state_path), exist_ok=True)
     json.dump(state, open(state_path, "w"), indent=0)
     C.write_json("tw-models/data/meta/backfill_report.json", {

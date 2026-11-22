@@ -1,0 +1,57 @@
+{
+ "generated_at_utc": "2026-11-22 22:30:27",
+ "problems": [],
+ "sources": [
+  {
+   "name": "FinMind（歷史股價、本益比、法人、月營收、除權息、季報）",
+   "url": "https://api.finmindtrade.com/api/v4/data"
+  },
+  {
+   "name": "證交所 OpenAPI（每日累加）",
+   "url": "https://openapi.twse.com.tw/"
+  }
+ ],
+ "date": "2026-11-20",
+ "trade_on": "下一個交易日開盤",
+ "regime_total": 9,
+ "red_light": true,
+ "note": "水位紅燈（總分 ≥ 6）時只列前 3 名",
+ "stop_rule": "停損價 = 訊號日收盤 × 0.92（實際以進場價 −8% 計）；或收盤跌破 20 日均線；或持有滿 20 個交易日",
+ "list": [
+  {
+   "rank": 1,
+   "code": "6108",
+   "name": "競國",
+   "score": 3.773,
+   "reason": "站上 20 日與 60 日均線、近 60 日（扣最近 5 日）漲 64%",
+   "close": 34.45,
+   "stop_price": 31.69,
+   "ma20": 33.84
+  },
+  {
+   "rank": 2,
+   "code": "9933",
+   "name": "中鼎",
+   "score": 3.658,
+   "reason": "站上 20 日與 60 日均線、投信外資近 10 日買超占成交量 25.1%",
+   "close": 51.5,
+   "stop_price": 47.38,
+   "ma20": 49.11
+  },
+  {
+   "rank": 3,
+   "code": "3701",
+   "name": "大眾控",
+   "score": 3.587,
+   "reason": "近 60 日（扣最近 5 日）漲 68%、站上 20 或 60 日均線",
+   "close": 51.3,
+   "stop_price": 47.2,
+   "ma20": 56.86
+  }
+ ],
+ "changes": {
+  "new": [],
+  "dropped": []
+ },
+ "footer": "模型依公開資料與固定規則產生，回測不代表未來，非投資建議。"
+}

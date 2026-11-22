@@ -78,7 +78,15 @@ def twelvedata(endpoint, **params):
             msg = str(e)
             try:
                 j = json.loads(msg.split("：", 1)[1])
-                msg = "Twelve Data %s: %s" % (j.get("code"), j.get("message"))
+                m = j.get("message") or ""
+                if "available exclusively with" in m:
+                    msg = "Twelve Data 目前方案不支援這個功能（需要升級到 Grow 以上方案）"
+                elif j.get("code") == 401:
+                    msg = "Twelve Data 金鑰錯誤或沒有提供（請檢查 GitHub 密鑰 TWELVEDATA_KEY）"
+                elif j.get("code") == 404:
+                    msg = "Twelve Data 找不到這個代號或資料"
+                else:
+                    msg = "Twelve Data 錯誤 %s：%s" % (j.get("code"), m)
             except (IndexError, ValueError):
                 pass
             raise RuntimeError(msg) from None

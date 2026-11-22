@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-22 09:29:03",
+ "generated_at_utc": "2026-11-22 23:30:35",
  "problems": [],
  "sources": [
   {
@@ -18,11 +18,13 @@
  "date": "2026-11-20",
  "total": 9,
  "max_total": 10,
- "suggested_exposure_pct": [
+ "reference_exposure_pct": [
   20,
   40
  ],
- "rule": "每項 0 綠／1 黃／2 紅；總分 0～2 建議持股 80～100%，3～5 分 50～70%，6 分以上 20～40%。規則見 docs/TW_MODELS.md",
+ "reference_exposure_label": "參考水位（回測擇時效果不明顯）",
+ "timing_note": "樣本外（2024～今）水位調整 97.6% vs 固定比例 97.2%，擇時效果與固定持股比例幾乎相同；見 docs/BACKTEST_regime_tw.md",
+ "rule": "每項 0 綠／1 黃／2 紅；總分 0～2 參考水位 80～100%，3～5 分 50～70%，6 分以上 20～40%。規則見 docs/TW_MODELS.md",
  "worsened_vs_previous_day": [],
  "items": {
   "taiex_ma200": {

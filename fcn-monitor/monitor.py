@@ -56,9 +56,34 @@ def evaluate(prod, prices):
             "maturity": prod.get("maturity", "")}
 
 
-def render(asof, results):
+def evaluate_stock(item, prices):
+    """已換股（轉換成股票）的部位：追蹤現價相對換股價的損益。"""
+    p = prices.get(item["t"])
+    if p is None:
+        return {"code": item["code"], "t": item["t"], "missing": True}
+    return {"code": item["code"], "t": item["t"], "price": p, "strike": item["strike"],
+            "pnl": round((p / item["strike"] - 1) * 100, 1), "missing": False}
+
+
+def render_stocks(stocks):
+    if not stocks:
+        return []
+    lines = ["── 已換股部位（現價 vs 換股價）──"]
+    for s in sorted(stocks, key=lambda s: s.get("pnl", 0)):
+        if s["missing"]:
+            lines.append(f"⚪ {s['code']} {s['t']}：抓不到價格")
+            continue
+        icon = "📈" if s["pnl"] >= 0 else "📉"
+        lines.append(f"{icon} {s['code']}　{s['t']:<5} 收盤 {s['price']:>9.2f}｜換股價 {s['strike']:>9.2f}｜"
+                     f"損益 {s['pnl']:+.1f}%" + ("　✅ 已回到換股價以上" if s["pnl"] >= 0 else ""))
+    return lines + [""]
+
+
+def render(asof, results, stocks=()):
     counts = {k: sum(1 for r in results if r["light"] == k) for k in ORDER}
     summary = " ".join(f"{LIGHTS[k][0]}{counts[k]}" for k in ORDER if counts[k])
+    if stocks:
+        summary += f"｜換股 {len(stocks)} 檔"
     subject = f"FCN 燈號 {asof}：{summary}"
     lines = [f"FCN 每日燈號（{asof} 美股收盤價）", "",
              "燈號說明：🔴 已跌破敲入價　🟠 離敲入價不到 %d%%　🔷 最弱標的離敲出價不到 %d%%　🔵 全部達敲出價　🟢 正常"
@@ -77,6 +102,7 @@ def render(asof, results):
         if r["missing"]:
             lines.append(f"    ⚠️ 抓不到價格：{', '.join(r['missing'])}")
         lines.append("")
+    lines += render_stocks(stocks)
     lines += ["※ 以每日收盤價估算，實際是否敲出或敲入，以商品條件書的觀察日與規則為準。"]
     return subject, "\n".join(lines), counts
 
@@ -108,9 +134,15 @@ def main():
     if not prices and latest.get("history"):  # 當天沒抓齊時，退回最近一個完整交易日
         asof = max(latest["history"])
         prices = latest["history"][asof]
-    results = [evaluate(p, prices) for p in products]
-    subject, body, counts = render(asof, results)
-    print("商品 %d 檔，燈號統計：%s" % (len(products), {k: v for k, v in counts.items() if v}))
+    today = datetime.date.today().isoformat()
+    # 已到期的 FCN 不再監控；已換股（type=stock）的部位改追蹤現價 vs 換股價
+    active = [p for p in products if p.get("type") != "stock" and not (p.get("maturity") and p["maturity"] < today)]
+    stocks = [evaluate_stock(p, prices) for p in products if p.get("type") == "stock"]
+    results = [evaluate(p, prices) for p in active]
+    subject, body, counts = render(asof, results, stocks)
+    print("FCN %d 檔（已略過到期 %d 檔），換股部位 %d 檔，燈號統計：%s"
+          % (len(active), len(products) - len(active) - len(stocks), len(stocks),
+             {k: v for k, v in counts.items() if v}))
     if dry:
         print("=" * 40); print(subject); print(body)
         return

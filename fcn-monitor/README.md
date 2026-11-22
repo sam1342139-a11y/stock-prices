@@ -4,7 +4,7 @@
 
 | 檔案 | 用途 |
 |---|---|
-| `monitor.py` | 計算燈號並寄信的程式 |
+| `monitor.py` | 計算燈號並寄信的程式；到期商品自動略過，已換股部位追蹤現價 vs 換股價 |
 
 ## 什麼時候執行
 每日股價（`update-prices`）抓完後**自動接著執行**，大約台灣時間週二到週六早上 06:35。
@@ -35,15 +35,19 @@ GitHub → **Settings** → **Secrets and variables** → **Actions**
 | `GMAIL_APP_PASSWORD` | 該 Gmail 的「應用程式密碼」（16 碼，不是登入密碼） |
 | `MAIL_TO` | 收信地址，多個用逗號分隔；不填就寄給 `GMAIL_USER` |
 
-`FCN_PRODUCTS` 格式（每檔標的填敲出價 `ko`、敲入價 `ki`，`maturity` 到期日可不填）：
+`FCN_PRODUCTS` 格式：
 
 ```json
 [
   {"code": "商品代號", "maturity": "2027-01-06",
    "legs": [{"t": "TSM", "ko": 418.45, "ki": 251.07},
-            {"t": "AVGO", "ko": 446.77, "ki": 268.06}]}
+            {"t": "AVGO", "ko": 446.77, "ki": 268.06}]},
+  {"code": "商品代號", "type": "stock", "t": "INTC", "strike": 70.32}
 ]
 ```
+
+- **存續中的 FCN**：每檔標的填敲出價 `ko`、敲入價 `ki`；`maturity` 是到期日，**過了到期日會自動停止監控**。
+- **已換股的部位**：加上 `"type": "stock"`，填股票代號 `t` 和換股價 `strike`。信件會另外列一區，顯示現價相對換股價的損益。
 
 要新增、刪除商品或修改條件，請找 Claude 幫你產生新的內容，再貼到 `FCN_PRODUCTS` 密鑰（按 Update）。
 

@@ -1,0 +1,123 @@
+{
+ "generated_at_utc": "2026-11-22 22:29:55",
+ "problems": [],
+ "sources": [
+  {
+   "name": "FinMind（歷史股價、本益比、法人、月營收、除權息、季報）",
+   "url": "https://api.finmindtrade.com/api/v4/data"
+  },
+  {
+   "name": "證交所 OpenAPI（每日累加）",
+   "url": "https://openapi.twse.com.tw/"
+  }
+ ],
+ "model": "long",
+ "title": "E. 長期（long）",
+ "notes": [
+  "訊號用當天收盤後資料，隔天開盤成交；手續費 ×0.6 折、證交稅（一般股 0.3%、ETF 0.1%）、滑價 0.1%；含息（還原權息價）；現金不計利息。",
+  "樣本內（2019–2023）與樣本外（2024～今）各自從 100 萬元開始；規則在樣本內訂好後，未依樣本外結果調整。",
+  "1、4、7、10 月 15 日後第一個交易日開盤換股（前一個交易日收盤後選股）；前 8 名等權重，同產業最多 3 檔。",
+  "股票池包含 43 檔 2019 年後下市的上市股票（其中 43 檔取得價格資料），以降低倖存者偏差。",
+  "現金股利以除權息結果中含「息」的事件判斷；權息合併事件的金額含股票股利，股利穩定判斷可能略有偏差。"
+ ],
+ "periods": {
+  "in_sample": {
+   "from": "2019-01-01",
+   "to": "2023-12-31",
+   "label": "樣本內（2019–2023，用來訂規則）",
+   "results": {
+    "long": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 169.98,
+     "cagr_pct": 22.87,
+     "max_drawdown_pct": -30.77,
+     "sharpe": 1.59,
+     "trades": 90,
+     "win_rate_pct": 71.1,
+     "avg_holding_days": 98.9,
+     "annual_turnover_x": 2.39,
+     "fees_ntd": 78895,
+     "final_nav": 2699792,
+     "yearly_return_pct": {
+      "2019": 6.43,
+      "2020": 11.59,
+      "2021": 31.45,
+      "2022": 4.23,
+      "2023": 65.93
+     }
+    },
+    "0050": {
+     "start": "2019-01-02",
+     "end": "2023-12-29",
+     "trading_days": 1215,
+     "total_return_pct": 118.55,
+     "cagr_pct": 17.6,
+     "max_drawdown_pct": -33.95,
+     "sharpe": 0.97,
+     "trades": 0,
+     "win_rate_pct": null,
+     "avg_holding_days": null,
+     "annual_turnover_x": 0.0,
+     "fees_ntd": 854,
+     "final_nav": 2185466,
+     "yearly_return_pct": {
+      "2019": 36.34,
+      "2020": 31.14,
+      "2021": 21.92,
+      "2022": -21.37,
+      "2023": 27.51
+     }
+    }
+   }
+  },
+  "out_of_sample": {
+   "from": "2024-01-01",
+   "to": "2026-11-20",
+   "label": "樣本外（2024～今，用來驗證）",
+   "results": {
+    "long": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 35.88,
+     "cagr_pct": 11.72,
+     "max_drawdown_pct": -14.36,
+     "sharpe": 0.89,
+     "trades": 46,
+     "win_rate_pct": 73.9,
+     "avg_holding_days": 94.4,
+     "annual_turnover_x": 2.12,
+     "fees_ntd": 38300,
+     "final_nav": 1358849,
+     "yearly_return_pct": {
+      "2024": 31.09,
+      "2025": 9.24,
+      "2026": -5.11
+     }
+    },
+    "0050": {
+     "start": "2024-01-02",
+     "end": "2026-11-20",
+     "trading_days": 697,
+     "total_return_pct": 170.19,
+     "cagr_pct": 43.24,
+     "max_drawdown_pct": -27.51,
+     "sharpe": 1.43,
+     "trades": 0,
+     "win_rate_pct": null,
+     "avg_holding_days": null,
+     "annual_turnover_x": 0.0,
+     "fees_ntd": 854,
+     "final_nav": 2701863,
+     "yearly_return_pct": {
+      "2024": 50.3,
+      "2025": 36.86,
+      "2026": 31.34
+     }
+    }
+   }
+  }
+ }
+}

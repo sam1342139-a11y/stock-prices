@@ -249,6 +249,7 @@ def _plot(model, variants):
                 font_manager.fontManager.addfont(f)
                 plt.rcParams["font.family"] = font_manager.FontProperties(fname=f).get_name()
                 break
+        plt.rcParams["axes.unicode_minus"] = False
     except Exception:
         return {}
     import common as C

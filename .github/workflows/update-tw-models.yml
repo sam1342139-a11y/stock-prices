@@ -1,5 +1,6 @@
 name: update-tw-models
 # Taiwan model data: weekdays 18:30 Taiwan (UTC 10:30). Appends today's data, refreshes SOXX/USD-TWD and regime_tw.
+# Fridays (or manual run): swing / long lists (tw-models/models.py --latest).
 # Raw data is NOT committed (FinMind terms do not clearly allow public redistribution); it lives in the Actions cache.
 # Only computed outputs (tw-models/latest/) are committed.
 on:
@@ -29,10 +30,15 @@ jobs:
           import json, os
           p = "tw-models/data/meta/backfill_state.json"
           s = json.load(open(p)) if os.path.exists(p) else {}
-          done = bool(s) and all(v == 0 for v in s.get("remaining", {"x": 1}).values())
-          open(os.environ["GITHUB_OUTPUT"], "a").write("ready=%s\n" % ("true" if done else "false"))
-          print("backfill complete:", done)
+          done = bool(s) and (s.get("initial_complete") or all(v == 0 for v in s.get("remaining", {"x": 1}).values()))
+          import datetime
+          tw = datetime.datetime.utcnow() + datetime.timedelta(hours=8)
+          lists = tw.weekday() == 4 or os.environ.get("EVENT") == "workflow_dispatch"
+          open(os.environ["GITHUB_OUTPUT"], "a").write("ready=%s\nlists=%s\n" % ("true" if done else "false", "true" if lists else "false"))
+          print("backfill complete:", done, "| lists today:", lists)
           PY
+        env:
+          EVENT: ${{ github.event_name }}
       - name: append today's data
         run: python3 tw-models/update_daily.py
         env:
@@ -44,6 +50,9 @@ jobs:
       - name: regime_tw
         if: steps.chk.outputs.ready == 'true'
         run: python3 tw-models/regime_tw.py
+      - name: swing / long lists (Fridays)
+        if: steps.chk.outputs.ready == 'true' && steps.chk.outputs.lists == 'true'
+        run: python3 tw-models/models.py --latest
       - name: save raw data
         if: always()
         uses: actions/cache/save@v4

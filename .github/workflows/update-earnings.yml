@@ -1,8 +1,7 @@
 name: update-earnings
-# 財報日曆：每天台灣 06:50（UTC 22:50）
+# Earnings calendar: scheduled run disabled (user uses MacroMicro's calendar instead).
+# Manual run only. To re-enable: add back  schedule: - cron: '50 22 * * *'  (Taiwan 06:50 daily)
 on:
-  schedule:
-    - cron: '50 22 * * *'
   workflow_dispatch:
 permissions:
   contents: write

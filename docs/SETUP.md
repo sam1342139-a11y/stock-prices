@@ -1,6 +1,6 @@
 # 系統設定說明（SETUP）
 
-> 每次修改系統都要同步更新這份文件。最後更新：2026-11-22（第一階段：台股、財報日曆、匯率位置、市場風險燈號）
+> 每次修改系統都要同步更新這份文件。最後更新：2026-11-22（停用財報日曆自動排程）
 
 本存放庫 `sam1342139-a11y/stock-prices` 是**公開的**。
 **只放市場公開資料，不放任何客戶或個人持股資料；不放密碼或 API 金鑰。**
@@ -22,7 +22,7 @@
 | FCN 燈號監控 | 股價抓完後自動接著執行 | `fcn-monitor/monitor.py` | 寄 Email |
 | 總經數據 | 週二～六 06:40 | `macro/fetch_macro.py` | `macro/macro.json` |
 | **匯率位置** | 週二～六 06:45 | `fx/fetch_fx.py` | `fx/position.json`、`fx/history/*.csv` |
-| **財報日曆** | 每天 06:50 | `calendar/fetch_earnings.py` | `calendar/earnings.json` |
+| 財報日曆 | **自動排程已停用**，只能手動執行 | `calendar/fetch_earnings.py` | `calendar/earnings.json` |
 | **市場風險燈號** | 週二～六 07:00 | `regime/fetch_regime.py` | `regime/regime.json`、`regime/history.csv`、`regime/spy_history.csv` |
 | **台股每日資料** | 平日 17:30（沒抓到最新日期，18:00 再試一次） | `tw/fetch_tw.py` | `tw/latest.csv`、`tw/revenue.csv`、`tw/meta.json` |
 | 晨間簡報 | 週二～六 07:55（**目前暫停**） | Claude 排程任務「晨間簡報」 | 寄 Email |
@@ -44,6 +44,8 @@
 - 手動補抓月營收：`python3 tw/fetch_tw.py --revenue`
 
 ### 財報日曆（calendar/earnings.json）
+- **自動排程已停用**（2026-11-22）：財經日曆改用財經M平方，由專案那邊負責。要手動執行：GitHub → Actions → update-earnings → Run workflow
+- 要恢復每天自動執行：在 `.github/workflows/update-earnings.yml` 加回 `schedule`（每天台灣 06:50）
 - 標的：從 `fetch_prices.py` 的 `SYMBOLS` 讀出（不寫死）
 - 來源：Twelve Data `/earnings_calendar`
 - ⚠️ **目前 Twelve Data 方案不支援**（需要 Grow 以上），清單為空，原因寫在 `problems`。升級方案後不用改程式就會開始有資料
@@ -80,7 +82,7 @@
 | `GMAIL_APP_PASSWORD` | Gmail 應用程式密碼 |
 
 ## Twelve Data 每日用量（免費方案上限 800 次／天、8 次／分鐘）
-股價 4 次（26 檔分批）＋ 總經匯率 1 次 ＋ 匯率位置 4 次 ＋ 風險燈號 2 次 ＋ 財報日曆 1 次 ≈ 12 次／天
+股價 4 次（26 檔分批）＋ 總經匯率 1 次 ＋ 匯率位置 4 次 ＋ 風險燈號 2 次 ≈ 11 次／天（財報日曆已停用）
 
 ## Claude 雲端環境「stock-prices」（只供 Claude 測試用）
 - 個人環境，允許連線：`api.twelvedata.com`、`fred.stlouisfed.org`、`home.treasury.gov`、`cdn.cboe.com`、`cdn-api.cboe.com`、`openapi.twse.com.tw`、`www.twse.com.tw`（另允許套件庫）
@@ -100,7 +102,6 @@
 - 晨間簡報：需在 claude.ai 為排程任務加上 Gmail 連接器，再由 Claude 重新啟用並測試（新聞改由專案負責）
 - 燈號網頁與 GitHub 股價尚未自動同步（網頁股價需手動更新，更新時覆蓋最近 5 天）
 - 建議更換一次 Gmail 應用程式密碼
-- 財報日曆需要升級 Twelve Data 方案才有資料
 - 向 GitHub Support 申請清除舊修改申請單的快取
 
 ## 修改紀錄
@@ -111,3 +112,4 @@
 - #5 總經：公債殖利率改抓財政部、VIX 改抓 CBOE；排程改為 06:40
 - #6 第一階段：台股每日資料、財報日曆、匯率位置、市場風險燈號；新增 docs/SETUP.md、docs/REGIME.md
 - #7 新增 CLAUDE.md：Claude 工作規則（一律繁體中文回覆、資料安全、修改流程）
+- #8 停用財報日曆自動排程（改用財經M平方），保留手動執行

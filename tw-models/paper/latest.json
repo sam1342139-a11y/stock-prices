@@ -1,0 +1,60 @@
+{
+ "generated_at_utc": "2026-11-23 23:17:27",
+ "problems": [],
+ "sources": [
+  {
+   "name": "FinMind（歷史股價、本益比、法人、月營收、除權息、季報）",
+   "url": "https://api.finmindtrade.com/api/v4/data"
+  },
+  {
+   "name": "證交所 OpenAPI（每日累加）",
+   "url": "https://openapi.twse.com.tw/"
+  }
+ ],
+ "start": "2026-11-23",
+ "date": "2026-11-23",
+ "version": "v1.0",
+ "initial_capital": 1000000,
+ "rule": "每組 100 萬元；訊號用收盤後資料、隔天開盤成交；成本與回測相同；七三組合與長期每季（1、4、7、10 月 15 日後第一個交易日）換股",
+ "next_rebalance": "2027-01-18",
+ "portfolios": {
+  "core_satellite": {
+   "name": "七三組合（0050 70%＋長期 30%）",
+   "nav": 1000000,
+   "return_pct": 0.0,
+   "max_drawdown_pct": 0.0,
+   "cash": 1000000,
+   "holdings": [],
+   "trades": 0,
+   "costs_ntd": null
+  },
+  "long": {
+   "name": "長期名單 100%",
+   "nav": 1000000,
+   "return_pct": 0.0,
+   "max_drawdown_pct": 0.0,
+   "cash": 1000000,
+   "holdings": [],
+   "trades": 0,
+   "costs_ntd": null
+  },
+  "etf_0050": {
+   "name": "0050 100%",
+   "nav": 1000000,
+   "return_pct": 0.0,
+   "max_drawdown_pct": 0.0,
+   "cash": 1000000,
+   "holdings": [],
+   "trades": 0,
+   "costs_ntd": null
+  }
+ },
+ "monthly_return_pct": {
+  "2026-11": {
+   "core_satellite": 0.0,
+   "long": 0.0,
+   "etf_0050": 0.0
+  }
+ },
+ "note": "模擬資金，非真實帳戶；模型依公開資料與固定規則產生，回測與模擬不代表未來，非投資建議。"
+}

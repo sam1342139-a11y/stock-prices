@@ -1,6 +1,6 @@
 # 系統設定說明（SETUP）
 
-> 每次修改系統都要同步更新這份文件。最後更新：2026-11-23（台股模型驗收通過，規則凍結 v1.0）
+> 每次修改系統都要同步更新這份文件。最後更新：2026-11-24（新增模擬資金追蹤）
 
 本存放庫 `sam1342139-a11y/stock-prices` 是**公開的**。
 **只放市場公開資料，不放任何客戶或個人持股資料；不放密碼或 API 金鑰。**
@@ -26,6 +26,7 @@
 | **市場風險燈號** | 週二～六 07:00 | `regime/fetch_regime.py` | `regime/regime.json`、`regime/history.csv`、`regime/spy_history.csv` |
 | **台股每日資料** | 平日 17:30（沒抓到最新日期，18:00 再試一次） | `tw/fetch_tw.py` | `tw/latest.csv`、`tw/revenue.csv`、`tw/meta.json` |
 | **台股模型資料＋水位燈號** | 平日 18:30（21:30、23:30 備援） | `tw-models/update_daily.py`、`fetch_us_market.py`、`regime_tw.py` | `tw-models/data/daily/`、`tw-models/latest/regime_tw.json` |
+| **模擬資金追蹤** | 平日 18:30 排程內 | `tw-models/paper.py` | `tw-models/paper/latest.json`、`nav.csv`、`docs/PAPER.md` |
 | **波段／長期名單** | 每週五 18:30 排程內（約 18:45 完成）；手動執行也會產生 | `tw-models/models.py --latest` | `tw-models/latest/swing.json`、`long.json`、`core_satellite.json` |
 
 排程設定都在 `.github/workflows/`。所有排程寫入 main 時都會「先合併最新版本再推送，失敗重試 5 次」，避免互相衝突。
@@ -130,3 +131,4 @@
 - 台股模型後續回測：波段低換手版、組合回測、成本占報酬比例；swing.json 加註「回測未勝過 0050，僅供觀察」
 - 新增 core_satellite.json（0050 70%＋長期 30%）；regime_tw.json 的建議持股水位改為參考水位
 - 驗收抽查通過（18 筆一致），規則凍結 v1.0；修正抽查程式的民國日期格式
+- 新增模擬資金追蹤（七三組合、長期 100%、0050，各 100 萬元，從 2026-11-23 起）

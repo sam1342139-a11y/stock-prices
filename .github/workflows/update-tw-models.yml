@@ -5,7 +5,12 @@ name: update-tw-models
 # Only computed outputs (tw-models/latest/) are committed.
 on:
   schedule:
+    # 18:30 Taiwan, plus backup runs at 21:30 and 23:30 Taiwan: GitHub often delays scheduled runs, and this job
+    # shares a concurrency group with the backfill, so a late run can be stuck or replaced. Appending is idempotent
+    # (upsert by date+code) and the TWSE endpoints return the latest trading day, so a later run still gets today's data.
     - cron: '30 10 * * 1-5'
+    - cron: '30 13 * * 1-5'
+    - cron: '30 15 * * 1-5'
   workflow_dispatch:
 permissions:
   contents: write

@@ -2,7 +2,7 @@ name: tw-models-backfill
 # One-time historical backfill from FinMind into the Actions cache (not committed).
 # Runs hourly; each run keeps going up to ~5.5 hours (request pacing keeps it under the free 600/hour limit)
 # and resumes from saved progress, so a late or skipped hourly schedule does not slow the backfill.
-# Each run stops before 10:20 UTC (18:20 Taiwan) so it never blocks the 18:30 daily update (same concurrency group).
+# Each run stops before 10:20 / 13:20 / 15:20 UTC so it never blocks the daily update and its backup runs (same concurrency group).
 # Once everything is fetched, each hourly run exits within seconds.
 on:
   schedule:
@@ -37,11 +37,13 @@ jobs:
       - name: backfill batch
         if: steps.chk.outputs.done != 'true'
         run: |
-          # budget: up to 330 minutes, but finish by 10:20 UTC (daily update at 10:30 UTC)
+          # budget: up to 330 minutes, but stop 10 minutes before each daily-update window
+          # (10:30 / 13:30 / 15:30 UTC; same concurrency group, so a long backfill would block it)
           now=$(( 10#$(date -u +%H) * 60 + 10#$(date -u +%M) ))
-          until=$(( (620 - now + 1440) % 1440 ))
+          until=1440
+          for w in 620 800 920; do u=$(( (w - now + 1440) % 1440 )); [ "$u" -lt "$until" ] && until=$u; done
           budget=$(( until - 5 < 330 ? until - 5 : 330 ))
-          if [ "$budget" -lt 5 ]; then echo "too close to the daily update, skipping this hour"; exit 0; fi
+          if [ "$budget" -lt 5 ]; then echo "too close to a daily-update window, skipping this hour"; exit 0; fi
           echo "budget ${budget} minutes"
           python3 tw-models/fetch_history.py --budget-min "$budget"
         env:

@@ -1,6 +1,6 @@
 # 系統設定說明（SETUP）
 
-> 每次修改系統都要同步更新這份文件。最後更新：2026-11-23（歷史回補改為每次連續跑約 5.5 小時，避免 GitHub 排程延遲拖慢進度）
+> 每次修改系統都要同步更新這份文件。最後更新：2026-11-23（台股每日更新加 21:30、23:30 備援排程）
 
 本存放庫 `sam1342139-a11y/stock-prices` 是**公開的**。
 **只放市場公開資料，不放任何客戶或個人持股資料；不放密碼或 API 金鑰。**
@@ -25,7 +25,7 @@
 | 財報日曆 | **自動排程已停用**，只能手動執行 | `calendar/fetch_earnings.py` | `calendar/earnings.json` |
 | **市場風險燈號** | 週二～六 07:00 | `regime/fetch_regime.py` | `regime/regime.json`、`regime/history.csv`、`regime/spy_history.csv` |
 | **台股每日資料** | 平日 17:30（沒抓到最新日期，18:00 再試一次） | `tw/fetch_tw.py` | `tw/latest.csv`、`tw/revenue.csv`、`tw/meta.json` |
-| **台股模型資料＋水位燈號** | 平日 18:30 | `tw-models/update_daily.py`、`fetch_us_market.py`、`regime_tw.py` | `tw-models/data/daily/`、`tw-models/latest/regime_tw.json` |
+| **台股模型資料＋水位燈號** | 平日 18:30（21:30、23:30 備援） | `tw-models/update_daily.py`、`fetch_us_market.py`、`regime_tw.py` | `tw-models/data/daily/`、`tw-models/latest/regime_tw.json` |
 | **波段／長期名單** | 每週五 18:30 排程內（約 18:45 完成）；手動執行也會產生 | `tw-models/models.py --latest` | `tw-models/latest/swing.json`、`long.json`、`core_satellite.json` |
 
 排程設定都在 `.github/workflows/`。所有排程寫入 main 時都會「先合併最新版本再推送，失敗重試 5 次」，避免互相衝突。
@@ -62,7 +62,7 @@
 ### 台股模型（tw-models/）
 - **完整規則見 `docs/TW_MODELS.md`**；參數在 `tw-models/config.json`
 - 歷史資料（2019 起，暖身資料 2014 起）：FinMind 一次性回補（證交所網站會封鎖雲端主機的大量抓取）；之後每日 18:30 用證交所 OpenAPI 累加
-- **原始資料不公開**（FinMind 條款未明確允許公開轉載）：存在 GitHub Actions 快取，只公開計算結果與報告；回補排程 `tw-models-backfill` 每小時檢查一次，每次最多連續跑約 5.5 小時（18:20 前停下，不擋 18:30 每日更新）
+- **原始資料不公開**（FinMind 條款未明確允許公開轉載）：存在 GitHub Actions 快取，只公開計算結果與報告；回補排程 `tw-models-backfill` 每小時檢查一次，每次最多連續跑約 5.5 小時（18:20、21:20、23:20 前停下，不擋每日更新）
 - 回測引擎 `tw-models/backtest.py`：隔天開盤成交、手續費 ×0.6 折、證交稅、滑價 0.1%、含息、樣本內 2019–2023／樣本外 2024～今分開報告
 - 台股水位燈號 `tw-models/latest/regime_tw.json`：5 項指標、總分換「參考水位」（樣本外擇時效果與固定比例幾乎相同：97.6% vs 97.2%）；回測報告 `docs/BACKTEST_regime_tw.md`
 - 選股模型 `tw-models/models.py`：D 波段（每週五名單、紅燈只列前 3 名）、E 長期（每季換股、同產業最多 3 檔）、F 舊篩選法（33 檔、每月前 8 名，只做回測）；回測報告 `docs/BACKTEST_swing.md`、`BACKTEST_long.md`、`BACKTEST_old_screen.md`、`BACKTEST_comparison.md`

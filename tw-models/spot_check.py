@@ -5,7 +5,7 @@ Checks:
   2) Ex-dividend records (TWSE TWT49U) vs our adjustment factors for 2330 and 0050
 Prints a readable table to the workflow log. Usage: python3 tw-models/spot_check.py
 """
-import os, sys, time
+import os, re, sys, time
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 sys.path.insert(1, os.path.join(os.path.dirname(HERE), "lib"))
@@ -17,8 +17,9 @@ EXDIV = [("2330", "20260901", "20260930"), ("0050", "20250101", "20250131"), ("0
 
 
 def roc(s):
-    y, m, d = s.split("/")
-    return "%04d-%s-%s" % (int(y) + 1911, m, d)
+    """ROC date '115/09/01' or '115年09月01日' -> '2026-09-01'."""
+    y, m, d = re.findall(r"\d+", s)[:3]
+    return "%04d-%02d-%02d" % (int(y) + 1911, int(m), int(d))
 
 
 def num(s):

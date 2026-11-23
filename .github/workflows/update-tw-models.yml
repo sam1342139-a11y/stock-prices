@@ -58,6 +58,9 @@ jobs:
       - name: swing / long lists (Fridays)
         if: steps.chk.outputs.ready == 'true' && steps.chk.outputs.lists == 'true'
         run: python3 tw-models/models.py --latest
+      - name: paper trading (simulated money)
+        if: steps.chk.outputs.ready == 'true'
+        run: python3 tw-models/paper.py
       - name: save raw data
         if: always()
         uses: actions/cache/save@v4
@@ -70,6 +73,8 @@ jobs:
           git config user.name "data-bot"
           git config user.email "bot@users.noreply.github.com"
           git add tw-models/latest/
+          if [ -d tw-models/paper ]; then git add tw-models/paper/; fi
+          if [ -f docs/PAPER.md ]; then git add docs/PAPER.md; fi
           git commit -m "update tw-models outputs" || exit 0
           for i in 1 2 3 4 5; do
             git pull --rebase origin main && git push && exit 0

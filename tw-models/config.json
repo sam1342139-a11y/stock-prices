@@ -154,5 +154,9 @@
   "revenue_yoy_min_pct": 10,
   "pe_max": 20,
   "dividend_yield_min_pct": 3
+ },
+ "paper": {
+  "_note": "模擬資金追蹤（不是模型參數）：每組 100 萬元，從開始日收盤後依當時名單建倉，隔天開盤成交",
+  "start": "2026-11-23"
  }
 }

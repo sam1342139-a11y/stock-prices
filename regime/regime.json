@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-22 08:39:25",
+ "generated_at_utc": "2026-11-23 23:39:53",
  "problems": [],
  "sources": [
   {
@@ -31,13 +31,13 @@
    "url": "https://www.newyorkfed.org/research/capital_markets/ycfaq"
   }
  ],
- "date_tw": "2026-11-22",
- "total": 6,
+ "date_tw": "2026-11-24",
+ "total": 5,
  "level": "黃",
  "max_possible": 14,
  "items_scored": 7,
  "rule": "每項 0 綠／1 黃／2 紅；總分 0～3 綠、4～6 黃、7 以上紅。規則見 docs/REGIME.md",
- "compared_with": null,
+ "compared_with": "2026-11-22",
  "turned_yellow": [],
  "turned_red": [],
  "items": {
@@ -52,22 +52,22 @@
   },
   "spy_ma200": {
    "name": "SPY 相對 200 日均線",
-   "value": -5.86,
-   "date": "2026-11-20",
-   "score": 2,
-   "color": "紅",
+   "value": -1.45,
+   "date": "2026-11-23",
+   "score": 1,
+   "color": "黃",
    "threshold": "綠：在均線之上且均線上升；黃：在均線之上但均線走平或下降，或低於均線 0～3%；紅：低於均線超過 3%（均線上升 = 200 日均線比 20 個交易日前高 0.1% 以上）",
    "source": "Twelve Data SPY",
    "unit": "%（SPY 高於均線的幅度）",
-   "spy": 689.81,
-   "ma200": 732.76,
-   "ma200_20d_change_pct": 0.79,
+   "spy": 722.28998,
+   "ma200": 732.91,
+   "ma200_20d_change_pct": 0.76,
    "ma200_rising": true
   },
   "t10y3m": {
    "name": "10 年減 3 個月利差",
-   "value": 0.6,
-   "date": "2026-11-20",
+   "value": 0.55,
+   "date": "2026-11-23",
    "score": 0,
    "color": "綠",
    "threshold": ">0.5 綠；0～0.5 黃；<0 紅",
@@ -76,8 +76,8 @@
   },
   "hy_spread": {
    "name": "高收益債利差",
-   "value": 3.52,
-   "date": "2026-11-19",
+   "value": 3.76,
+   "date": "2026-11-20",
    "score": 0,
    "color": "綠",
    "threshold": "<4 綠；4～5.5 黃；>5.5 紅",
@@ -109,16 +109,16 @@
   },
   "soxx_vs_spy": {
    "name": "SOXX 相對 SPY 近 20 日",
-   "value": -13.35,
-   "date": "2026-11-20",
+   "value": -8.84,
+   "date": "2026-11-23",
    "score": 2,
    "color": "紅",
    "threshold": "SOXX 20 日報酬 − SPY 20 日報酬；>0 綠；−5%～0 黃；<−5% 紅",
    "source": "Twelve Data SOXX、SPY",
    "unit": "百分點",
-   "soxx_20d_pct": -22.58,
-   "spy_20d_pct": -9.23,
-   "from": "2026-10-23"
+   "soxx_20d_pct": -14.47,
+   "spy_20d_pct": -5.63,
+   "from": "2026-10-26"
   }
  }
 }

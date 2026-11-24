@@ -266,6 +266,12 @@ FinMind 的說明寫明資料用於「教育、非商業用途」，並要求遵
 - 每天從開始日整段重算（結果可重現，沒有隱藏狀態）。
 - 輸出：`tw-models/paper/latest.json`（淨值、報酬、回撤、持股、下次換股日）、`tw-models/paper/nav.csv`（每日淨值）、`docs/PAPER.md`（手機好讀，含每月報酬）。
 
+## 進階績效報告（quantstats）
+開源套件 **quantstats**（Apache-2.0）只用來產生報告與交叉驗證，**模型規則不變（v1.0）**。
+- `python3 tw-models/extra_backtests.py --qs` → `docs/BACKTEST_quantstats.md`：七三組合、長期 100%、0050 的索提諾值、年化波動、最長回撤天數、卡瑪值、月勝率、最佳／最差月、單日風險值，以及月報酬熱力圖。
+- 交叉驗證：同一條淨值曲線，我們的回測引擎和 quantstats 算出的夏普值、最大回撤、總報酬**全部一致**。
+- 模擬資金 `docs/PAPER.md`：累積滿 20 個交易日後，自動加上同樣的進階指標與七三組合月報酬熱力圖。
+
 ## 資料合理性檢查
 每日輸出 commit 前會先檢查（加權指數偏離均線、單日漲跌、收盤為 0、外資異常、匯率、檔名與欄位結構）。沒通過就維持前一次的檔案、在 `problems` 寫明原因，並開 GitHub issue。規則見 `docs/DATA_CHECKS.md`。
 

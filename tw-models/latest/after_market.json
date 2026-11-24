@@ -1,0 +1,383 @@
+{
+ "generated_at_utc": "2026-11-24 07:50:23",
+ "problems": [],
+ "sources": [
+  {
+   "name": "證交所 OpenAPI／三大法人買賣超（T86）、FinMind 市場層級資料",
+   "url": "https://openapi.twse.com.tw/"
+  }
+ ],
+ "date": "2026-11-23",
+ "taiex": {
+  "close": 36811.9,
+  "change_pct": 2.16
+ },
+ "institutional": {
+  "foreign": {
+   "today_yi": -289.5,
+   "sum5_yi": -1774.3,
+   "sum20_yi": -10421.5,
+   "streak_days": -6
+  },
+  "trust": {
+   "today_yi": -41.5,
+   "sum5_yi": 56.8,
+   "sum20_yi": 2966.8,
+   "streak_days": -2
+  },
+  "dealer": {
+   "today_yi": -190.0,
+   "sum5_yi": -962.9,
+   "sum20_yi": -4523.0,
+   "streak_days": -6
+  },
+  "total": {
+   "today_yi": -521.0,
+   "sum5_yi": -2680.3,
+   "sum20_yi": -11977.7
+  }
+ },
+ "margin": {
+  "balance_yi": 4338.1,
+  "change_yi": -14.2,
+  "change_pct": -0.33,
+  "change20_pct": -31.56,
+  "index_change20_pct": -20.05
+ },
+ "top": {
+  "foreign_buy": [
+   {
+    "rank": 1,
+    "code": "3443",
+    "name": "創意",
+    "close": 5120.0,
+    "lots": 815,
+    "amt_yi": 41.7
+   },
+   {
+    "rank": 2,
+    "code": "2603",
+    "name": "長榮",
+    "close": 234.5,
+    "lots": 9965,
+    "amt_yi": 23.4
+   },
+   {
+    "rank": 3,
+    "code": "2308",
+    "name": "台達電",
+    "close": 990.0,
+    "lots": 1043,
+    "amt_yi": 10.3
+   },
+   {
+    "rank": 4,
+    "code": "2368",
+    "name": "金像電",
+    "close": 782.0,
+    "lots": 1224,
+    "amt_yi": 9.6
+   },
+   {
+    "rank": 5,
+    "code": "2360",
+    "name": "致茂",
+    "close": 927.0,
+    "lots": 969,
+    "amt_yi": 9.0
+   },
+   {
+    "rank": 6,
+    "code": "7769",
+    "name": "鴻勁",
+    "close": 2910.0,
+    "lots": 304,
+    "amt_yi": 8.9
+   },
+   {
+    "rank": 7,
+    "code": "3661",
+    "name": "世芯-KY",
+    "close": 3560.0,
+    "lots": 229,
+    "amt_yi": 8.2
+   },
+   {
+    "rank": 8,
+    "code": "8046",
+    "name": "南電",
+    "close": 670.0,
+    "lots": 1218,
+    "amt_yi": 8.2
+   },
+   {
+    "rank": 9,
+    "code": "5871",
+    "name": "中租-KY",
+    "close": 96.6,
+    "lots": 7227,
+    "amt_yi": 7.0
+   },
+   {
+    "rank": 10,
+    "code": "3026",
+    "name": "禾伸堂",
+    "close": 330.0,
+    "lots": 2038,
+    "amt_yi": 6.7
+   }
+  ],
+  "foreign_sell": [
+   {
+    "rank": 1,
+    "code": "2330",
+    "name": "台積電",
+    "close": 2030.0,
+    "lots": -11039,
+    "amt_yi": -224.1
+   },
+   {
+    "rank": 2,
+    "code": "2454",
+    "name": "聯發科",
+    "close": 3685.0,
+    "lots": -927,
+    "amt_yi": -34.2
+   },
+   {
+    "rank": 3,
+    "code": "0050",
+    "name": "元大台灣50",
+    "close": 87.0,
+    "lots": -37983,
+    "amt_yi": -33.0
+   },
+   {
+    "rank": 4,
+    "code": "2317",
+    "name": "鴻海",
+    "close": 206.0,
+    "lots": -14885,
+    "amt_yi": -30.7
+   },
+   {
+    "rank": 5,
+    "code": "1802",
+    "name": "台玻",
+    "close": 58.1,
+    "lots": -31450,
+    "amt_yi": -18.3
+   },
+   {
+    "rank": 6,
+    "code": "3189",
+    "name": "景碩",
+    "close": 467.5,
+    "lots": -3205,
+    "amt_yi": -15.0
+   },
+   {
+    "rank": 7,
+    "code": "2345",
+    "name": "智邦",
+    "close": 1350.0,
+    "lots": -810,
+    "amt_yi": -10.9
+   },
+   {
+    "rank": 8,
+    "code": "3711",
+    "name": "日月光投控",
+    "close": 482.0,
+    "lots": -2244,
+    "amt_yi": -10.8
+   },
+   {
+    "rank": 9,
+    "code": "3008",
+    "name": "大立光",
+    "close": 3620.0,
+    "lots": -244,
+    "amt_yi": -8.8
+   },
+   {
+    "rank": 10,
+    "code": "6415",
+    "name": "矽力*-KY",
+    "close": 296.0,
+    "lots": -2556,
+    "amt_yi": -7.6
+   }
+  ],
+  "trust_buy": [
+   {
+    "rank": 1,
+    "code": "2330",
+    "name": "台積電",
+    "close": 2030.0,
+    "lots": 1294,
+    "amt_yi": 26.3
+   },
+   {
+    "rank": 2,
+    "code": "2454",
+    "name": "聯發科",
+    "close": 3685.0,
+    "lots": 534,
+    "amt_yi": 19.7
+   },
+   {
+    "rank": 3,
+    "code": "2412",
+    "name": "中華電",
+    "close": 164.5,
+    "lots": 9708,
+    "amt_yi": 16.0
+   },
+   {
+    "rank": 4,
+    "code": "3661",
+    "name": "世芯-KY",
+    "close": 3560.0,
+    "lots": 289,
+    "amt_yi": 10.3
+   },
+   {
+    "rank": 5,
+    "code": "3653",
+    "name": "健策",
+    "close": 3685.0,
+    "lots": 248,
+    "amt_yi": 9.1
+   },
+   {
+    "rank": 6,
+    "code": "3665",
+    "name": "貿聯-KY",
+    "close": 1430.0,
+    "lots": 632,
+    "amt_yi": 9.0
+   },
+   {
+    "rank": 7,
+    "code": "2886",
+    "name": "兆豐金",
+    "close": 50.0,
+    "lots": 17468,
+    "amt_yi": 8.7
+   },
+   {
+    "rank": 8,
+    "code": "2890",
+    "name": "永豐金",
+    "close": 36.7,
+    "lots": 18466,
+    "amt_yi": 6.8
+   },
+   {
+    "rank": 9,
+    "code": "2027",
+    "name": "大成鋼",
+    "close": 44.75,
+    "lots": 13576,
+    "amt_yi": 6.1
+   },
+   {
+    "rank": 10,
+    "code": "2883",
+    "name": "凱基金",
+    "close": 29.6,
+    "lots": 19840,
+    "amt_yi": 5.9
+   }
+  ],
+  "trust_sell": [
+   {
+    "rank": 1,
+    "code": "3443",
+    "name": "創意",
+    "close": 5120.0,
+    "lots": -542,
+    "amt_yi": -27.7
+   },
+   {
+    "rank": 2,
+    "code": "2603",
+    "name": "長榮",
+    "close": 234.5,
+    "lots": -11368,
+    "amt_yi": -26.7
+   },
+   {
+    "rank": 3,
+    "code": "2327",
+    "name": "國巨*",
+    "close": 310.0,
+    "lots": -6239,
+    "amt_yi": -19.3
+   },
+   {
+    "rank": 4,
+    "code": "3037",
+    "name": "欣興",
+    "close": 558.0,
+    "lots": -2343,
+    "amt_yi": -13.1
+   },
+   {
+    "rank": 5,
+    "code": "2882",
+    "name": "國泰金",
+    "close": 95.0,
+    "lots": -12500,
+    "amt_yi": -11.9
+   },
+   {
+    "rank": 6,
+    "code": "3189",
+    "name": "景碩",
+    "close": 467.5,
+    "lots": -2054,
+    "amt_yi": -9.6
+   },
+   {
+    "rank": 7,
+    "code": "2360",
+    "name": "致茂",
+    "close": 927.0,
+    "lots": -853,
+    "amt_yi": -7.9
+   },
+   {
+    "rank": 8,
+    "code": "8046",
+    "name": "南電",
+    "close": 670.0,
+    "lots": -1107,
+    "amt_yi": -7.4
+   },
+   {
+    "rank": 9,
+    "code": "2357",
+    "name": "華碩",
+    "close": 758.0,
+    "lots": -878,
+    "amt_yi": -6.7
+   },
+   {
+    "rank": 10,
+    "code": "3532",
+    "name": "台勝科",
+    "close": 168.0,
+    "lots": -3995,
+    "amt_yi": -6.7
+   }
+  ]
+ },
+ "notes": [
+  "金額單位：億元；個股以張（1,000 股）計，金額 ≈ 買賣超股數 × 收盤價",
+  "外資含外資自營商；連續天數正數是連續買超、負數是連續賣超",
+  "streak_days 只看最近一段同方向的交易日"
+ ],
+ "footer": "資料為證交所公開資訊整理（收盤後），只列事實數字，不構成投資建議。"
+}

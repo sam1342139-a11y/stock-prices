@@ -1,7 +1,7 @@
 """Earnings calendar for the FCN watchlist: earnings/calendar.json (daily).
 
 US: Nasdaq earnings calendar (public JSON, one call per date) scanned from 3 days ago to ~10 weeks ahead.
-TW: MOPS investor-conference announcements (法人說明會), current and next month.
+TW: MOPS investor-conference announcements (法人說明會), last / current / next month.
 Merged pairs (TSM->2330, ASX->3711) become one entry; ETFs are skipped (earnings/watchlist.json).
 Dates are never guessed: symbols without a date are listed in problems.
 Usage: python3 earnings/fetch_calendar.py
@@ -82,10 +82,11 @@ def us_entries(symbols, problems):
 
 
 def tw_entries(codes, problems):
-    """MOPS 法人說明會 list for this month and next (ROC year)."""
+    """MOPS 法人說明會 list for last month, this month and next (ROC year)."""
     out, seen = [], set()
     today = tw_today()
-    months = [(today.year, today.month), ((today.year + (today.month == 12)), today.month % 12 + 1)]
+    prev = (today.year - (today.month == 1), (today.month - 2) % 12 + 1)
+    months = [prev, (today.year, today.month), ((today.year + (today.month == 12)), today.month % 12 + 1)]
     for y, m in months:
         try:
             body = urllib.parse.urlencode({"encodeURIComponent": 1, "step": 1, "firstin": 1, "off": 1, "TYPEK": "sii",
@@ -112,8 +113,10 @@ def tw_entries(codes, problems):
             q = (d.month - 1) // 3  # conference reports the previous quarter
             period = "%dQ%d" % (d.year, q) if q else "%dQ4" % (d.year - 1)
             desc = " ".join(cells[4:6])
-            # broker-hosted forums / conferences the company attends are not its own quarterly conference
-            invited = bool(re.search(r"受邀|邀請|參加|論壇|Conference|Summit|Forum", desc, re.I))
+            # The company's own quarterly conference uploads a new deck named <code><meeting date>M001.pdf;
+            # broker forums reuse an older deck (or none) and usually say 受邀／參加.
+            own_deck = ("%s%s" % (code, d.strftime("%Y%m%d"))) in " ".join(cells)
+            invited = (not own_deck) or bool(re.search(r"受邀|邀請|參加|論壇|Conference|Summit|Forum", desc, re.I))
             out.append({"ticker": code, "name": cells[1] or TW_NAMES.get(code), "market": "台股", "period": None if invited else period,
                         "event": "受邀參加券商論壇" if invited else "法說會", "date": d.isoformat(), "time": tm.group(1) if tm else "公告未寫時間",
                         "confirmed": "公司已公告", "detail": desc[:200],
@@ -159,7 +162,7 @@ def main():
         "notes": ["date 一律是台灣日期；美股盤後公布的財報，台灣日期是隔天早上",
                   "美股日期來自 Nasdaq 行事曆，不區分公司是否已確認，標為「預估」；台股來自公開資訊觀測站法說會公告，標為「公司已公告」",
                   "TSM 與 2330、ASX 與 3711 合併成一筆；SPY、SOXX、SOXL 是 ETF，略過",
-                  "台股「受邀參加券商論壇」是公司受券商邀請說明已公開的資訊，不是季度法說會，不列入 recent",
+                  "台股「受邀參加券商論壇」是公司受券商邀請說明已公開的資訊，不是季度法說會，不列入 recent；判斷方式：季度法說會會上傳當天日期的新簡報（代號＋日期 M001.pdf），沒有新簡報或寫明受邀／參加的都算論壇",
                   "台股季度法說會通常在財報公告前後；公開資訊觀測站只列已公告的場次，還沒公告的不會出現在這裡"]},
         problems, [{"name": "Nasdaq Earnings Calendar", "url": "https://www.nasdaq.com/market-activity/earnings"},
                    {"name": "公開資訊觀測站 法人說明會一覽表", "url": "https://mops.twse.com.tw/mops/#/web/t100sb02_1"}])

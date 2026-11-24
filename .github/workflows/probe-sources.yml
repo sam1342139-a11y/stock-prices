@@ -29,4 +29,4 @@ jobs:
           print('RECENT', d['recent'])
           for x in d['all']: print(x['date'], x['ticker'], x['event'], x['time'], x.get('period'), x['confirmed'])"
           python3 earnings/tw_financials.py
-# rerun 1795533389
+# rerun 2

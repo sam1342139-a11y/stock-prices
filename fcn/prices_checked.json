@@ -1,8 +1,6 @@
 {
- "generated_at_utc": "2026-11-24 15:02:22",
- "problems": [
-  "國泰世華牌告匯率抓不到（URLError），請繼續由 Claude 抓"
- ],
+ "generated_at_utc": "2026-11-24 23:24:21",
+ "problems": [],
  "sources": [
   {
    "name": "stock-prices latest.json（Twelve Data 收盤價）",
@@ -13,234 +11,48 @@
    "url": "https://www.cathaybk.com.tw/cathaybk/personal/product/deposit/currency-billboard/"
   }
  ],
- "status": "ok",
- "fail_reasons": [],
- "asof": "2026-11-23",
- "fetched_at_utc": "2026-11-23 23:25:23",
+ "status": "fail",
+ "fail_reasons": [
+  "SNDK 在 2026-11-23 的終值和暫定價差 4.09%（91.45 → 87.71），超過 0.5%"
+ ],
+ "asof": "2026-11-24",
+ "fetched_at_utc": "2026-11-24 23:24:19",
  "compared_with": {
-  "asof": "2026-11-20",
-  "commit": "849a328"
+  "asof": "2026-11-23",
+  "commit": "dc1e757"
  },
  "prices": {
-  "AAPL": 349.08,
-  "AMAT": 346.87,
-  "AMD": 453.46,
-  "ARM": 176.67,
-  "ASML": 1383.78,
-  "ASX": 31.88,
-  "AVGO": 313.55,
-  "AMZN": 255.39,
-  "CRWD": 208.97,
-  "GOOG": 279.53,
-  "INTC": 59.66,
-  "KLAC": 145.85,
-  "LITE": 544.38,
-  "MSFT": 492.5,
-  "MU": 707.7,
-  "NVDA": 165.05,
-  "SNDK": 91.45,
-  "SOXX": 140.22,
-  "SPCX": 133.35,
-  "SPY": 722.29,
-  "TSLA": 385.46,
-  "TSM": 363.6,
-  "ENTG": 142.06,
-  "NBIS": 97.8,
-  "BE": 168.15,
-  "SOXL": 43.21
+  "AAPL": 354.07,
+  "AMAT": 323.76,
+  "AMD": 413.27,
+  "ARM": 161.56,
+  "ASML": 1336.06,
+  "ASX": 29.33,
+  "AVGO": 301.08,
+  "AMZN": 252.29,
+  "CRWD": 210.86,
+  "GOOG": 276.58,
+  "INTC": 54.8,
+  "KLAC": 133.65,
+  "LITE": 487.12,
+  "MSFT": 496.13,
+  "MU": 629.79,
+  "NVDA": 155.38,
+  "SNDK": 77.95,
+  "SOXX": 128.62,
+  "SPCX": 125.81,
+  "SPY": 718.78,
+  "TSLA": 384.68,
+  "TSM": 349.2,
+  "ENTG": 127.82,
+  "NBIS": 87.31,
+  "BE": 156.41,
+  "SOXL": 32.6
  },
- "corrections": [
-  {
-   "ticker": "AAPL",
-   "date": "2026-11-20",
-   "old": 342.68,
-   "new": 342.56
-  },
-  {
-   "ticker": "AMAT",
-   "date": "2026-11-20",
-   "old": 302.15,
-   "new": 302.63
-  },
-  {
-   "ticker": "AMD",
-   "date": "2026-11-20",
-   "old": 424.26,
-   "new": 424.39
-  },
-  {
-   "ticker": "AMZN",
-   "date": "2026-11-20",
-   "old": 247.15,
-   "new": 246.82
-  },
-  {
-   "ticker": "ARM",
-   "date": "2026-11-20",
-   "old": 152.4,
-   "new": 152.2
-  },
-  {
-   "ticker": "ASML",
-   "date": "2026-11-20",
-   "old": 1268.25,
-   "new": 1266.22
-  },
-  {
-   "ticker": "AVGO",
-   "date": "2026-11-20",
-   "old": 304.17,
-   "new": 304.41
-  },
-  {
-   "ticker": "BE",
-   "date": "2026-11-20",
-   "old": 142.37,
-   "new": 142.39
-  },
-  {
-   "ticker": "CRWD",
-   "date": "2026-11-20",
-   "old": 229.46,
-   "new": 229.44
-  },
-  {
-   "ticker": "ENTG",
-   "date": "2026-11-20",
-   "old": 124.44,
-   "new": 124.53
-  },
-  {
-   "ticker": "GOOG",
-   "date": "2026-11-20",
-   "old": 264.21,
-   "new": 264.0
-  },
-  {
-   "ticker": "INTC",
-   "date": "2026-11-20",
-   "old": 51.37,
-   "new": 51.28
-  },
-  {
-   "ticker": "KLAC",
-   "date": "2026-11-20",
-   "old": 127.06,
-   "new": 126.87
-  },
-  {
-   "ticker": "LITE",
-   "date": "2026-11-20",
-   "old": 460.97,
-   "new": 460.54
-  },
-  {
-   "ticker": "MSFT",
-   "date": "2026-11-20",
-   "old": 485.01,
-   "new": 484.52
-  },
-  {
-   "ticker": "MU",
-   "date": "2026-11-20",
-   "old": 594.39,
-   "new": 594.51
-  },
-  {
-   "ticker": "NBIS",
-   "date": "2026-11-20",
-   "old": 81.33,
-   "new": 81.31
-  },
-  {
-   "ticker": "NVDA",
-   "date": "2026-11-20",
-   "old": 125.79,
-   "new": 125.53
-  },
-  {
-   "ticker": "SNDK",
-   "date": "2026-11-20",
-   "old": 79.24,
-   "new": 79.3
-  },
-  {
-   "ticker": "SOXX",
-   "date": "2026-11-20",
-   "old": 123.38,
-   "new": 123.4
-  },
-  {
-   "ticker": "SPCX",
-   "date": "2026-11-20",
-   "old": 127.96,
-   "new": 127.79
-  },
-  {
-   "ticker": "SPY",
-   "date": "2026-11-20",
-   "old": 690.91,
-   "new": 689.81
-  },
-  {
-   "ticker": "TSLA",
-   "date": "2026-11-20",
-   "old": 346.17,
-   "new": 345.82
-  },
-  {
-   "ticker": "TSM",
-   "date": "2026-11-20",
-   "old": 319.55,
-   "new": 318.71
-  }
- ],
+ "corrections": [],
  "fill_days": [],
- "watch": [
-  {
-   "ticker": "NVDA",
-   "date": "2026-11-23",
-   "prev_close": 125.53,
-   "close": 165.05,
-   "change_pct": 31.48
-  },
-  {
-   "ticker": "SOXL",
-   "date": "2026-11-23",
-   "prev_close": 30.88,
-   "close": 43.21,
-   "change_pct": 39.93
-  }
- ],
+ "watch": [],
  "history": {
-  "2026-11-16": {
-   "AAPL": 352.78,
-   "AMAT": 350.25,
-   "AMD": 504.28,
-   "ARM": 175.05,
-   "ASML": 1406.79,
-   "ASX": 32.8,
-   "AVGO": 333.4,
-   "AMZN": 257.75,
-   "CRWD": 223.21,
-   "GOOG": 281.26,
-   "INTC": 55.47,
-   "KLAC": 143.96,
-   "LITE": 546.0,
-   "MSFT": 517.99,
-   "MU": 719.02,
-   "NVDA": 156.14,
-   "SNDK": 101.14,
-   "SOXX": 141.22,
-   "SPCX": 137.36,
-   "SPY": 739.95,
-   "TSLA": 379.74,
-   "TSM": 373.45,
-   "ENTG": 140.02,
-   "NBIS": 107.13,
-   "BE": 177.28,
-   "SOXL": 48.76
-  },
   "2026-11-17": {
    "AAPL": 351.91,
    "AMAT": 349.23,
@@ -370,7 +182,7 @@
    "MSFT": 492.5,
    "MU": 707.7,
    "NVDA": 165.05,
-   "SNDK": 91.45,
+   "SNDK": 87.71,
    "SOXX": 140.22,
    "SPCX": 133.35,
    "SPY": 722.29,
@@ -380,9 +192,44 @@
    "NBIS": 97.8,
    "BE": 168.15,
    "SOXL": 43.21
+  },
+  "2026-11-24": {
+   "AAPL": 354.07,
+   "AMAT": 323.76,
+   "AMD": 413.27,
+   "ARM": 161.56,
+   "ASML": 1336.06,
+   "ASX": 29.33,
+   "AVGO": 301.08,
+   "AMZN": 252.29,
+   "CRWD": 210.86,
+   "GOOG": 276.58,
+   "INTC": 54.8,
+   "KLAC": 133.65,
+   "LITE": 487.12,
+   "MSFT": 496.13,
+   "MU": 629.79,
+   "NVDA": 155.38,
+   "SNDK": 77.95,
+   "SOXX": 128.62,
+   "SPCX": 125.81,
+   "SPY": 718.78,
+   "TSLA": 384.68,
+   "TSM": 349.2,
+   "ENTG": 127.82,
+   "NBIS": 87.31,
+   "BE": 156.41,
+   "SOXL": 32.6
   }
  },
- "fx": null,
+ "fx": {
+  "date": "2026-11-25",
+  "time": "07:24:20",
+  "source": "國泰世華銀行 牌告匯率（即期買入）",
+  "USD": 32.85,
+  "AUD": 21.76,
+  "JPY": 0.2044
+ },
  "notes": [
   "asof 當天的 prices 是暫定價，隔天以 history 的終值為準；corrections 是前一次暫定價改成終值的清單",
   "status 為 fail 時不要寫入價格；fail_reasons 說明原因",

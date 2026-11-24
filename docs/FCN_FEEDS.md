@@ -34,7 +34,7 @@
 **晨間用法（建議）**：讀這個檔 → `status` 是 `ok` 才寫入 → 用 `corrections` 改前一天、`fill_days` 補缺的日子、`prices` 寫當天。
 
 ## 二、法說會行事曆 `earnings/calendar.json`
-- **更新時間**：每天台灣 06:40（排程 `update-fcn-feeds`）；**程式**：`earnings/calendar.py`；**追蹤清單**：`earnings/watchlist.json`（要加代號就改這個檔）
+- **更新時間**：每天台灣 06:40（排程 `update-fcn-feeds`）；**程式**：`earnings/fetch_calendar.py`；**追蹤清單**：`earnings/watchlist.json`（要加代號就改這個檔）
 - **範圍**：`latest.json` 的 26 檔＋台股 2330、2454、2317、2382、2303、3711。TSM＋2330、ASX＋3711 各合併成一筆；SPY、SOXX、SOXL 是 ETF，略過。
 - **來源**：美股用 Nasdaq 財報行事曆（每天掃 3 天前到 10 週後）；台股用公開資訊觀測站「法人說明會一覽表」（本月與下個月）。
 

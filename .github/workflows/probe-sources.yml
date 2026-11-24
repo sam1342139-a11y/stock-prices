@@ -23,9 +23,10 @@ jobs:
           import json;d=json.load(open('news/raw.json'));print('NEWS', d['window_tw'], d['count'], d['problems'])
           for x in d['items'][:8]: print(x)
           print([x for x in d['items'] if x.get('tickers')][:6])"
-          python3 earnings/calendar.py
+          python3 earnings/fetch_calendar.py
           python3 -c "
           import json;d=json.load(open('earnings/calendar.json'));print('CAL problems', d['problems'])
           print('RECENT', d['recent'])
           for x in d['all']: print(x['date'], x['ticker'], x['event'], x['time'], x.get('period'), x['confirmed'])"
           python3 earnings/tw_financials.py
+# rerun 1795533389

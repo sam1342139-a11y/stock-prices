@@ -4,7 +4,7 @@ US: Nasdaq earnings calendar (public JSON, one call per date) scanned from 3 day
 TW: MOPS investor-conference announcements (法人說明會), current and next month.
 Merged pairs (TSM->2330, ASX->3711) become one entry; ETFs are skipped (earnings/watchlist.json).
 Dates are never guessed: symbols without a date are listed in problems.
-Usage: python3 earnings/calendar.py
+Usage: python3 earnings/fetch_calendar.py
 """
 import datetime, html, json, os, re, sys, time, urllib.parse, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -112,7 +112,8 @@ def tw_entries(codes, problems):
             q = (d.month - 1) // 3  # conference reports the previous quarter
             period = "%dQ%d" % (d.year, q) if q else "%dQ4" % (d.year - 1)
             desc = " ".join(cells[4:6])
-            invited = "受邀" in desc  # broker-hosted forum, not the company's own quarterly conference
+            # broker-hosted forums / conferences the company attends are not its own quarterly conference
+            invited = bool(re.search(r"受邀|邀請|參加|論壇|Conference|Summit|Forum", desc, re.I))
             out.append({"ticker": code, "name": cells[1] or TW_NAMES.get(code), "market": "台股", "period": None if invited else period,
                         "event": "受邀參加券商論壇" if invited else "法說會", "date": d.isoformat(), "time": tm.group(1) if tm else "公告未寫時間",
                         "confirmed": "公司已公告", "detail": desc[:200],
@@ -142,9 +143,12 @@ def main():
     rows += tw_rows
     rows.sort(key=lambda r: (r["date"], r["ticker"]))
     today = tw_today()
-    have = {r["ticker"].split("／")[-1] for r in rows if r["event"] != "受邀參加券商論壇"} | {r.get("merged_with") for r in rows if r["event"] != "受邀參加券商論壇"} | {r["ticker"].split("／")[0] for r in rows if r["event"] != "受邀參加券商論壇"}
+    have = set()
+    for r in rows:
+        if r["event"] != "受邀參加券商論壇":
+            have |= set(r["ticker"].split("／")) | ({r["merged_with"]} if r.get("merged_with") else set())
     for s in us + wl["tw"]:
-        if s not in have and merge.get(s) not in have:
+        if s not in have and (merge.get(s) or s) not in have:
             problems.append("%s：%s 天內查不到財報或法說會日期（不估算）" % (s, AHEAD))
     lo = (today - datetime.timedelta(days=RECENT_DAYS - 1)).isoformat()
     recent = [r for r in rows if lo <= r["date"] <= today.isoformat() and r["event"] != "受邀參加券商論壇"]

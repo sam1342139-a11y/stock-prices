@@ -19,7 +19,7 @@ jobs:
         run: python3 news/fetch_news.py
       - name: earnings calendar
         continue-on-error: true
-        run: python3 earnings/calendar.py
+        run: python3 earnings/fetch_calendar.py
       - name: Taiwan financials
         continue-on-error: true
         run: python3 earnings/tw_financials.py

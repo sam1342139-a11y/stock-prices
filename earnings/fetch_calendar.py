@@ -116,10 +116,12 @@ def tw_entries(codes, problems):
             # The company's own quarterly conference uploads a new deck named <code><meeting date>M001.pdf;
             # broker forums reuse an older deck (or none) and usually say 受邀／參加.
             own_deck = ("%s%s" % (code, d.strftime("%Y%m%d"))) in " ".join(cells)
-            invited = (not own_deck) or bool(re.search(r"受邀|邀請|參加|論壇|Conference|Summit|Forum", desc, re.I))
+            hosted = bool(re.search(r"受邀|邀請", desc))
+            own_words = bool(re.search(r"召開|自行舉辦|營運成果|財務業務|第.季", desc))
+            invited = hosted or not (own_deck or own_words)
             out.append({"ticker": code, "name": cells[1] or TW_NAMES.get(code), "market": "台股", "period": None if invited else period,
                         "event": "受邀參加券商論壇" if invited else "法說會", "date": d.isoformat(), "time": tm.group(1) if tm else "公告未寫時間",
-                        "confirmed": "公司已公告", "detail": desc[:200],
+                        "confirmed": "公司已公告", "detail": desc[:300],
                         "source": "https://mops.twse.com.tw/mops/#/web/t100sb02_1"})
         time.sleep(2)
     return out

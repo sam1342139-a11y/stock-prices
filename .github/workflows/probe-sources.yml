@@ -27,6 +27,6 @@ jobs:
           python3 -c "
           import json;d=json.load(open('earnings/calendar.json'));print('CAL problems', d['problems'])
           print('RECENT', d['recent'])
-          for x in d['all']: print(x['date'], x['ticker'], x['event'], x['time'], x.get('period'), x['confirmed'])"
+          for x in d['all']: print(x['date'], x['ticker'], x['event'], x['time'], x.get('period'), x.get('detail','')[:150])"
           python3 earnings/tw_financials.py
-# rerun 2
+# rerun 3

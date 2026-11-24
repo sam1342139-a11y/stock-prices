@@ -14,6 +14,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  issues: write
 concurrency:
   group: tw-models-data
   cancel-in-progress: false
@@ -64,6 +65,18 @@ jobs:
       - name: paper trading (simulated money)
         if: steps.chk.outputs.ready == 'true'
         run: python3 tw-models/paper.py
+      - name: data checks (docs/DATA_CHECKS.md)
+        id: sanity
+        if: steps.chk.outputs.ready == 'true'
+        run: |
+          python3 tw-models/sanity.py check --out /tmp/sanity.json
+          python3 -c "import json,os; r=json.load(open('/tmp/sanity.json')); open(os.environ['GITHUB_OUTPUT'],'a').write('ok=%s\n' % ('true' if r['ok'] else 'false'))"
+      - name: keep previous outputs when a check fails
+        if: steps.chk.outputs.ready == 'true' && steps.sanity.outputs.ok == 'false'
+        run: |
+          git checkout HEAD -- tw-models/latest tw-models/paper
+          if git cat-file -e HEAD:docs/PAPER.md 2>/dev/null; then git checkout HEAD -- docs/PAPER.md; fi
+          python3 tw-models/sanity.py mark --report /tmp/sanity.json
       - name: save raw data
         if: always()
         uses: actions/cache/save@v4
@@ -84,3 +97,23 @@ jobs:
             sleep $((i * 10))
           done
           exit 1
+      - name: open or update an issue when a check fails
+        if: ${{ !cancelled() && steps.chk.outputs.ready == 'true' && steps.sanity.outputs.ok == 'false' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json
+          r = json.load(open('/tmp/sanity.json'))
+          lines = ["資料檢查沒有通過，這次**沒有發布新資料**，各輸出檔維持前一次的內容，並在 problems 欄位寫明原因。", "",
+                   "資料日期：%s" % r.get("date"), "", "**沒通過的項目**"] + ["- " + p for p in r["problems"]]
+          if r.get("notes"):
+              lines += ["", "**其他提醒（不擋發布）**"] + ["- " + n for n in r["notes"]]
+          lines += ["", "檢查規則：docs/DATA_CHECKS.md。修正後重跑 update-tw-models，檢查通過就會恢復發布。",
+                    "", "工作紀錄：${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"]
+          open('/tmp/issue.md', 'w').write("\n".join(lines))
+          open('/tmp/title.txt', 'w').write("資料檢查未通過 %s" % r.get("date"))
+          PY
+          title="$(cat /tmp/title.txt)"
+          num=$(gh issue list --state open --search "\"$title\" in:title" --json number --jq '.[0].number')
+          if [ -n "$num" ]; then gh issue comment "$num" --body-file /tmp/issue.md; else gh issue create --title "$title" --body-file /tmp/issue.md; fi

@@ -1,6 +1,6 @@
 # 系統設定說明（SETUP）
 
-> 每次修改系統都要同步更新這份文件。最後更新：2026-11-24（新增每日 33 檔觀察名單評分 old_screen.json）
+> 每次修改系統都要同步更新這份文件。最後更新：2026-11-24（新增台股模型資料合理性檢查，見 docs/DATA_CHECKS.md）
 
 本存放庫 `sam1342139-a11y/stock-prices` 是**公開的**。
 **只放市場公開資料，不放任何客戶或個人持股資料；不放密碼或 API 金鑰。**
@@ -68,6 +68,7 @@
 - 回測引擎 `tw-models/backtest.py`：隔天開盤成交、手續費 ×0.6 折、證交稅、滑價 0.1%、含息、樣本內 2019–2023／樣本外 2024～今分開報告
 - 台股水位燈號 `tw-models/latest/regime_tw.json`：5 項指標、總分換「參考水位」（樣本外擇時效果與固定比例幾乎相同：97.6% vs 97.2%）；回測報告 `docs/BACKTEST_regime_tw.md`
 - 選股模型 `tw-models/models.py`：D 波段（每週五名單、紅燈只列前 3 名）、E 長期（每季換股、同產業最多 3 檔）、F 舊篩選法（33 檔、每月前 8 名，只做回測）；回測報告 `docs/BACKTEST_swing.md`、`BACKTEST_long.md`、`BACKTEST_old_screen.md`、`BACKTEST_comparison.md`
+- **資料合理性檢查** `tw-models/sanity.py`：每日輸出 commit 前檢查；沒通過就維持前一次的檔案、在 problems 寫明原因，並開 GitHub issue。規則見 `docs/DATA_CHECKS.md`
 - 後續回測 `tw-models/extra_backtests.py`：波段低換手版 `docs/BACKTEST_swing_lowturn.md`、0050 70%＋長期 30% 組合 `docs/BACKTEST_combo.md`（手動執行，不排程）
 - 季報（`fin`）與除權息（`dividends`）在每個季報法定期限後（4/1、5/16、8/15、11/15）由回補排程自動重抓一次（約 2,440 次請求、5 小時左右），期間模型照常產生
 - 驗收抽查：GitHub Actions → tw-models-spot-check → Run workflow
@@ -132,6 +133,7 @@
 - 台股模型後續回測：波段低換手版、組合回測、成本占報酬比例；swing.json 加註「回測未勝過 0050，僅供觀察」
 - 新增 core_satellite.json（0050 70%＋長期 30%）；regime_tw.json 的建議持股水位改為參考水位
 - 驗收抽查通過（18 筆一致），規則凍結 v1.0；修正抽查程式的民國日期格式
+- 新增資料合理性檢查（docs/DATA_CHECKS.md）
 - 新增模擬資金追蹤（七三組合、長期 100%、0050，各 100 萬元，從 2026-11-23 起）
 - 修正每日資料檔名比對：market_taiex 會誤吃 market_taiex_tri（報酬指數），造成 11 月水位燈號第 1 項錯誤
 - regime_tw.json 加整體燈號 overall_light；swing.json 停損價改名 stop_price_est 並說明實際以進場價計（只改輸出，不改規則）

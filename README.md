@@ -25,6 +25,7 @@
 | `lib/` | 各程式共用的小工具 | 要改請找 Claude |
 | `docs/SETUP.md` | **完整系統設定說明**（排程、資料來源、密鑰名稱、待辦），每次修改都會更新 | 要改請找 Claude |
 | `docs/REGIME.md` | 市場風險燈號的計分規則 | 要改請找 Claude |
+| `docs/DATA_CHECKS.md` | 資料合理性檢查的規則（數字異常時不發布、開 issue 通知） | 要改請找 Claude |
 | `docs/TW_MODELS.md` | 台股模型的完整規則 | 要改請找 Claude |
 | `docs/PAPER.md` | **模擬資金追蹤**（七三組合、長期、0050 各 100 萬元，每個交易日更新） | ❌ 程式產生 |
 | `docs/BACKTEST_*.md` | 各模型回測報告（手機好讀，含淨值曲線圖） | ❌ 程式產生 |

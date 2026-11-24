@@ -266,6 +266,9 @@ FinMind 的說明寫明資料用於「教育、非商業用途」，並要求遵
 - 每天從開始日整段重算（結果可重現，沒有隱藏狀態）。
 - 輸出：`tw-models/paper/latest.json`（淨值、報酬、回撤、持股、下次換股日）、`tw-models/paper/nav.csv`（每日淨值）、`docs/PAPER.md`（手機好讀，含每月報酬）。
 
+## 資料合理性檢查
+每日輸出 commit 前會先檢查（加權指數偏離均線、單日漲跌、收盤為 0、外資異常、匯率、檔名與欄位結構）。沒通過就維持前一次的檔案、在 `problems` 寫明原因，並開 GitHub issue。規則見 `docs/DATA_CHECKS.md`。
+
 ## 輸出給理專助手讀
 - `tw-models/latest/regime_tw.json`（每個交易日；整體燈號 `overall_light`；`reference_exposure_pct` = 參考水位，回測擇時效果不明顯）
 - `tw-models/latest/swing.json`（每週五：名單、上榜原因、預估停損價 `stop_price_est`（訊號日收盤 × 0.92，實際以進場成交價 × 0.92）、20 日均線、新進／剔除；`caution`：回測未勝過 0050，僅供觀察）

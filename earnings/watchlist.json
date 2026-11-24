@@ -1,0 +1,7 @@
+{
+ "note": "法說會行事曆與台股財報的追蹤清單。要加代號直接改這個檔（美股寫在 us、台股寫在 tw），開申請單合併後隔天生效。merge 是合併成同一筆的對應（美股 ADR → 台股）；skip 是略過的 ETF。",
+ "us": ["AAPL", "AMAT", "AMD", "ARM", "ASML", "ASX", "AVGO", "AMZN", "CRWD", "GOOG", "INTC", "KLAC", "LITE", "MSFT", "MU", "NVDA", "SNDK", "SPCX", "TSLA", "TSM", "ENTG", "NBIS", "BE"],
+ "tw": ["2330", "2454", "2317", "2382", "2303", "3711"],
+ "merge": {"TSM": "2330", "ASX": "3711"},
+ "skip": ["SPY", "SOXX", "SOXL"]
+}

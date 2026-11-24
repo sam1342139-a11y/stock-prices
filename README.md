@@ -15,6 +15,9 @@
 | `.github/workflows/update-prices.yml` | 自動排程設定：決定**什麼時候**執行抓股價程式 | 要改請找 Claude |
 | `macro/` | **總經數據**：利率、公債殖利率、VIX、CPI、失業率、美元兌台幣，每日自動更新，詳見資料夾內的 README | 要改請找 Claude |
 | `.github/workflows/update-macro.yml` | 總經數據的自動排程 | 要改請找 Claude |
+| `earnings/` | **法說會行事曆**（calendar.json）與**台股財報數字**（tw_financials.json）；追蹤清單 watchlist.json 可自行加代號，說明見 `docs/FCN_FEEDS.md` | 只改 watchlist.json |
+| `news/` | **新聞初篩**（raw.json）：每天早上的新聞標題清單，只存標題與連結 | ❌ 系統自動更新 |
+| `fcn/` | **FCN 晨間用資料**：`prices_checked.json`（收盤價檢查結果，晨間更新直接讀），說明見 `docs/FCN_FEEDS.md` | ❌ 系統自動更新 |
 | `fcn-monitor/` | **FCN 每日燈號監控**：算出每檔商品離敲出、敲入的距離，寄 Email 通知；商品條件存在 GitHub 密鑰，詳見資料夾內的 README | 要改請找 Claude |
 | `.github/workflows/fcn-monitor.yml` | FCN 燈號監控的自動排程（每日股價抓完後接著執行） | 要改請找 Claude |
 | `tw/` | **台股每日資料**（證交所上市全市場）：收盤、成交量、本益比、殖利率、三大法人、月營收 | ❌ 系統自動更新 |
@@ -25,6 +28,7 @@
 | `lib/` | 各程式共用的小工具 | 要改請找 Claude |
 | `docs/SETUP.md` | **完整系統設定說明**（排程、資料來源、密鑰名稱、待辦），每次修改都會更新 | 要改請找 Claude |
 | `docs/REGIME.md` | 市場風險燈號的計分規則 | 要改請找 Claude |
+| `docs/FCN_FEEDS.md` | FCN 晨間用資料檔與 email 通知的欄位說明 | 要改請找 Claude |
 | `docs/DATA_CHECKS.md` | 資料合理性檢查的規則（數字異常時不發布、開 issue 通知） | 要改請找 Claude |
 | `docs/TW_MODELS.md` | 台股模型的完整規則 | 要改請找 Claude |
 | `docs/PAPER.md` | **模擬資金追蹤**（七三組合、長期、0050 各 100 萬元，每個交易日更新） | ❌ 程式產生 |

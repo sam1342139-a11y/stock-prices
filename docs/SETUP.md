@@ -36,6 +36,12 @@
 
 ## 各功能說明
 
+### FCN 晨間用資料檔（fcn/）與 email 通知
+- `fcn/prices_checked.json`：`update-prices` 抓完 `latest.json` 後由 `fcn/check_prices.py` 檢查（終值修正、拆合股、±25% 請留意、國泰世華牌告匯率），欄位見 `docs/FCN_FEEDS.md`
+- `update-fcn-feeds` 排程（每天台灣 06:40）：`news/raw.json`（新聞標題）、`earnings/calendar.json`（法說會）、`earnings/tw_financials.json`（台股財報）
+- `weekly-report` 排程（週一台灣 06:10）：`tw-models/latest/weekly_report.md`
+- `notify` 排程：其他排程跑完後，失敗或燈號轉色、長期換股、資料檢查未通過時寄 email（`lib/notify.py`）
+
 ### 台股每日資料（tw/）
 - 來源：證交所 OpenAPI `STOCK_DAY_ALL`（日成交）、`BWIBBU_ALL`（本益比／殖利率／淨值比）、`T86`（三大法人）、`t187ap05_L`（月營收）
 - `tw/latest.csv` 欄位：`code,name,date,close,volume,high,low,pe,dy,pb,foreign,trust,dealer`
@@ -97,6 +103,7 @@
 | `FCN_PRODUCTS` | FCN 商品條件，不含客戶姓名 |
 | `GMAIL_USER` | 寄信用的 Gmail 帳號 |
 | `GMAIL_APP_PASSWORD` | Gmail 應用程式密碼 |
+| `MAIL_TO`（選填） | 通知信收件人，沒設就寄給 `GMAIL_USER` |
 | `FINMIND_TOKEN` | FinMind API token（台股模型：每日市場層級資料） |
 
 ## Twelve Data 每日用量（免費方案上限 800 次／天、8 次／分鐘）
@@ -143,3 +150,4 @@
 - 修正每日資料檔名比對：market_taiex 會誤吃 market_taiex_tri（報酬指數），造成 11 月水位燈號第 1 項錯誤
 - regime_tw.json 加整體燈號 overall_light；swing.json 停損價改名 stop_price_est 並說明實際以進場價計（只改輸出，不改規則）
 - 用量守則寫進 CLAUDE.md；新增 docs/handoff/（交接文件），第一份是「儀表板排程改用 GitHub Actions」
+- 新增 FCN 晨間用資料檔：fcn/prices_checked.json、earnings/calendar.json、earnings/tw_financials.json、news/raw.json、tw-models/latest/weekly_report.md；notify 排程（email 通知）；docs/FCN_FEEDS.md

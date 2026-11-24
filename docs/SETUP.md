@@ -38,6 +38,8 @@
 
 ### FCN 晨間用資料檔（fcn/）與 email 通知
 - `fcn/prices_checked.json`：`update-prices` 抓完 `latest.json` 後由 `fcn/check_prices.py` 檢查（終值修正、拆合股、±25% 請留意、國泰世華牌告匯率），欄位見 `docs/FCN_FEEDS.md`
+- `update-fcn-feeds` 排程（每天台灣 06:40）：`news/raw.json`（新聞標題）、`earnings/calendar.json`（法說會）、`earnings/tw_financials.json`（台股財報）
+- `weekly-report` 排程（週一台灣 06:10）：`tw-models/latest/weekly_report.md`
 - `notify` 排程：其他排程跑完後，失敗或燈號轉色、長期換股、資料檢查未通過時寄 email（`lib/notify.py`）
 
 ### 台股每日資料（tw/）
@@ -148,4 +150,4 @@
 - 修正每日資料檔名比對：market_taiex 會誤吃 market_taiex_tri（報酬指數），造成 11 月水位燈號第 1 項錯誤
 - regime_tw.json 加整體燈號 overall_light；swing.json 停損價改名 stop_price_est 並說明實際以進場價計（只改輸出，不改規則）
 - 用量守則寫進 CLAUDE.md；新增 docs/handoff/（交接文件），第一份是「儀表板排程改用 GitHub Actions」
-- 新增 fcn/prices_checked.json（收盤價檢查）與 notify 排程（email 通知）；docs/FCN_FEEDS.md
+- 新增 FCN 晨間用資料檔：fcn/prices_checked.json、earnings/calendar.json、earnings/tw_financials.json、news/raw.json、tw-models/latest/weekly_report.md；notify 排程（email 通知）；docs/FCN_FEEDS.md

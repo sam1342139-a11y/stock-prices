@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-23 23:16:41",
+ "generated_at_utc": "2026-11-24 00:23:11",
  "problems": [],
  "sources": [
   {
@@ -18,6 +18,8 @@
  "date": "2026-11-23",
  "total": 6,
  "max_total": 10,
+ "overall_light": "紅",
+ "overall_light_rule": "總分 0～2 綠、3～5 黃、6 以上紅（與參考水位同一組級距）",
  "reference_exposure_pct": [
   20,
   40

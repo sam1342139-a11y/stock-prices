@@ -1,0 +1,39 @@
+name: notify
+# Email alerts without AI: runs after the other schedules finish.
+#  - a schedule failed -> mail with the run link
+#  - a schedule succeeded -> compare the files it committed with their previous version (lib/notify.py watch)
+on:
+  workflow_run:
+    workflows: [update-prices, update-macro, update-regime, update-fx, update-tw, update-tw-models, update-earnings, fcn-monitor, tw-models-backfill, tw-models-spot-check]
+    types: [completed]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  notify:
+    if: github.event.workflow_run.conclusion == 'failure' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 200
+      - name: failure mail
+        if: github.event.workflow_run.conclusion == 'failure'
+        # mail only when the previous run of the same schedule did not fail too (no hourly repeats)
+        run: |
+          prev=$(gh run list -R "${{ github.repository }}" --workflow "${{ github.event.workflow_run.name }}" --status completed --limit 2 --json conclusion -q '.[1].conclusion' || echo "")
+          if [ "$prev" = "failure" ]; then echo "previous run also failed: already mailed"; exit 0; fi
+          python3 lib/notify.py failure "${{ github.event.workflow_run.name }}" "${{ github.event.workflow_run.html_url }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+      - name: change mail
+        if: github.event.workflow_run.conclusion == 'success'
+        run: python3 lib/notify.py watch "${{ github.event.workflow_run.created_at }}"
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}

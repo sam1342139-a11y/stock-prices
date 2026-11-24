@@ -266,6 +266,14 @@ FinMind 的說明寫明資料用於「教育、非商業用途」，並要求遵
 - 每天從開始日整段重算（結果可重現，沒有隱藏狀態）。
 - 輸出：`tw-models/paper/latest.json`（淨值、報酬、回撤、持股、下次換股日）、`tw-models/paper/nav.csv`（每日淨值）、`docs/PAPER.md`（手機好讀，含每月報酬）。
 
+## 盤後籌碼整理（`tw-models/latest/after_market.json`，每個交易日 18:30）
+`tw-models/after_market.py` 只整理證交所公開的收盤後數字，不做預測：
+- **三大法人買賣超金額**（外資含外資自營商、投信、自營商、合計）：當日、近 5 日、近 20 日累計（億元），以及外資、投信、自營商的連續買超或賣超天數（正數是連買、負數是連賣）。
+- **融資餘額**：餘額、當日增減（億元、%）、近 20 日變化，並附加權指數近 20 日漲跌，方便對照「指數跌、融資增」的警訊。
+- **個股法人買賣超排行**：外資、投信的買超前 10 名和賣超前 10 名（張數，以及張數 × 收盤估算的金額）。
+- 已和證交所「三大法人買賣金額統計表」核對 2026-11-20：外資 −95.1 億、投信 −73.5 億、自營商 −340.8 億、合計 −509.4 億，完全一致。
+- 融資餘額通常比法人資料晚公布，18:30 還沒有時會寫進 `problems`，21:30、23:30 的備援排程會補上。
+
 ## 進階績效報告（quantstats）
 開源套件 **quantstats**（Apache-2.0）只用來產生報告與交叉驗證，**模型規則不變（v1.0）**。
 - `python3 tw-models/extra_backtests.py --qs` → `docs/BACKTEST_quantstats.md`：七三組合、長期 100%、0050 的索提諾值、年化波動、最長回撤天數、卡瑪值、月勝率、最佳／最差月、單日風險值，以及月報酬熱力圖。
@@ -279,6 +287,7 @@ FinMind 的說明寫明資料用於「教育、非商業用途」，並要求遵
 - `tw-models/latest/regime_tw.json`（每個交易日；整體燈號 `overall_light`；`reference_exposure_pct` = 參考水位，回測擇時效果不明顯）
 - `tw-models/latest/swing.json`（每週五：名單、上榜原因、預估停損價 `stop_price_est`（訊號日收盤 × 0.92，實際以進場成交價 × 0.92）、20 日均線、新進／剔除；`caution`：回測未勝過 0050，僅供觀察）
 - `tw-models/latest/long.json`（每季：名單、產業、上榜原因、下次換股日、新進／剔除）
+- `tw-models/latest/after_market.json`（每個交易日：三大法人、融資餘額、個股法人買賣超排行）
 - `tw-models/latest/old_screen.json`（每個交易日：33 檔固定名單的 4 項評分，與 §F 同規則）
 - `tw-models/paper/latest.json`（每個交易日：模擬資金三組的淨值與持股）
 - `tw-models/latest/core_satellite.json`（每週五：0050 70%＋長期 30% 目標配置、下次再平衡日、回測摘要）

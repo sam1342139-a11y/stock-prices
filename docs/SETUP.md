@@ -1,6 +1,6 @@
 # 系統設定說明（SETUP）
 
-> 每次修改系統都要同步更新這份文件。最後更新：2026-11-24（導入開源套件 quantstats 報告、pandera 欄位格式檢查）
+> 每次修改系統都要同步更新這份文件。最後更新：2026-11-24（新增每日盤後籌碼整理 after_market.json）
 
 本存放庫 `sam1342139-a11y/stock-prices` 是**公開的**。
 **只放市場公開資料，不放任何客戶或個人持股資料；不放密碼或 API 金鑰。**
@@ -26,6 +26,7 @@
 | **市場風險燈號** | 週二～六 07:00 | `regime/fetch_regime.py` | `regime/regime.json`、`regime/history.csv`、`regime/spy_history.csv` |
 | **台股每日資料** | 平日 17:30（沒抓到最新日期，18:00 再試一次） | `tw/fetch_tw.py` | `tw/latest.csv`、`tw/revenue.csv`、`tw/meta.json` |
 | **台股模型資料＋水位燈號** | 平日 18:30（21:30、23:30 備援） | `tw-models/update_daily.py`、`fetch_us_market.py`、`regime_tw.py` | `tw-models/data/daily/`、`tw-models/latest/regime_tw.json` |
+| **盤後籌碼整理** | 平日 18:30 排程內 | `tw-models/after_market.py` | `tw-models/latest/after_market.json` |
 | **33 檔觀察名單評分** | 平日 18:30 排程內 | `tw-models/models.py --screen` | `tw-models/latest/old_screen.json` |
 | **模擬資金追蹤** | 平日 18:30 排程內 | `tw-models/paper.py` | `tw-models/paper/latest.json`、`nav.csv`、`docs/PAPER.md` |
 | **波段／長期名單** | 每週五 18:30 排程內（約 18:45 完成）；手動執行也會產生 | `tw-models/models.py --latest` | `tw-models/latest/swing.json`、`long.json`、`core_satellite.json` |
@@ -136,6 +137,7 @@
 - 驗收抽查通過（18 筆一致），規則凍結 v1.0；修正抽查程式的民國日期格式
 - 新增資料合理性檢查（docs/DATA_CHECKS.md）
 - 導入 quantstats（docs/BACKTEST_quantstats.md、模擬資金進階指標）與 pandera（欄位格式檢查）
+- 新增每日盤後籌碼整理（三大法人、融資餘額、個股法人買賣超排行）
 - 新增模擬資金追蹤（七三組合、長期 100%、0050，各 100 萬元，從 2026-11-23 起）
 - 修正每日資料檔名比對：market_taiex 會誤吃 market_taiex_tri（報酬指數），造成 11 月水位燈號第 1 項錯誤
 - regime_tw.json 加整體燈號 overall_light；swing.json 停損價改名 stop_price_est 並說明實際以進場價計（只改輸出，不改規則）

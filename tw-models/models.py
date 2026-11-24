@@ -468,14 +468,15 @@ def write_latest():
         i = s.idx[d]
         lst.append({"rank": k + 1, "code": c, "name": info(c).get("name"), "score": round(score[c], 3),
                     "reason": reason_swing(P, raw, c), "close": s.close[i],
-                    "stop_price": round(s.close[i] * (1 - cfg["swing"]["exit_a"]["stop_loss_pct"] / 100), 2),
+                    "stop_price_est": round(s.close[i] * (1 - cfg["swing"]["exit_a"]["stop_loss_pct"] / 100), 2),
                     "ma20": round(sum(s.close[i - 19:i + 1]) / 20, 2)})
     cur = [x["code"] for x in lst]
     C.write_json("tw-models/latest/swing.json", {
         "date": d, "trade_on": "下一個交易日開盤", "regime_total": reg["total"] if reg else None,
         "red_light": red, "note": "水位紅燈（總分 ≥ 6）時只列前 3 名" if red else "前 %d 名等權重" % n,
         "caution": "回測未勝過 0050，僅供觀察",
-        "stop_rule": "停損價 = 訊號日收盤 × 0.92（實際以進場價 −8% 計）；或收盤跌破 20 日均線；或持有滿 20 個交易日",
+        "stop_rule": "實際停損 = 進場成交價（隔天開盤價含滑價）× 0.92，收盤跌破就隔天開盤賣出，與回測相同；或收盤跌破 20 日均線；或持有滿 20 個交易日",
+        "stop_price_est_note": "stop_price_est 是用訊號日收盤價 × 0.92 預估（進場價要隔天開盤才知道），實際停損價以進場成交價計算",
         "list": lst,
         "changes": {"new": [c for c in cur if c not in prev_codes], "dropped": [c for c in prev_codes if c not in cur]},
         "footer": FOOTER}, problems, SOURCES)

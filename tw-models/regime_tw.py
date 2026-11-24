@@ -132,6 +132,9 @@ def write_latest(cfg, allres, problems):
     changed = [NAMES[k] for k in ITEMS if prev and res["items"][k][0] > prev["items"][k][0]]
     C.write_json("tw-models/latest/regime_tw.json", {
         "date": d, "total": res["total"], "max_total": 10,
+        # overall light follows the same three score bands as the reference exposure (0-2 / 3-5 / 6+)
+        "overall_light": ["綠", "黃", "紅"][cfg["regime_tw"]["levels"].index(lv)],
+        "overall_light_rule": "總分 0～2 綠、3～5 黃、6 以上紅（與參考水位同一組級距）",
         "reference_exposure_pct": [int(lv["exposure"][0] * 100), int(lv["exposure"][1] * 100)],
         "reference_exposure_label": "參考水位（回測擇時效果不明顯）",
         "timing_note": "樣本外（2024～今）水位調整 97.6% vs 固定比例 97.2%，擇時效果與固定持股比例幾乎相同；見 docs/BACKTEST_regime_tw.md",

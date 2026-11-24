@@ -564,7 +564,33 @@ def write_core_satellite(cfg, d, sig, long_list, days, problems):
         "footer": FOOTER}, probs, SOURCES)
 
 
+def write_screen():
+    """tw-models/latest/old_screen.json: the fixed 33-stock list scored on the 4 conditions (daily, public data only)."""
+    cfg = T.config()
+    cal = T.calendar()
+    d = cal[-1]
+    picks, ranked, score, detail = old_rank(d, cfg)
+    rows = []
+    for c in ranked:
+        s = T.prices(c)
+        i = s.idx[d]
+        rf = rev_features(c, d)
+        pe = T.per(c).get(d, (None, None, None))
+        rows.append({"code": c, "name": info(c).get("name"), "score": score[c], "close": s.close[i],
+                     "ret20_pct": round((s.close_adj[i] / s.close_adj[i - 20] - 1) * 100, 2),
+                     "pe": pe[0], "dy": pe[1], "rev_yoy_pct": round(rf[3] * 100, 2) if rf and rf[3] is not None else None,
+                     "checks": detail[c], "top8": c in picks})
+    missing = [c for c in cfg["old_screen"]["universe"] if c not in score]
+    problems = ["%s 沒有 %s 的資料，未評分" % (c, d) for c in missing]
+    C.write_json("tw-models/latest/old_screen.json", {
+        "date": d, "rule": "33 檔固定名單；營收年增 ≥ 10%、本益比 < 20、殖利率 ≥ 3%、近 20 日上漲，各 1 分；同分以近 20 日報酬排序",
+        "list": rows, "footer": FOOTER}, problems, SOURCES)
+    print("screen", d, len(rows))
+
+
 if __name__ == "__main__":
+    if "--screen" in sys.argv:
+        write_screen()
     if "--backtest" in sys.argv:
         backtest_all()
     if "--latest" in sys.argv:

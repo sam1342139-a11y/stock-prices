@@ -55,6 +55,9 @@ jobs:
       - name: regime_tw
         if: steps.chk.outputs.ready == 'true'
         run: python3 tw-models/regime_tw.py
+      - name: 33-stock screen (daily)
+        if: steps.chk.outputs.ready == 'true'
+        run: python3 tw-models/models.py --screen
       - name: swing / long lists (Fridays)
         if: steps.chk.outputs.ready == 'true' && steps.chk.outputs.lists == 'true'
         run: python3 tw-models/models.py --latest

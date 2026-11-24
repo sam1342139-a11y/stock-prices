@@ -270,6 +270,7 @@ FinMind 的說明寫明資料用於「教育、非商業用途」，並要求遵
 - `tw-models/latest/regime_tw.json`（每個交易日；整體燈號 `overall_light`；`reference_exposure_pct` = 參考水位，回測擇時效果不明顯）
 - `tw-models/latest/swing.json`（每週五：名單、上榜原因、預估停損價 `stop_price_est`（訊號日收盤 × 0.92，實際以進場成交價 × 0.92）、20 日均線、新進／剔除；`caution`：回測未勝過 0050，僅供觀察）
 - `tw-models/latest/long.json`（每季：名單、產業、上榜原因、下次換股日、新進／剔除）
+- `tw-models/latest/old_screen.json`（每個交易日：33 檔固定名單的 4 項評分，與 §F 同規則）
 - `tw-models/paper/latest.json`（每個交易日：模擬資金三組的淨值與持股）
 - `tw-models/latest/core_satellite.json`（每週五：0050 70%＋長期 30% 目標配置、下次再平衡日、回測摘要）
 - 頁尾註明：「模型依公開資料與固定規則產生，回測不代表未來，非投資建議。」

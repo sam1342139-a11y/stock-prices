@@ -1,0 +1,580 @@
+{
+ "generated_at_utc": "2026-11-24 00:48:01",
+ "problems": [],
+ "sources": [
+  {
+   "name": "FinMind（歷史股價、本益比、法人、月營收、除權息、季報）",
+   "url": "https://api.finmindtrade.com/api/v4/data"
+  },
+  {
+   "name": "證交所 OpenAPI（每日累加）",
+   "url": "https://openapi.twse.com.tw/"
+  }
+ ],
+ "date": "2026-11-23",
+ "rule": "33 檔固定名單；營收年增 ≥ 10%、本益比 < 20、殖利率 ≥ 3%、近 20 日上漲，各 1 分；同分以近 20 日報酬排序",
+ "list": [
+  {
+   "code": "2412",
+   "name": "中華電",
+   "score": 3,
+   "close": 164.5,
+   "ret20_pct": 4.11,
+   "pe": 30.18,
+   "dy": 3.16,
+   "rev_yoy_pct": 13.45,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": true,
+    "近20日上漲": true
+   },
+   "top8": true
+  },
+  {
+   "code": "2603",
+   "name": "長榮",
+   "score": 3,
+   "close": 234.5,
+   "ret20_pct": -9.81,
+   "pe": 6.39,
+   "dy": 6.82,
+   "rev_yoy_pct": 96.13,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": true
+  },
+  {
+   "code": "2317",
+   "name": "鴻海",
+   "score": 3,
+   "close": 206.0,
+   "ret20_pct": -15.92,
+   "pe": 12.46,
+   "dy": 3.48,
+   "rev_yoy_pct": 45.73,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": true
+  },
+  {
+   "code": "2357",
+   "name": "華碩",
+   "score": 3,
+   "close": 758.0,
+   "ret20_pct": -19.87,
+   "pe": 9.1,
+   "dy": 5.54,
+   "rev_yoy_pct": 62.25,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": true
+  },
+  {
+   "code": "2382",
+   "name": "廣達",
+   "score": 3,
+   "close": 257.0,
+   "ret20_pct": -20.19,
+   "pe": 10.49,
+   "dy": 6.07,
+   "rev_yoy_pct": 103.96,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": true
+  },
+  {
+   "code": "3231",
+   "name": "緯創",
+   "score": 3,
+   "close": 148.5,
+   "ret20_pct": -21.84,
+   "pe": 9.98,
+   "dy": 3.7,
+   "rev_yoy_pct": 117.56,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": true
+  },
+  {
+   "code": "6669",
+   "name": "緯穎",
+   "score": 3,
+   "close": 1375.0,
+   "ret20_pct": -25.27,
+   "pe": 12.13,
+   "dy": 11.94,
+   "rev_yoy_pct": 80.94,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": true
+  },
+  {
+   "code": "3034",
+   "name": "聯詠",
+   "score": 3,
+   "close": 431.0,
+   "ret20_pct": -26.07,
+   "pe": 13.27,
+   "dy": 5.34,
+   "rev_yoy_pct": 27.59,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": true
+  },
+  {
+   "code": "3661",
+   "name": "世芯-KY",
+   "score": 2,
+   "close": 3560.0,
+   "ret20_pct": 1.86,
+   "pe": 39.41,
+   "dy": 0.91,
+   "rev_yoy_pct": 515.81,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": true
+   },
+   "top8": false
+  },
+  {
+   "code": "1216",
+   "name": "統一",
+   "score": 2,
+   "close": 75.5,
+   "ret20_pct": -5.15,
+   "pe": 17.89,
+   "dy": 3.97,
+   "rev_yoy_pct": 5.3,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "5880",
+   "name": "合庫金",
+   "score": 2,
+   "close": 25.9,
+   "ret20_pct": -8.16,
+   "pe": 16.93,
+   "dy": 4.05,
+   "rev_yoy_pct": -11.04,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2886",
+   "name": "兆豐金",
+   "score": 2,
+   "close": 50.0,
+   "ret20_pct": -9.42,
+   "pe": 18.73,
+   "dy": 3.5,
+   "rev_yoy_pct": -10.3,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2880",
+   "name": "華南金",
+   "score": 2,
+   "close": 44.9,
+   "ret20_pct": -10.74,
+   "pe": 19.44,
+   "dy": 3.23,
+   "rev_yoy_pct": 2.77,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2892",
+   "name": "第一金",
+   "score": 2,
+   "close": 37.65,
+   "ret20_pct": -11.1,
+   "pe": 17.59,
+   "dy": 3.45,
+   "rev_yoy_pct": -3.17,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2379",
+   "name": "瑞昱",
+   "score": 2,
+   "close": 666.0,
+   "ret20_pct": -13.73,
+   "pe": 23.02,
+   "dy": 3.75,
+   "rev_yoy_pct": 32.11,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2891",
+   "name": "中信金",
+   "score": 2,
+   "close": 63.8,
+   "ret20_pct": -14.82,
+   "pe": 15.49,
+   "dy": 3.92,
+   "rev_yoy_pct": -27.16,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2882",
+   "name": "國泰金",
+   "score": 2,
+   "close": 95.0,
+   "ret20_pct": -16.3,
+   "pe": 11.2,
+   "dy": 3.68,
+   "rev_yoy_pct": -45.76,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2881",
+   "name": "富邦金",
+   "score": 2,
+   "close": 130.5,
+   "ret20_pct": -17.67,
+   "pe": 12.2,
+   "dy": 3.26,
+   "rev_yoy_pct": -74.48,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2885",
+   "name": "元大金",
+   "score": 2,
+   "close": 58.4,
+   "ret20_pct": -19.34,
+   "pe": 12.51,
+   "dy": 3.77,
+   "rev_yoy_pct": 0.3,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2884",
+   "name": "玉山金",
+   "score": 2,
+   "close": 38.7,
+   "ret20_pct": -22.21,
+   "pe": 16.06,
+   "dy": 3.62,
+   "rev_yoy_pct": -16.03,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": true,
+    "殖利率≥3%": true,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2345",
+   "name": "智邦",
+   "score": 2,
+   "close": 1350.0,
+   "ret20_pct": -23.94,
+   "pe": 18.48,
+   "dy": 1.11,
+   "rev_yoy_pct": 91.16,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": true,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2303",
+   "name": "聯電",
+   "score": 2,
+   "close": 88.3,
+   "ret20_pct": -29.64,
+   "pe": 13.04,
+   "dy": 2.96,
+   "rev_yoy_pct": 18.33,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": true,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2327",
+   "name": "國巨*",
+   "score": 2,
+   "close": 310.0,
+   "ret20_pct": -38.86,
+   "pe": 17.65,
+   "dy": 1.94,
+   "rev_yoy_pct": 55.01,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": true,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2002",
+   "name": "中鋼",
+   "score": 1,
+   "close": 16.85,
+   "ret20_pct": -13.81,
+   "pe": 421.25,
+   "dy": 0.89,
+   "rev_yoy_pct": 30.98,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2330",
+   "name": "台積電",
+   "score": 1,
+   "close": 2030.0,
+   "ret20_pct": -14.88,
+   "pe": 20.66,
+   "dy": 1.08,
+   "rev_yoy_pct": 59.71,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2395",
+   "name": "研華",
+   "score": 1,
+   "close": 536.0,
+   "ret20_pct": -20.0,
+   "pe": 27.14,
+   "dy": 2.08,
+   "rev_yoy_pct": 88.42,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "1303",
+   "name": "南亞",
+   "score": 1,
+   "close": 226.5,
+   "ret20_pct": -24.75,
+   "pe": 21.19,
+   "dy": 0.35,
+   "rev_yoy_pct": 64.6,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "3017",
+   "name": "奇鋐",
+   "score": 1,
+   "close": 2365.0,
+   "ret20_pct": -24.8,
+   "pe": 26.14,
+   "dy": 0.88,
+   "rev_yoy_pct": 34.35,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "3711",
+   "name": "日月光投控",
+   "score": 1,
+   "close": 482.0,
+   "ret20_pct": -26.3,
+   "pe": 27.67,
+   "dy": 1.37,
+   "rev_yoy_pct": 47.13,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2308",
+   "name": "台達電",
+   "score": 1,
+   "close": 990.0,
+   "ret20_pct": -36.54,
+   "pe": 29.73,
+   "dy": 1.17,
+   "rev_yoy_pct": 30.12,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2383",
+   "name": "台光電",
+   "score": 1,
+   "close": 3090.0,
+   "ret20_pct": -39.05,
+   "pe": 33.1,
+   "dy": 0.81,
+   "rev_yoy_pct": 203.08,
+   "checks": {
+    "營收年增≥10%": true,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "2454",
+   "name": "聯發科",
+   "score": 0,
+   "close": 3685.0,
+   "ret20_pct": -8.1,
+   "pe": 59.27,
+   "dy": 1.45,
+   "rev_yoy_pct": 5.77,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  },
+  {
+   "code": "3008",
+   "name": "大立光",
+   "score": 0,
+   "close": 3620.0,
+   "ret20_pct": -41.38,
+   "pe": 20.86,
+   "dy": 2.21,
+   "rev_yoy_pct": -6.63,
+   "checks": {
+    "營收年增≥10%": false,
+    "本益比<20": false,
+    "殖利率≥3%": false,
+    "近20日上漲": false
+   },
+   "top8": false
+  }
+ ],
+ "footer": "模型依公開資料與固定規則產生，回測不代表未來，非投資建議。"
+}

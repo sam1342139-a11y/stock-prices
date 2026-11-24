@@ -111,6 +111,7 @@
 - **Claude Code（雲端）**：寫程式、改 GitHub、設定自動排程；每次修改都開修改申請單，按 Merge 才生效
 - **理專助手（claude.ai 專案）**：客戶相關工作（燈號網頁、客戶報告、圖卡）、新聞、財經日曆、**晨間簡報**（可讀取本存放庫的公開資料）
 - 客戶姓名、持倉、貸款資料一律不進 GitHub
+- 用量守則（一個任務一個對話、交接放 `docs/handoff/`、重複工作放 GitHub Actions 等）寫在 `CLAUDE.md`
 
 ## 安全紀錄
 - 2026-11-22：已用 git filter-repo 從所有歷史 commit 清除含客戶資料的 backfill 檔案並強制推送；確認無 fork。
@@ -141,3 +142,4 @@
 - 新增模擬資金追蹤（七三組合、長期 100%、0050，各 100 萬元，從 2026-11-23 起）
 - 修正每日資料檔名比對：market_taiex 會誤吃 market_taiex_tri（報酬指數），造成 11 月水位燈號第 1 項錯誤
 - regime_tw.json 加整體燈號 overall_light；swing.json 停損價改名 stop_price_est 並說明實際以進場價計（只改輸出，不改規則）
+- 用量守則寫進 CLAUDE.md；新增 docs/handoff/（交接文件），第一份是「儀表板排程改用 GitHub Actions」

@@ -10,20 +10,18 @@ jobs:
     steps:
       - name: probe
         run: |
+          set +e
           UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
-          p() { echo "=== $1"; curl -sL --max-time 30 -A "$UA" -H "Accept-Language: zh-TW,zh;q=0.9,en;q=0.8" "${@:2}" -o /tmp/o -w "HTTP %{http_code} size %{size_download} type %{content_type}\n"; head -c ${N:-600} /tmp/o | tr '\n' ' '; echo; }
-          p cathay https://www.cathaybk.com.tw/cathaybk/personal/product/deposit/currency-billboard/
+          p() { echo "=== $1"; curl -sL --max-time 90 -A "$UA" -H "Accept-Language: zh-TW,zh;q=0.9,en;q=0.8" "${@:2}" -o /tmp/o -w "HTTP %{http_code} size %{size_download} type %{content_type}\n" || true; head -c ${N:-600} /tmp/o | tr '\n' ' '; echo; }
+          N=400 p mops_old "https://mops.twse.com.tw/mops/web/ajax_t100sb02_1" --data "encodeURIComponent=1&step=1&firstin=1&off=1&TYPEK=sii&year=115&month=11"
+          N=400 p mopsov "https://mopsov.twse.com.tw/mops/web/ajax_t100sb02_1" --data "encodeURIComponent=1&step=1&firstin=1&off=1&TYPEK=sii&year=115&month=11"
           python3 - <<'PY'
           import re
           t=open('/tmp/o',encoding='utf-8',errors='replace').read()
-          t=re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',re.sub(r'(?s)<(script|style)[^>]*>.*?</\1>',' ',t)))
-          for c in ('USD','AUD','JPY'):
-              i=t.find(c); print(c, i, t[max(0,i-80):i+260] if i>=0 else '')
-          m=re.search(r'\d{4}/\d{2}/\d{2}[^0-9]{0,5}\d{2}:\d{2}',t); print('time', m.group(0) if m else None)
+          t=re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',t))
+          for c in ('2330','2454','2317','2303'):
+              i=t.find(' '+c+' '); print(c, i, t[max(0,i-20):i+300] if i>=0 else '')
           PY
-          N=800 p nasdaq "https://api.nasdaq.com/api/calendar/earnings?date=2026-11-24" -H "Accept: application/json"
-          N=400 p mops_old "https://mops.twse.com.tw/mops/web/ajax_t100sb02_1" --data "encodeURIComponent=1&step=1&firstin=1&off=1&TYPEK=sii&year=115&month=11"
-          N=400 p mopsov "https://mopsov.twse.com.tw/mops/web/ajax_t100sb02_1" --data "encodeURIComponent=1&step=1&firstin=1&off=1&TYPEK=sii&year=115&month=11"
           N=400 p mops_new "https://mops.twse.com.tw/mops/api/t100sb02_1" -H "Content-Type: application/json" --data '{"companyId":"","year":"115","month":"11","marketKind":"sii"}'
           N=500 p cnyes_us "https://api.cnyes.com/media/api/v1/newslist/category/us_stock?limit=5"
           N=500 p cnyes_tw "https://api.cnyes.com/media/api/v1/newslist/category/tw_stock?limit=5"

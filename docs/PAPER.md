@@ -23,4 +23,8 @@
 | 代號 | 名稱 | 市值 | 持有報酬 |
 |---|---|---|---|
 
+## 進階指標（quantstats）
+
+累積滿 20 個交易日後自動產生（目前 1 天）。
+
 原始數字：`tw-models/paper/latest.json`、`tw-models/paper/nav.csv`

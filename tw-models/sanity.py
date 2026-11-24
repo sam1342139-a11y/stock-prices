@@ -197,10 +197,13 @@ def check_schemas(problems, notes, d):
         "swing.json": DataFrameSchema({"rank": Column(int, Check.ge(1), unique=True), "code": Column(str, Check.str_matches(code)),
                                        "close": Column(float, Check.gt(0)), "stop_price_est": Column(float, Check.gt(0))}, strict=False, coerce=True),
         "long.json": DataFrameSchema({"rank": Column(int, Check.ge(1), unique=True), "code": Column(str, Check.str_matches(code), unique=True)}, strict=False, coerce=True),
+        "after_market.json": None,
         "old_screen.json": DataFrameSchema({"code": Column(str, Check.str_matches(code), unique=True), "score": Column(int, Check.in_range(0, 4)),
                                             "close": Column(float, Check.gt(0))}, strict=False, coerce=True),
     }
     for fn, sch in lists.items():
+        if sch is None:
+            continue
         p = os.path.join(ROOT, "tw-models", "latest", fn)
         if not os.path.exists(p):
             continue
@@ -213,6 +216,22 @@ def check_schemas(problems, notes, d):
         except pa.errors.SchemaErrors as e:
             n, ex = explain(e, df, "code")
             problems.append("%s 名單有 %d 處格式或數值不合理（例如 %s）" % (fn, n, ex))
+    am = os.path.join(ROOT, "tw-models", "latest", "after_market.json")
+    if os.path.exists(am):
+        top = json.load(open(am, encoding="utf-8")).get("top") or {}
+        sch = DataFrameSchema({"rank": Column(int, Check.ge(1), unique=True), "code": Column(str, Check.str_matches(code), unique=True),
+                               "close": Column(float, Check.gt(0))}, strict=False, coerce=True)
+        for k, rows in top.items():
+            if not rows:
+                continue
+            df = pd.DataFrame(rows)
+            try:
+                sch.validate(df, lazy=True)
+            except pa.errors.SchemaErrors as e:
+                n, ex = explain(e, df, "code")
+                problems.append("after_market.json %s 有 %d 處不合理（例如 %s）" % (k, n, ex))
+            if k.endswith("_buy") and (df["amt_yi"] < 0).any() or k.endswith("_sell") and (df["amt_yi"] > 0).any():
+                problems.append("after_market.json %s 的買賣方向不對" % k)
     reg = os.path.join(ROOT, "tw-models", "latest", "regime_tw.json")
     if os.path.exists(reg):
         items = json.load(open(reg, encoding="utf-8")).get("items") or {}

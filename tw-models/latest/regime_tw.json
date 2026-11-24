@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-24 00:23:11",
+ "generated_at_utc": "2026-11-24 00:35:53",
  "problems": [],
  "sources": [
   {
@@ -16,7 +16,7 @@
   }
  ],
  "date": "2026-11-23",
- "total": 6,
+ "total": 9,
  "max_total": 10,
  "overall_light": "紅",
  "overall_light_rule": "總分 0～2 綠、3～5 黃、6 以上紅（與參考水位同一組級距）",
@@ -31,14 +31,14 @@
  "items": {
   "taiex_ma200": {
    "name": "加權指數 vs 200 日均線",
-   "score": 0,
-   "color": "綠",
-   "value": 92.51,
+   "score": 2,
+   "color": "紅",
+   "value": -11.41,
    "date": "2026-11-23",
    "threshold": "綠：在 200 日均線之上且均線上升（20 日內上升超過 0.1%）；黃：在均線之上但走平或下降，或低於均線 0～3%；紅：低於均線超過 3%",
-   "taiex": 85129.9,
-   "ma200": 44221.67,
-   "ma200_20d_change_pct": 9.63
+   "taiex": 36811.9,
+   "ma200": 41555.17,
+   "ma200_20d_change_pct": 3.02
   },
   "foreign_20d": {
    "name": "外資近 20 日累計買賣超",
@@ -51,12 +51,12 @@
   },
   "margin_vs_index": {
    "name": "融資近 20 日變化 vs 指數",
-   "score": 0,
-   "color": "綠",
+   "score": 1,
+   "color": "黃",
    "value": -31.56,
    "date": "2026-11-23",
    "threshold": "紅：指數跌且融資增加；綠：指數漲且融資增加不超過 2%；其餘（兩者同向等）黃",
-   "index_20d_pct": 84.9
+   "index_20d_pct": -20.05
   },
   "usdtwd_20d": {
    "name": "美元兌台幣近 20 日",

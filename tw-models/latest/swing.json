@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-24 00:23:26",
+ "generated_at_utc": "2026-11-24 00:36:10",
  "problems": [
   "最新交易日 2026-11-23 不是週五，名單以最新交易日計算"
  ],
@@ -15,7 +15,7 @@
  ],
  "date": "2026-11-23",
  "trade_on": "下一個交易日開盤",
- "regime_total": 6,
+ "regime_total": 9,
  "red_light": true,
  "note": "水位紅燈（總分 ≥ 6）時只列前 3 名",
  "caution": "回測未勝過 0050，僅供觀察",

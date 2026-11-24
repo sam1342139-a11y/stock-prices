@@ -1,6 +1,6 @@
 # 系統設定說明（SETUP）
 
-> 每次修改系統都要同步更新這份文件。最後更新：2026-11-24（修正每日資料讀取：加權指數被誤讀成報酬指數）
+> 每次修改系統都要同步更新這份文件。最後更新：2026-11-24（新增每日 33 檔觀察名單評分 old_screen.json）
 
 本存放庫 `sam1342139-a11y/stock-prices` 是**公開的**。
 **只放市場公開資料，不放任何客戶或個人持股資料；不放密碼或 API 金鑰。**
@@ -26,6 +26,7 @@
 | **市場風險燈號** | 週二～六 07:00 | `regime/fetch_regime.py` | `regime/regime.json`、`regime/history.csv`、`regime/spy_history.csv` |
 | **台股每日資料** | 平日 17:30（沒抓到最新日期，18:00 再試一次） | `tw/fetch_tw.py` | `tw/latest.csv`、`tw/revenue.csv`、`tw/meta.json` |
 | **台股模型資料＋水位燈號** | 平日 18:30（21:30、23:30 備援） | `tw-models/update_daily.py`、`fetch_us_market.py`、`regime_tw.py` | `tw-models/data/daily/`、`tw-models/latest/regime_tw.json` |
+| **33 檔觀察名單評分** | 平日 18:30 排程內 | `tw-models/models.py --screen` | `tw-models/latest/old_screen.json` |
 | **模擬資金追蹤** | 平日 18:30 排程內 | `tw-models/paper.py` | `tw-models/paper/latest.json`、`nav.csv`、`docs/PAPER.md` |
 | **波段／長期名單** | 每週五 18:30 排程內（約 18:45 完成）；手動執行也會產生 | `tw-models/models.py --latest` | `tw-models/latest/swing.json`、`long.json`、`core_satellite.json` |
 

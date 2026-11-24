@@ -103,8 +103,54 @@ def combo():
     B.write_report("combo", "組合：0050 70%＋長期 30%", res, notes, [], M.SOURCES)
 
 
+def quantstats_report():
+    """Advanced figures (quantstats) for the core-satellite comparison; report only, rules unchanged."""
+    import qs_report as Q
+    cfg = T.config()
+    dl = T.delisted()
+    groups = {"0050 70%＋長期 30%": lambda s, e: B.run(M.combo_strategy(cfg, 0.7), s, e, delisted=dl),
+              "長期 100%": lambda s, e: B.run(M.long_strategy(cfg), s, e, delisted=dl),
+              "0050": lambda s, e: B.benchmark_0050(s, e)}
+    names = list(groups)
+    L = ["# 進階績效指標（quantstats）", "", "> 模型依公開資料與固定規則產生，回測不代表未來，非投資建議。", "",
+         "用開源套件 quantstats（Apache-2.0）重新計算七三組合、長期名單和 0050 的回測績效。**只用來看報告和交叉驗證，模型規則沒有改（v1.0）。**", "",
+         "- 夏普值、索提諾值：日報酬、無風險利率 0、乘 √252，和 `backtest.py` 的算法一樣。",
+         "- 最長回撤天數：從前高到重新站回前高的日曆天數（還沒回到前高的就算到最後一天）。",
+         "- 單日風險值（95%）：歷史上 95% 的交易日，單日虧損不會超過這個數字。",
+         "- 月報酬熱力圖：紅色是上漲、綠色是下跌（台股習慣）。", ""]
+    check = []
+    for per, (s, e) in B.periods().items():
+        res, curves = {}, {}
+        for n in names:
+            r = groups[n](s, e)
+            curves[n] = r["curve"]
+            res[n] = Q.metrics(r["curve"])
+            own = B.metrics(r)
+            check.append((per, n, own["sharpe"], res[n]["sharpe"], own["max_drawdown_pct"], res[n]["mdd_pct"], own["total_return_pct"], res[n]["total_pct"]))
+        L += ["## " + B.PERIOD_ZH[per], "", "期間：%s ～ %s" % (s, e), ""] + Q.table_md(names, res) + [""]
+        for n in ("0050 70%＋長期 30%", "0050"):
+            slug = "combo" if n != "0050" else "0050"
+            rel = "docs/img/QS_%s_%s.png" % (slug, per)
+            if Q.heatmap(curves[n], os.path.join(os.path.dirname(HERE), rel), "%s 月報酬（%%）— %s" % (n, B.PERIOD_ZH[per].split("（")[0])):
+                L += ["**%s 月報酬熱力圖**" % n, "", "![%s](img/%s)" % (slug, os.path.basename(rel)), ""]
+    L += ["## 交叉驗證：我們的回測引擎 vs quantstats", "", "兩邊各自計算同一條淨值曲線，數字應該一致；不一致代表有一邊算錯。", "",
+          "| 期間 | 組合 | 夏普值（引擎）| 夏普值（quantstats）| 最大回撤（引擎）| 最大回撤（quantstats）| 總報酬（引擎）| 總報酬（quantstats）|", "|---|---|---|---|---|---|---|---|"]
+    bad = 0
+    for per, n, s1, s2, d1, d2, t1, t2 in check:
+        ok = abs(s1 - s2) <= 0.02 and abs(d1 - d2) <= 0.05 and abs(t1 - t2) <= 0.05
+        bad += not ok
+        L.append("| %s | %s | %s | %s | %s%% | %s%% | %s%% | %s%% |%s" % (B.PERIOD_ZH[per].split("（")[0], n, s1, s2, d1, d2, t1, t2, "" if ok else " ⚠️ 不一致"))
+    L += ["", "結果：%s" % ("全部一致。" if not bad else "有 %d 列不一致，需要查原因。" % bad), ""]
+    with open(os.path.join(os.path.dirname(HERE), "docs", "BACKTEST_quantstats.md"), "w", encoding="utf-8") as f:
+        f.write("\n".join(L))
+    print("quantstats report written; mismatches:", bad)
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
+    if "--qs" in args:
+        quantstats_report()
+        sys.exit(0)
     if "--swing" in args or not args:
         swing()
     if "--combo" in args or not args:

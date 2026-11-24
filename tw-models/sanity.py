@@ -140,6 +140,92 @@ def check_outputs(problems):
             problems.append("regime_tw.json 總分 %r 不在 0～10" % r.get("total"))
 
 
+def check_schemas(problems, notes, d):
+    """Column-by-column format rules with pandera (MIT, https://github.com/unionai-oss/pandera).
+    Today's appended daily rows and the published lists must have the right types and ranges."""
+    try:
+        import pandas as pd
+        import pandera.pandas as pa
+        from pandera.pandas import Check, Column, DataFrameSchema
+    except Exception:
+        notes.append("pandera 沒有安裝，這次略過欄位格式檢查")
+        return
+    ymd, code = r"^\d{4}-\d{2}-\d{2}$", r"^[0-9A-Z]{4,6}$"
+
+    def explain(e, df, key):
+        """Readable examples: '代號：哪條規則（欄位=值）', one per offending row, at most 3."""
+        out, seen = [], set()
+        for _, r in e.failure_cases.iterrows():
+            idx = r["index"]
+            who = str(df.loc[idx, key]) if idx is not None and idx == idx and idx in df.index and key in df.columns else "整份"
+            what = str(r["check"]) if r["column"] in (None, "") or r["schema_context"] == "DataFrameSchema" else "%s=%s（%s）" % (r["column"], r["failure_case"], r["check"])
+            k = (who, what)
+            if k not in seen:
+                seen.add(k)
+                out.append("%s：%s" % (who, what))
+        return len(seen), "；".join(out[:3])
+    schemas = {
+        "prices": DataFrameSchema({
+            "date": Column(str, Check.str_matches(ymd)), "code": Column(str, Check.str_matches(code)),
+            "open": Column(float, Check.gt(0), nullable=True), "high": Column(float, Check.gt(0), nullable=True),
+            "low": Column(float, Check.gt(0), nullable=True), "close": Column(float, Check.gt(0)),
+            "volume": Column(float, Check.ge(0))},
+            checks=[Check(lambda df: (df["high"].isna() | (df["high"] >= df["low"])), error="最高價低於最低價"),
+                    Check(lambda df: (df["high"].isna() | ((df["close"] <= df["high"] * 1.0001) & (df["close"] >= df["low"] * 0.9999))), error="收盤不在最高、最低之間")],
+            unique=["date", "code"], strict=False, coerce=True),
+        "per": DataFrameSchema({"date": Column(str, Check.str_matches(ymd)), "code": Column(str, Check.str_matches(code)),
+            "pe": Column(float, Check.ge(0), nullable=True), "dy": Column(float, Check.in_range(0, 100), nullable=True),
+            "pb": Column(float, Check.ge(0), nullable=True)}, unique=["date", "code"], strict=False, coerce=True),
+        "inst": DataFrameSchema({"date": Column(str, Check.str_matches(ymd)), "code": Column(str, Check.str_matches(code)),
+            "foreign": Column(int), "trust": Column(int), "dealer": Column(int)}, unique=["date", "code"], strict=False, coerce=True),
+    }
+    daily = os.path.join(T.DATA, "daily")
+    for ds, sch in schemas.items():
+        p = os.path.join(daily, "%s_%s.csv" % (ds, (d or "")[:7]))
+        if not d or not os.path.exists(p):
+            continue
+        df = pd.read_csv(p, dtype={"code": str, "date": str})
+        df = df[df["date"] == d]
+        if df.empty:
+            continue
+        try:
+            sch.validate(df, lazy=True)
+        except pa.errors.SchemaErrors as e:
+            n, ex = explain(e, df, "code")
+            problems.append("%s 的每日 %s 資料有 %d 處格式或數值不合理（例如 %s）" % (d, ds, n, ex))
+    lists = {
+        "swing.json": DataFrameSchema({"rank": Column(int, Check.ge(1), unique=True), "code": Column(str, Check.str_matches(code)),
+                                       "close": Column(float, Check.gt(0)), "stop_price_est": Column(float, Check.gt(0))}, strict=False, coerce=True),
+        "long.json": DataFrameSchema({"rank": Column(int, Check.ge(1), unique=True), "code": Column(str, Check.str_matches(code), unique=True)}, strict=False, coerce=True),
+        "old_screen.json": DataFrameSchema({"code": Column(str, Check.str_matches(code), unique=True), "score": Column(int, Check.in_range(0, 4)),
+                                            "close": Column(float, Check.gt(0))}, strict=False, coerce=True),
+    }
+    for fn, sch in lists.items():
+        p = os.path.join(ROOT, "tw-models", "latest", fn)
+        if not os.path.exists(p):
+            continue
+        rows = json.load(open(p, encoding="utf-8")).get("list") or []
+        if not rows:
+            continue
+        df = pd.DataFrame(rows)
+        try:
+            sch.validate(df, lazy=True)
+        except pa.errors.SchemaErrors as e:
+            n, ex = explain(e, df, "code")
+            problems.append("%s 名單有 %d 處格式或數值不合理（例如 %s）" % (fn, n, ex))
+    reg = os.path.join(ROOT, "tw-models", "latest", "regime_tw.json")
+    if os.path.exists(reg):
+        items = json.load(open(reg, encoding="utf-8")).get("items") or {}
+        df = pd.DataFrame([{"key": k, "score": v.get("score"), "color": v.get("color")} for k, v in items.items()])
+        sch = DataFrameSchema({"score": Column(int, Check.isin([0, 1, 2])), "color": Column(str, Check.isin(["綠", "黃", "紅"]))}, strict=False, coerce=True)
+        try:
+            if len(df) != 5:
+                problems.append("regime_tw.json 應該有 5 項指標，現在是 %d 項" % len(df))
+            sch.validate(df, lazy=True)
+        except pa.errors.SchemaErrors as e:
+            problems.append("regime_tw.json 指標有 %d 處不合理（分數要 0／1／2、燈號要綠／黃／紅）" % len(e.failure_cases))
+
+
 def run_checks():
     problems, notes = [], []
     d = check_index(problems)
@@ -149,6 +235,7 @@ def run_checks():
     check_fx(problems)
     check_files(problems)
     check_outputs(problems)
+    check_schemas(problems, notes, d)
     return {"ok": not problems, "date": d, "checked_at_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
             "limits": LIMITS, "problems": problems, "notes": notes}
 

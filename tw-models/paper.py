@@ -122,11 +122,32 @@ def main():
            "monthly_return_pct": monthly,
            "note": "模擬資金，非真實帳戶；模型依公開資料與固定規則產生，回測與模擬不代表未來，非投資建議。"}
     C.write_json("tw-models/paper/latest.json", out, problems, M.SOURCES)
-    write_md(out)
+    write_md(out, {k: results[k]["curve"] for k in NAMES})
     print("paper", end, {k: results[k]["nav"] for k in NAMES})
 
 
-def write_md(o):
+QS_MIN_DAYS = 20
+
+
+def quantstats_section(curves):
+    """Advanced figures via quantstats once there are enough days; report only (rules unchanged)."""
+    days = min((len(c) for c in curves.values()), default=0)
+    L = ["", "## 進階指標（quantstats）", ""]
+    if days < QS_MIN_DAYS:
+        return L + ["累積滿 %d 個交易日後自動產生（目前 %d 天）。" % (QS_MIN_DAYS, days)]
+    try:
+        import qs_report as Q
+        res = {NAMES[k]: Q.metrics(c) for k, c in curves.items()}
+    except Exception as e:
+        return L + ["這次沒有產生（%s）。" % type(e).__name__]
+    L += Q.table_md(list(res), res)
+    img = Q.heatmap(curves["core_satellite"], C.out_path("docs/img/PAPER_core_satellite_monthly.png"), "七三組合 模擬資金 月報酬（%）")
+    if img:
+        L += ["", "![七三組合月報酬](img/PAPER_core_satellite_monthly.png)"]
+    return L
+
+
+def write_md(o, curves=None):
     L = ["# 模擬資金追蹤", "", "> 模擬資金，非真實帳戶；模型依公開資料與固定規則產生，非投資建議。", "",
          "規則版本 %s｜開始日 %s｜最新 %s｜每組起始 100 萬元｜下次換股：%s" % (o["version"], o["start"], o["date"], o["next_rebalance"]), "",
          "## 目前成績", "", "| 組合 | 淨值 | 報酬 | 最大回撤 | 交易次數 |", "|---|---|---|---|---|"]
@@ -138,6 +159,7 @@ def write_md(o):
     L += ["", "## 目前持股（七三組合）", "", "| 代號 | 名稱 | 市值 | 持有報酬 |", "|---|---|---|---|"]
     for h in o["portfolios"]["core_satellite"]["holdings"]:
         L.append("| %s | %s | %s | %s%% |" % (h["code"], h["name"], format(h["value"], ","), h["return_pct"]))
+    L += quantstats_section(curves or {})
     L += ["", "原始數字：`tw-models/paper/latest.json`、`tw-models/paper/nav.csv`", ""]
     with open(C.out_path("docs/PAPER.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(L))

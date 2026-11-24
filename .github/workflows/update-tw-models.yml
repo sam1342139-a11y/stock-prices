@@ -23,6 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: optional packages (quantstats reports, pandera checks)
+        continue-on-error: true
+        run: python3 -m pip install --quiet --user --break-system-packages -r tw-models/requirements.txt || python3 -m pip install --quiet --user -r tw-models/requirements.txt
       - name: restore raw data
         uses: actions/cache/restore@v4
         with:

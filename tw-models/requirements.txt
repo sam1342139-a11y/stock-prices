@@ -1,0 +1,5 @@
+# Optional packages for reports and data checks (the system still runs without them).
+# quantstats: Apache-2.0, https://github.com/ranaroussi/quantstats
+# pandera: MIT, https://github.com/unionai-oss/pandera
+quantstats==0.0.86
+pandera==0.35.0

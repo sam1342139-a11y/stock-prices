@@ -57,18 +57,14 @@ def fetch_fx():
     text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"(?s)<(script|style)[^>]*>.*?</\1>", " ", html)))
     out = {}
     for cur in ("USD", "AUD", "JPY"):
-        m = re.search(r"\(%s\)|（%s）|%s" % (cur, cur, cur), text)
-        if not m:
-            continue
-        seg = text[m.end():m.end() + 200]
-        print("FX segment", cur, ":", seg[:160])  # public board text, logged so the parser can be verified
-        nums = re.findall(r"\d+\.\d+", seg)
-        if nums:
-            out[cur] = float(nums[0])  # first number after the currency = spot buy (verify in log)
-    t = re.search(r"(\d{4}/\d{2}/\d{2})\s*(\d{2}:\d{2}(?::\d{2})?)", text)
+        # board block: "<中文名><CODE> 歷史走勢 ... 即期匯率 <bank buy> <bank sell>"
+        m = re.search(r"%s 歷史走勢.{0,80}?即期匯率 (\d+\.\d+) (\d+\.\d+)" % cur, text)
+        if m:
+            out[cur] = float(m.group(1))
+    t = re.search(r"(\d{4})年(\d{1,2})月(\d{1,2})日 (\d{2}:\d{2}(?::\d{2})?)", text)
     if len(out) < 3:
         return None, "國泰世華牌告匯率頁面格式讀不出 USD／AUD／JPY（讀到 %s），請繼續由 Claude 抓" % (sorted(out) or "無")
-    return {"date": t.group(1).replace("/", "-") if t else None, "time": t.group(2) if t else None,
+    return {"date": "%s-%02d-%02d" % (t.group(1), int(t.group(2)), int(t.group(3))) if t else None, "time": t.group(4) if t else None,
             "source": "國泰世華銀行 牌告匯率（即期買入）", **out}, None
 
 

@@ -1,0 +1,14 @@
+{
+ "note": "新聞標題比對用的名稱。標題出現代號或任一名稱，就把代號加進 tickers。可自行增減。",
+ "aliases": {
+  "AAPL": ["Apple", "蘋果"], "AMAT": ["Applied Materials", "應用材料", "應材"], "AMD": ["AMD", "超微"],
+  "ARM": ["Arm Holdings", "安謀"], "ASML": ["ASML", "艾司摩爾"], "ASX": ["ASE Technology", "日月光"],
+  "AVGO": ["Broadcom", "博通"], "AMZN": ["Amazon", "亞馬遜"], "CRWD": ["CrowdStrike"],
+  "GOOG": ["Alphabet", "Google", "谷歌", "Waymo"], "INTC": ["Intel", "英特爾"], "KLAC": ["KLA", "科磊"],
+  "LITE": ["Lumentum"], "MSFT": ["Microsoft", "微軟"], "MU": ["Micron", "美光"],
+  "NVDA": ["Nvidia", "NVIDIA", "輝達"], "SNDK": ["SanDisk", "Sandisk", "閃迪"], "SOXX": ["SOXX", "費半", "費城半導體"],
+  "SPCX": ["SPCX"], "SPY": ["S&P 500", "標普500", "標普 500"], "TSLA": ["Tesla", "特斯拉"],
+  "TSM": ["TSMC", "Taiwan Semiconductor", "台積電", "台積"], "ENTG": ["Entegris"], "NBIS": ["Nebius"],
+  "BE": ["Bloom Energy"], "SOXL": ["SOXL"]
+ }
+}

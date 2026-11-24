@@ -4,7 +4,7 @@ name: notify
 #  - a schedule succeeded -> compare the files it committed with their previous version (lib/notify.py watch)
 on:
   workflow_run:
-    workflows: [update-prices, weekly-report, update-macro, update-regime, update-fx, update-tw, update-tw-models, update-earnings, fcn-monitor, tw-models-backfill, tw-models-spot-check]
+    workflows: [update-prices, weekly-report, update-fcn-feeds, update-macro, update-regime, update-fx, update-tw, update-tw-models, update-earnings, fcn-monitor, tw-models-backfill, tw-models-spot-check]
     types: [completed]
 permissions:
   contents: read

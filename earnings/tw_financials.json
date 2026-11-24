@@ -1,0 +1,1150 @@
+{
+ "generated_at_utc": "2026-11-24 15:05:59",
+ "problems": [],
+ "sources": [
+  {
+   "name": "FinMind（公開資訊觀測站財報：綜合損益表、資產負債表、現金流量表、月營收）",
+   "url": "https://api.finmindtrade.com/api/v4/data"
+  },
+  {
+   "name": "公開資訊觀測站",
+   "url": "https://mops.twse.com.tw/"
+  }
+ ],
+ "units": {
+  "revenue": "新台幣元",
+  "inventory": "新台幣元",
+  "cogs": "新台幣元（營業成本）",
+  "operating_cash_flow": "新台幣元（單季，由年初累計數相減）"
+ },
+ "notes": [
+  "inventory_days（存貨週轉天數）= 存貨 ÷ 當季營業成本 × 當季天數，為計算值，公司若有揭露以公司為準",
+  "inventory_qoq_pct／inventory_yoy_pct：存貨季增／年增；inventory_days_qoq_pct：週轉天數季增",
+  "財報季（Q1 5/15、Q2 8/14、Q3 11/14、Q4 隔年 3/31 前公告），公告前最新一季不會出現",
+  "monthly_revenue：單月營收與年增率（最近 12 個月）"
+ ],
+ "companies": {
+  "2330": {
+   "code": "2330",
+   "quarters": [
+    {
+     "period": "2024Q4",
+     "end": "2024-12-31",
+     "revenue": 868461178000.0,
+     "gross_margin_pct": 59.0,
+     "operating_margin_pct": 49.02,
+     "eps": 14.45,
+     "inventory": 287868810000.0,
+     "cogs": 356083027000.0,
+     "operating_cash_flow": 620205283000.0,
+     "inventory_days": 74.4,
+     "inventory_qoq_pct": -1.71,
+     "inventory_yoy_pct": 14.69,
+     "inventory_days_qoq_pct": -11.53
+    },
+    {
+     "period": "2025Q1",
+     "end": "2025-03-31",
+     "revenue": 839253664000.0,
+     "gross_margin_pct": 58.79,
+     "operating_margin_pct": 48.51,
+     "eps": 13.95,
+     "inventory": 293387615000.0,
+     "cogs": 345858588000.0,
+     "operating_cash_flow": 625573672000.0,
+     "inventory_days": 76.3,
+     "inventory_qoq_pct": 1.92,
+     "inventory_yoy_pct": 9.83,
+     "inventory_days_qoq_pct": 2.55
+    },
+    {
+     "period": "2025Q2",
+     "end": "2025-06-30",
+     "revenue": 933791869000.0,
+     "gross_margin_pct": 58.62,
+     "operating_margin_pct": 49.63,
+     "eps": 15.36,
+     "inventory": 304193716000.0,
+     "cogs": 386422631000.0,
+     "operating_cash_flow": 497064085000.0,
+     "inventory_days": 71.6,
+     "inventory_qoq_pct": 3.68,
+     "inventory_yoy_pct": 11.63,
+     "inventory_days_qoq_pct": -6.16
+    },
+    {
+     "period": "2025Q3",
+     "end": "2025-09-30",
+     "revenue": 989918318000.0,
+     "gross_margin_pct": 59.45,
+     "operating_margin_pct": 50.58,
+     "eps": 17.44,
+     "inventory": 288689063000.0,
+     "cogs": 401375489000.0,
+     "operating_cash_flow": 426829081000.0,
+     "inventory_days": 66.2,
+     "inventory_qoq_pct": -5.1,
+     "inventory_yoy_pct": -1.43,
+     "inventory_days_qoq_pct": -7.54
+    },
+    {
+     "period": "2025Q4",
+     "end": "2025-12-31",
+     "revenue": 1046090421000.0,
+     "gross_margin_pct": 62.33,
+     "operating_margin_pct": 54.0,
+     "eps": 19.51,
+     "inventory": 288109485000.0,
+     "cogs": 394103585000.0,
+     "operating_cash_flow": 725508787000.0,
+     "inventory_days": 67.3,
+     "inventory_qoq_pct": -0.2,
+     "inventory_yoy_pct": 0.08,
+     "inventory_days_qoq_pct": 1.66
+    },
+    {
+     "period": "2026Q1",
+     "end": "2026-03-31",
+     "revenue": 1134103440000.0,
+     "gross_margin_pct": 66.25,
+     "operating_margin_pct": 58.1,
+     "eps": 22.08,
+     "inventory": 311453459000.0,
+     "cogs": 382808019000.0,
+     "operating_cash_flow": 698976265000.0,
+     "inventory_days": 73.2,
+     "inventory_qoq_pct": 8.1,
+     "inventory_yoy_pct": 6.16,
+     "inventory_days_qoq_pct": 8.77
+    },
+    {
+     "period": "2026Q2",
+     "end": "2026-06-30",
+     "revenue": 1270380250000.0,
+     "gross_margin_pct": 67.72,
+     "operating_margin_pct": 60.34,
+     "eps": 27.25,
+     "inventory": 385524542000.0,
+     "cogs": 410069555000.0,
+     "operating_cash_flow": 783364977000.0,
+     "inventory_days": 85.6,
+     "inventory_qoq_pct": 23.78,
+     "inventory_yoy_pct": 26.74,
+     "inventory_days_qoq_pct": 16.94
+    },
+    {
+     "period": "2026Q3",
+     "end": "2026-09-30",
+     "revenue": 1494243284000.0,
+     "gross_margin_pct": 66.41,
+     "operating_margin_pct": 58.65,
+     "eps": 29.43,
+     "inventory": 427753380000.0,
+     "cogs": 501864634000.0,
+     "operating_cash_flow": 919775483000.0,
+     "inventory_days": 78.4,
+     "inventory_qoq_pct": 10.95,
+     "inventory_yoy_pct": 48.17,
+     "inventory_days_qoq_pct": -8.41
+    }
+   ],
+   "monthly_revenue": [
+    {
+     "month": "2025-11",
+     "revenue": 343613802000,
+     "yoy_pct": 24.47
+    },
+    {
+     "month": "2025-12",
+     "revenue": 335003568000,
+     "yoy_pct": 20.43
+    },
+    {
+     "month": "2026-01",
+     "revenue": 401255128000,
+     "yoy_pct": 36.81
+    },
+    {
+     "month": "2026-02",
+     "revenue": 317656613000,
+     "yoy_pct": 22.17
+    },
+    {
+     "month": "2026-03",
+     "revenue": 415191699000,
+     "yoy_pct": 45.19
+    },
+    {
+     "month": "2026-04",
+     "revenue": 410725118000,
+     "yoy_pct": 17.5
+    },
+    {
+     "month": "2026-05",
+     "revenue": 416975163000,
+     "yoy_pct": 30.09
+    },
+    {
+     "month": "2026-06",
+     "revenue": 442679969000,
+     "yoy_pct": 67.87
+    },
+    {
+     "month": "2026-07",
+     "revenue": 467580548000,
+     "yoy_pct": 44.69
+    },
+    {
+     "month": "2026-08",
+     "revenue": 514805337000,
+     "yoy_pct": 53.32
+    },
+    {
+     "month": "2026-09",
+     "revenue": 511857399000,
+     "yoy_pct": 54.65
+    },
+    {
+     "month": "2026-10",
+     "revenue": 586890319000,
+     "yoy_pct": 59.71
+    }
+   ]
+  },
+  "2454": {
+   "code": "2454",
+   "quarters": [
+    {
+     "period": "2024Q4",
+     "end": "2024-12-31",
+     "revenue": 138043124000.0,
+     "gross_margin_pct": 48.54,
+     "operating_margin_pct": 15.51,
+     "eps": 14.94,
+     "inventory": 58414245000.0,
+     "cogs": 71041996000.0,
+     "operating_cash_flow": 44685106000.0,
+     "inventory_days": 75.6,
+     "inventory_qoq_pct": 5.0,
+     "inventory_yoy_pct": 35.15,
+     "inventory_days_qoq_pct": -0.4
+    },
+    {
+     "period": "2025Q1",
+     "end": "2025-03-31",
+     "revenue": 153312237000.0,
+     "gross_margin_pct": 48.14,
+     "operating_margin_pct": 19.6,
+     "eps": 18.43,
+     "inventory": 54537417000.0,
+     "cogs": 79502745000.0,
+     "operating_cash_flow": 13422960000.0,
+     "inventory_days": 61.7,
+     "inventory_qoq_pct": -6.64,
+     "inventory_yoy_pct": 10.82,
+     "inventory_days_qoq_pct": -18.39
+    },
+    {
+     "period": "2025Q2",
+     "end": "2025-06-30",
+     "revenue": 150368571000.0,
+     "gross_margin_pct": 49.13,
+     "operating_margin_pct": 19.54,
+     "eps": 17.5,
+     "inventory": 55482287000.0,
+     "cogs": 76490921000.0,
+     "operating_cash_flow": 45668702000.0,
+     "inventory_days": 66.0,
+     "inventory_qoq_pct": 1.73,
+     "inventory_yoy_pct": 3.55,
+     "inventory_days_qoq_pct": 6.97
+    },
+    {
+     "period": "2025Q3",
+     "end": "2025-09-30",
+     "revenue": 142096864000.0,
+     "gross_margin_pct": 46.53,
+     "operating_margin_pct": 15.61,
+     "eps": 15.84,
+     "inventory": 56964023000.0,
+     "cogs": 75984973000.0,
+     "operating_cash_flow": 39180927000.0,
+     "inventory_days": 69.0,
+     "inventory_qoq_pct": 2.67,
+     "inventory_yoy_pct": 2.39,
+     "inventory_days_qoq_pct": 4.55
+    },
+    {
+     "period": "2025Q4",
+     "end": "2025-12-31",
+     "revenue": 150188010000.0,
+     "gross_margin_pct": 46.13,
+     "operating_margin_pct": 14.55,
+     "eps": 14.4,
+     "inventory": 67234559000.0,
+     "cogs": 80907102000.0,
+     "operating_cash_flow": 64520283000.0,
+     "inventory_days": 76.5,
+     "inventory_qoq_pct": 18.03,
+     "inventory_yoy_pct": 15.1,
+     "inventory_days_qoq_pct": 10.87
+    },
+    {
+     "period": "2026Q1",
+     "end": "2026-03-31",
+     "revenue": 149150510000.0,
+     "gross_margin_pct": 46.3,
+     "operating_margin_pct": 15.35,
+     "eps": 15.17,
+     "inventory": 85470342000.0,
+     "cogs": 80095157000.0,
+     "operating_cash_flow": -17656664000.0,
+     "inventory_days": 96.0,
+     "inventory_qoq_pct": 27.12,
+     "inventory_yoy_pct": 56.72,
+     "inventory_days_qoq_pct": 25.49
+    },
+    {
+     "period": "2026Q2",
+     "end": "2026-06-30",
+     "revenue": 152182611000.0,
+     "gross_margin_pct": 46.2,
+     "operating_margin_pct": 15.03,
+     "eps": 15.28,
+     "inventory": 98420627000.0,
+     "cogs": 81874995000.0,
+     "operating_cash_flow": 24250644000.0,
+     "inventory_days": 109.4,
+     "inventory_qoq_pct": 15.15,
+     "inventory_yoy_pct": 77.39,
+     "inventory_days_qoq_pct": 13.96
+    },
+    {
+     "period": "2026Q3",
+     "end": "2026-09-30",
+     "revenue": 168057788000.0,
+     "gross_margin_pct": 46.32,
+     "operating_margin_pct": 16.13,
+     "eps": 17.5,
+     "inventory": 153531020000.0,
+     "cogs": 90209400000.0,
+     "operating_cash_flow": -4255736000.0,
+     "inventory_days": 156.6,
+     "inventory_qoq_pct": 55.99,
+     "inventory_yoy_pct": 169.52,
+     "inventory_days_qoq_pct": 43.14
+    }
+   ],
+   "monthly_revenue": [
+    {
+     "month": "2025-11",
+     "revenue": 46895680000,
+     "yoy_pct": 3.65
+    },
+    {
+     "month": "2025-12",
+     "revenue": 51266079000,
+     "yoy_pct": 22.99
+    },
+    {
+     "month": "2026-01",
+     "revenue": 46977055000,
+     "yoy_pct": -8.15
+    },
+    {
+     "month": "2026-02",
+     "revenue": 38954271000,
+     "yoy_pct": -15.63
+    },
+    {
+     "month": "2026-03",
+     "revenue": 63219184000,
+     "yoy_pct": 12.9
+    },
+    {
+     "month": "2026-04",
+     "revenue": 46736664000,
+     "yoy_pct": -4.14
+    },
+    {
+     "month": "2026-05",
+     "revenue": 47434191000,
+     "yoy_pct": 4.99
+    },
+    {
+     "month": "2026-06",
+     "revenue": 58011756000,
+     "yoy_pct": 2.8
+    },
+    {
+     "month": "2026-07",
+     "revenue": 48474930000,
+     "yoy_pct": 12.16
+    },
+    {
+     "month": "2026-08",
+     "revenue": 64183361000,
+     "yoy_pct": 44.08
+    },
+    {
+     "month": "2026-09",
+     "revenue": 55399497000,
+     "yoy_pct": 1.97
+    },
+    {
+     "month": "2026-10",
+     "revenue": 55025656000,
+     "yoy_pct": 5.77
+    }
+   ]
+  },
+  "2317": {
+   "code": "2317",
+   "quarters": [
+    {
+     "period": "2024Q4",
+     "end": "2024-12-31",
+     "revenue": 2130503832000.0,
+     "gross_margin_pct": 6.15,
+     "operating_margin_pct": 3.03,
+     "eps": 3.34,
+     "inventory": 835016178000.0,
+     "cogs": 1999460264000.0,
+     "operating_cash_flow": 184662484000.0,
+     "inventory_days": 38.4,
+     "inventory_qoq_pct": -5.49,
+     "inventory_yoy_pct": 14.27,
+     "inventory_days_qoq_pct": -17.77
+    },
+    {
+     "period": "2025Q1",
+     "end": "2025-03-31",
+     "revenue": 1644315563000.0,
+     "gross_margin_pct": 6.11,
+     "operating_margin_pct": 2.83,
+     "eps": 3.03,
+     "inventory": 1047613181000.0,
+     "cogs": 1543767136000.0,
+     "operating_cash_flow": -51063465000.0,
+     "inventory_days": 61.1,
+     "inventory_qoq_pct": 25.46,
+     "inventory_yoy_pct": 39.1,
+     "inventory_days_qoq_pct": 59.11
+    },
+    {
+     "period": "2025Q2",
+     "end": "2025-06-30",
+     "revenue": 1793468046000.0,
+     "gross_margin_pct": 6.33,
+     "operating_margin_pct": 3.16,
+     "eps": 3.19,
+     "inventory": 935826587000.0,
+     "cogs": 1679939050000.0,
+     "operating_cash_flow": 72939050000.0,
+     "inventory_days": 50.7,
+     "inventory_qoq_pct": -10.67,
+     "inventory_yoy_pct": 15.75,
+     "inventory_days_qoq_pct": -17.02
+    },
+    {
+     "period": "2025Q3",
+     "end": "2025-09-30",
+     "revenue": 2058949127000.0,
+     "gross_margin_pct": 6.35,
+     "operating_margin_pct": 3.43,
+     "eps": 4.15,
+     "inventory": 1185675170000.0,
+     "cogs": 1928192485000.0,
+     "operating_cash_flow": -71411309000.0,
+     "inventory_days": 56.6,
+     "inventory_qoq_pct": 26.7,
+     "inventory_yoy_pct": 34.2,
+     "inventory_days_qoq_pct": 11.64
+    },
+    {
+     "period": "2025Q4",
+     "end": "2025-12-31",
+     "revenue": 2606372027000.0,
+     "gross_margin_pct": 5.88,
+     "operating_margin_pct": 3.28,
+     "eps": 3.23,
+     "inventory": 1095574319000.0,
+     "cogs": 2453045056000.0,
+     "operating_cash_flow": 276388198000.0,
+     "inventory_days": 41.1,
+     "inventory_qoq_pct": -7.6,
+     "inventory_yoy_pct": 31.2,
+     "inventory_days_qoq_pct": -27.39
+    },
+    {
+     "period": "2026Q1",
+     "end": "2026-03-31",
+     "revenue": 2119533391000.0,
+     "gross_margin_pct": 6.18,
+     "operating_margin_pct": 3.57,
+     "eps": 3.56,
+     "inventory": 1209878099000.0,
+     "cogs": 1988552831000.0,
+     "operating_cash_flow": 3217154000.0,
+     "inventory_days": 54.8,
+     "inventory_qoq_pct": 10.43,
+     "inventory_yoy_pct": 15.49,
+     "inventory_days_qoq_pct": 33.33
+    },
+    {
+     "period": "2026Q2",
+     "end": "2026-06-30",
+     "revenue": 2525894433000.0,
+     "gross_margin_pct": 6.12,
+     "operating_margin_pct": 3.75,
+     "eps": 4.27,
+     "inventory": 1370072780000.0,
+     "cogs": 2371361112000.0,
+     "operating_cash_flow": -72339437000.0,
+     "inventory_days": 52.6,
+     "inventory_qoq_pct": 13.24,
+     "inventory_yoy_pct": 46.4,
+     "inventory_days_qoq_pct": -4.01
+    },
+    {
+     "period": "2026Q3",
+     "end": "2026-09-30",
+     "revenue": 3015633915000.0,
+     "gross_margin_pct": 6.02,
+     "operating_margin_pct": 3.83,
+     "eps": 5.51,
+     "inventory": 1507485125000.0,
+     "cogs": 2834120623000.0,
+     "operating_cash_flow": -56600742000.0,
+     "inventory_days": 48.9,
+     "inventory_qoq_pct": 10.03,
+     "inventory_yoy_pct": 27.14,
+     "inventory_days_qoq_pct": -7.03
+    }
+   ],
+   "monthly_revenue": [
+    {
+     "month": "2025-11",
+     "revenue": 844275843000,
+     "yoy_pct": 25.53
+    },
+    {
+     "month": "2025-12",
+     "revenue": 862861362000,
+     "yoy_pct": 31.77
+    },
+    {
+     "month": "2026-01",
+     "revenue": 730039420000,
+     "yoy_pct": 35.53
+    },
+    {
+     "month": "2026-02",
+     "revenue": 595813348000,
+     "yoy_pct": 8.06
+    },
+    {
+     "month": "2026-03",
+     "revenue": 803737716000,
+     "yoy_pct": 45.57
+    },
+    {
+     "month": "2026-04",
+     "revenue": 832097956000,
+     "yoy_pct": 29.74
+    },
+    {
+     "month": "2026-05",
+     "revenue": 859409333000,
+     "yoy_pct": 39.57
+    },
+    {
+     "month": "2026-06",
+     "revenue": 821762936000,
+     "yoy_pct": 52.11
+    },
+    {
+     "month": "2026-07",
+     "revenue": 946512543000,
+     "yoy_pct": 54.19
+    },
+    {
+     "month": "2026-08",
+     "revenue": 921766023000,
+     "yoy_pct": 51.98
+    },
+    {
+     "month": "2026-09",
+     "revenue": 1158633235000,
+     "yoy_pct": 38.42
+    },
+    {
+     "month": "2026-10",
+     "revenue": 1305319612000,
+     "yoy_pct": 45.73
+    }
+   ]
+  },
+  "2382": {
+   "code": "2382",
+   "quarters": [
+    {
+     "period": "2024Q4",
+     "end": "2024-12-31",
+     "revenue": 417312909000.0,
+     "gross_margin_pct": 7.45,
+     "operating_margin_pct": 3.63,
+     "eps": 4.12,
+     "inventory": 261886319000.0,
+     "cogs": 386235955000.0,
+     "operating_cash_flow": 8152725000.0,
+     "inventory_days": 62.4,
+     "inventory_qoq_pct": 17.03,
+     "inventory_yoy_pct": 111.6,
+     "inventory_days_qoq_pct": 19.31
+    },
+    {
+     "period": "2025Q1",
+     "end": "2025-03-31",
+     "revenue": 485671990000.0,
+     "gross_margin_pct": 7.92,
+     "operating_margin_pct": 5.07,
+     "eps": 5.06,
+     "inventory": 277147661000.0,
+     "cogs": 447189335000.0,
+     "operating_cash_flow": -34535096000.0,
+     "inventory_days": 55.8,
+     "inventory_qoq_pct": 5.83,
+     "inventory_yoy_pct": 87.15,
+     "inventory_days_qoq_pct": -10.58
+    },
+    {
+     "period": "2025Q2",
+     "end": "2025-06-30",
+     "revenue": 504121652000.0,
+     "gross_margin_pct": 7.05,
+     "operating_margin_pct": 4.05,
+     "eps": 4.37,
+     "inventory": 286281720000.0,
+     "cogs": 468588422000.0,
+     "operating_cash_flow": 76572924000.0,
+     "inventory_days": 55.6,
+     "inventory_qoq_pct": 3.3,
+     "inventory_yoy_pct": 55.11,
+     "inventory_days_qoq_pct": -0.36
+    },
+    {
+     "period": "2025Q3",
+     "end": "2025-09-30",
+     "revenue": 495258381000.0,
+     "gross_margin_pct": 6.85,
+     "operating_margin_pct": 3.71,
+     "eps": 4.26,
+     "inventory": 334618334000.0,
+     "cogs": 461339987000.0,
+     "operating_cash_flow": 34540918000.0,
+     "inventory_days": 66.7,
+     "inventory_qoq_pct": 16.88,
+     "inventory_yoy_pct": 49.53,
+     "inventory_days_qoq_pct": 19.96
+    },
+    {
+     "period": "2025Q4",
+     "end": "2025-12-31",
+     "revenue": 638637424000.0,
+     "gross_margin_pct": 6.33,
+     "operating_margin_pct": 3.76,
+     "eps": 5.75,
+     "inventory": 512945798000.0,
+     "cogs": 598239239000.0,
+     "operating_cash_flow": -86943707000.0,
+     "inventory_days": 78.9,
+     "inventory_qoq_pct": 53.29,
+     "inventory_yoy_pct": 95.87,
+     "inventory_days_qoq_pct": 18.29
+    },
+    {
+     "period": "2026Q1",
+     "end": "2026-03-31",
+     "revenue": 809221055000.0,
+     "gross_margin_pct": 4.78,
+     "operating_margin_pct": 2.85,
+     "eps": 5.5,
+     "inventory": 673886075000.0,
+     "cogs": 770524024000.0,
+     "operating_cash_flow": -92209981000.0,
+     "inventory_days": 78.7,
+     "inventory_qoq_pct": 31.38,
+     "inventory_yoy_pct": 143.15,
+     "inventory_days_qoq_pct": -0.25
+    },
+    {
+     "period": "2026Q2",
+     "end": "2026-06-30",
+     "revenue": 1036592712000.0,
+     "gross_margin_pct": 5.02,
+     "operating_margin_pct": 3.3,
+     "eps": 7.43,
+     "inventory": 790183522000.0,
+     "cogs": 984513859000.0,
+     "operating_cash_flow": 138138961000.0,
+     "inventory_days": 73.0,
+     "inventory_qoq_pct": 17.26,
+     "inventory_yoy_pct": 176.02,
+     "inventory_days_qoq_pct": -7.24
+    },
+    {
+     "period": "2026Q3",
+     "end": "2026-09-30",
+     "revenue": 1115544521000.0,
+     "gross_margin_pct": 4.75,
+     "operating_margin_pct": 2.89,
+     "eps": 7.08,
+     "inventory": 856064084000.0,
+     "cogs": 1062520141000.0,
+     "operating_cash_flow": 22101553000.0,
+     "inventory_days": 74.1,
+     "inventory_qoq_pct": 8.34,
+     "inventory_yoy_pct": 155.83,
+     "inventory_days_qoq_pct": 1.51
+    }
+   ],
+   "monthly_revenue": [
+    {
+     "month": "2025-11",
+     "revenue": 192946811000,
+     "yoy_pct": 36.5
+    },
+    {
+     "month": "2025-12",
+     "revenue": 272494820000,
+     "yoy_pct": 96.87
+    },
+    {
+     "month": "2026-01",
+     "revenue": 230834858000,
+     "yoy_pct": 61.92
+    },
+    {
+     "month": "2026-02",
+     "revenue": 215583149000,
+     "yoy_pct": 43.18
+    },
+    {
+     "month": "2026-03",
+     "revenue": 362803048000,
+     "yoy_pct": 88.42
+    },
+    {
+     "month": "2026-04",
+     "revenue": 339921315000,
+     "yoy_pct": 120.71
+    },
+    {
+     "month": "2026-05",
+     "revenue": 311481017000,
+     "yoy_pct": 94.38
+    },
+    {
+     "month": "2026-06",
+     "revenue": 385190820000,
+     "yoy_pct": 102.87
+    },
+    {
+     "month": "2026-07",
+     "revenue": 366274080000,
+     "yoy_pct": 131.32
+    },
+    {
+     "month": "2026-08",
+     "revenue": 423970932000,
+     "yoy_pct": 177.45
+    },
+    {
+     "month": "2026-09",
+     "revenue": 325299509000,
+     "yoy_pct": 76.69
+    },
+    {
+     "month": "2026-10",
+     "revenue": 353250414000,
+     "yoy_pct": 103.96
+    }
+   ]
+  },
+  "2303": {
+   "code": "2303",
+   "quarters": [
+    {
+     "period": "2024Q4",
+     "end": "2024-12-31",
+     "revenue": 60386110000.0,
+     "gross_margin_pct": 30.38,
+     "operating_margin_pct": 19.8,
+     "eps": 0.68,
+     "inventory": 35782464000.0,
+     "cogs": 42043529000.0,
+     "operating_cash_flow": 32977174000.0,
+     "inventory_days": 78.3,
+     "inventory_qoq_pct": -6.06,
+     "inventory_yoy_pct": 0.2,
+     "inventory_days_qoq_pct": -10.51
+    },
+    {
+     "period": "2025Q1",
+     "end": "2025-03-31",
+     "revenue": 57858957000.0,
+     "gross_margin_pct": 26.7,
+     "operating_margin_pct": 16.91,
+     "eps": 0.62,
+     "inventory": 35424924000.0,
+     "cogs": 42412312000.0,
+     "operating_cash_flow": 23825705000.0,
+     "inventory_days": 75.2,
+     "inventory_qoq_pct": -1.0,
+     "inventory_yoy_pct": 2.4,
+     "inventory_days_qoq_pct": -3.96
+    },
+    {
+     "period": "2025Q2",
+     "end": "2025-06-30",
+     "revenue": 58757657000.0,
+     "gross_margin_pct": 28.72,
+     "operating_margin_pct": 18.41,
+     "eps": 0.71,
+     "inventory": 34018188000.0,
+     "cogs": 41879559000.0,
+     "operating_cash_flow": 22098031000.0,
+     "inventory_days": 73.9,
+     "inventory_qoq_pct": -3.97,
+     "inventory_yoy_pct": -6.37,
+     "inventory_days_qoq_pct": -1.73
+    },
+    {
+     "period": "2025Q3",
+     "end": "2025-09-30",
+     "revenue": 59127040000.0,
+     "gross_margin_pct": 29.81,
+     "operating_margin_pct": 18.8,
+     "eps": 1.2,
+     "inventory": 35180506000.0,
+     "cogs": 41503722000.0,
+     "operating_cash_flow": 20937564000.0,
+     "inventory_days": 78.0,
+     "inventory_qoq_pct": 3.42,
+     "inventory_yoy_pct": -7.64,
+     "inventory_days_qoq_pct": 5.55
+    },
+    {
+     "period": "2025Q4",
+     "end": "2025-12-31",
+     "revenue": 61809545000.0,
+     "gross_margin_pct": 30.67,
+     "operating_margin_pct": 19.78,
+     "eps": 0.8,
+     "inventory": 37228383000.0,
+     "cogs": 42851107000.0,
+     "operating_cash_flow": 33002887000.0,
+     "inventory_days": 79.9,
+     "inventory_qoq_pct": 5.82,
+     "inventory_yoy_pct": 4.04,
+     "inventory_days_qoq_pct": 2.44
+    },
+    {
+     "period": "2026Q1",
+     "end": "2026-03-31",
+     "revenue": 61037902000.0,
+     "gross_margin_pct": 29.19,
+     "operating_margin_pct": 18.47,
+     "eps": 1.29,
+     "inventory": 38645404000.0,
+     "cogs": 43219412000.0,
+     "operating_cash_flow": 21981335000.0,
+     "inventory_days": 80.5,
+     "inventory_qoq_pct": 3.81,
+     "inventory_yoy_pct": 9.09,
+     "inventory_days_qoq_pct": 0.75
+    },
+    {
+     "period": "2026Q2",
+     "end": "2026-06-30",
+     "revenue": 68732662000.0,
+     "gross_margin_pct": 32.48,
+     "operating_margin_pct": 21.75,
+     "eps": 3.39,
+     "inventory": 37916610000.0,
+     "cogs": 46409872000.0,
+     "operating_cash_flow": 33697362000.0,
+     "inventory_days": 74.3,
+     "inventory_qoq_pct": -1.89,
+     "inventory_yoy_pct": 11.46,
+     "inventory_days_qoq_pct": -7.7
+    },
+    {
+     "period": "2026Q3",
+     "end": "2026-09-30",
+     "revenue": 74239117000.0,
+     "gross_margin_pct": 33.95,
+     "operating_margin_pct": 25.11,
+     "eps": 1.32,
+     "inventory": 38373353000.0,
+     "cogs": 49034594000.0,
+     "operating_cash_flow": 30015547000.0,
+     "inventory_days": 72.0,
+     "inventory_qoq_pct": 1.2,
+     "inventory_yoy_pct": 9.08,
+     "inventory_days_qoq_pct": -3.1
+    }
+   ],
+   "monthly_revenue": [
+    {
+     "month": "2025-11",
+     "revenue": 21233847000,
+     "yoy_pct": 5.91
+    },
+    {
+     "month": "2025-12",
+     "revenue": 19280724000,
+     "yoy_pct": 1.66
+    },
+    {
+     "month": "2026-01",
+     "revenue": 20862150000,
+     "yoy_pct": 5.33
+    },
+    {
+     "month": "2026-02",
+     "revenue": 19345126000,
+     "yoy_pct": 6.33
+    },
+    {
+     "month": "2026-03",
+     "revenue": 20830626000,
+     "yoy_pct": 4.89
+    },
+    {
+     "month": "2026-04",
+     "revenue": 22663945000,
+     "yoy_pct": 10.8
+    },
+    {
+     "month": "2026-05",
+     "revenue": 22943755000,
+     "yoy_pct": 17.78
+    },
+    {
+     "month": "2026-06",
+     "revenue": 23124962000,
+     "yoy_pct": 22.85
+    },
+    {
+     "month": "2026-07",
+     "revenue": 23844045000,
+     "yoy_pct": 18.98
+    },
+    {
+     "month": "2026-08",
+     "revenue": 25044641000,
+     "yoy_pct": 30.71
+    },
+    {
+     "month": "2026-09",
+     "revenue": 25350431000,
+     "yoy_pct": 27.22
+    },
+    {
+     "month": "2026-10",
+     "revenue": 25197532000,
+     "yoy_pct": 18.33
+    }
+   ]
+  },
+  "3711": {
+   "code": "3711",
+   "quarters": [
+    {
+     "period": "2024Q4",
+     "end": "2024-12-31",
+     "revenue": 162263561000.0,
+     "gross_margin_pct": 16.41,
+     "operating_margin_pct": 6.91,
+     "eps": 2.17,
+     "inventory": 61180932000.0,
+     "cogs": 135638939000.0,
+     "operating_cash_flow": 35245072000.0,
+     "inventory_days": 41.5,
+     "inventory_qoq_pct": -11.31,
+     "inventory_yoy_pct": -3.31,
+     "inventory_days_qoq_pct": -12.63
+    },
+    {
+     "period": "2025Q1",
+     "end": "2025-03-31",
+     "revenue": 148153262000.0,
+     "gross_margin_pct": 16.8,
+     "operating_margin_pct": 6.53,
+     "eps": 1.75,
+     "inventory": 59857448000.0,
+     "cogs": 123260526000.0,
+     "operating_cash_flow": 19973302000.0,
+     "inventory_days": 43.7,
+     "inventory_qoq_pct": -2.16,
+     "inventory_yoy_pct": -5.38,
+     "inventory_days_qoq_pct": 5.3
+    },
+    {
+     "period": "2025Q2",
+     "end": "2025-06-30",
+     "revenue": 150750323000.0,
+     "gross_margin_pct": 17.04,
+     "operating_margin_pct": 6.76,
+     "eps": 1.74,
+     "inventory": 57057673000.0,
+     "cogs": 125062803000.0,
+     "operating_cash_flow": 36844875000.0,
+     "inventory_days": 41.5,
+     "inventory_qoq_pct": -4.68,
+     "inventory_yoy_pct": -10.13,
+     "inventory_days_qoq_pct": -5.03
+    },
+    {
+     "period": "2025Q3",
+     "end": "2025-09-30",
+     "revenue": 168568888000.0,
+     "gross_margin_pct": 17.13,
+     "operating_margin_pct": 7.83,
+     "eps": 2.5,
+     "inventory": 66181876000.0,
+     "cogs": 139692146000.0,
+     "operating_cash_flow": 14625921000.0,
+     "inventory_days": 43.6,
+     "inventory_qoq_pct": 15.99,
+     "inventory_yoy_pct": -4.06,
+     "inventory_days_qoq_pct": 5.06
+    },
+    {
+     "period": "2025Q4",
+     "end": "2025-12-31",
+     "revenue": 177915237000.0,
+     "gross_margin_pct": 19.52,
+     "operating_margin_pct": 9.94,
+     "eps": 3.38,
+     "inventory": 69382990000.0,
+     "cogs": 143179361000.0,
+     "operating_cash_flow": 70805189000.0,
+     "inventory_days": 44.6,
+     "inventory_qoq_pct": 4.84,
+     "inventory_yoy_pct": 13.41,
+     "inventory_days_qoq_pct": 2.29
+    },
+    {
+     "period": "2026Q1",
+     "end": "2026-03-31",
+     "revenue": 173662152000.0,
+     "gross_margin_pct": 20.07,
+     "operating_margin_pct": 10.1,
+     "eps": 3.24,
+     "inventory": 76043030000.0,
+     "cogs": 138812313000.0,
+     "operating_cash_flow": 36387434000.0,
+     "inventory_days": 49.3,
+     "inventory_qoq_pct": 9.6,
+     "inventory_yoy_pct": 27.04,
+     "inventory_days_qoq_pct": 10.54
+    },
+    {
+     "period": "2026Q2",
+     "end": "2026-06-30",
+     "revenue": 191063522000.0,
+     "gross_margin_pct": 21.0,
+     "operating_margin_pct": 11.04,
+     "eps": 4.8,
+     "inventory": 86268399000.0,
+     "cogs": 150945167000.0,
+     "operating_cash_flow": 47013817000.0,
+     "inventory_days": 52.0,
+     "inventory_qoq_pct": 13.45,
+     "inventory_yoy_pct": 51.2,
+     "inventory_days_qoq_pct": 5.48
+    },
+    {
+     "period": "2026Q3",
+     "end": "2026-09-30",
+     "revenue": 244161159000.0,
+     "gross_margin_pct": 22.1,
+     "operating_margin_pct": 13.57,
+     "eps": 6.13,
+     "inventory": 99720766000.0,
+     "cogs": 190197876000.0,
+     "operating_cash_flow": 50461757000.0,
+     "inventory_days": 48.2,
+     "inventory_qoq_pct": 15.59,
+     "inventory_yoy_pct": 50.68,
+     "inventory_days_qoq_pct": -7.31
+    }
+   ],
+   "monthly_revenue": [
+    {
+     "month": "2025-11",
+     "revenue": 58819584000,
+     "yoy_pct": 11.12
+    },
+    {
+     "month": "2025-12",
+     "revenue": 58864547000,
+     "yoy_pct": 11.27
+    },
+    {
+     "month": "2026-01",
+     "revenue": 59988631000,
+     "yoy_pct": 21.33
+    },
+    {
+     "month": "2026-02",
+     "revenue": 52096847000,
+     "yoy_pct": 15.87
+    },
+    {
+     "month": "2026-03",
+     "revenue": 61576674000,
+     "yoy_pct": 14.57
+    },
+    {
+     "month": "2026-04",
+     "revenue": 62247107000,
+     "yoy_pct": 19.22
+    },
+    {
+     "month": "2026-05",
+     "revenue": 63033313000,
+     "yoy_pct": 28.57
+    },
+    {
+     "month": "2026-06",
+     "revenue": 65783102000,
+     "yoy_pct": 32.86
+    },
+    {
+     "month": "2026-07",
+     "revenue": 73783701000,
+     "yoy_pct": 43.15
+    },
+    {
+     "month": "2026-08",
+     "revenue": 82247374000,
+     "yoy_pct": 45.66
+    },
+    {
+     "month": "2026-09",
+     "revenue": 88130084000,
+     "yoy_pct": 45.52
+    },
+    {
+     "month": "2026-10",
+     "revenue": 88615136000,
+     "yoy_pct": 47.13
+    }
+   ]
+  }
+ }
+}

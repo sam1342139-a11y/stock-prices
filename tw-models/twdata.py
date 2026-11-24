@@ -34,7 +34,7 @@ def _num(x):
 def _daily(dataset):
     """All rows appended by update_daily.py for a dataset, grouped by code."""
     out = {}
-    for p in sorted(glob.glob(os.path.join(DATA, "daily", "%s_*.csv" % dataset))):
+    for p in sorted(glob.glob(os.path.join(DATA, "daily", "%s_[0-9][0-9][0-9][0-9]-[0-9][0-9].csv" % dataset))):
         for r in _read(p):
             out.setdefault(r["code"], []).append(r)
     return out
@@ -189,7 +189,7 @@ def market(name):
     if os.path.exists(p):
         for r in _read(p):
             rows[r["date"]] = r
-    for q in sorted(glob.glob(os.path.join(DATA, "daily", "market_%s_*.csv" % name))):
+    for q in sorted(glob.glob(os.path.join(DATA, "daily", "market_%s_[0-9][0-9][0-9][0-9]-[0-9][0-9].csv" % name))):
         for r in _read(q):
             rows[r["date"]] = r
     return dict(sorted(rows.items()))

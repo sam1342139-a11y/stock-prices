@@ -1,0 +1,22 @@
+name: probe-sources
+# TEMPORARY: checks TWSE daily-quotes backfill source. Will be removed before merge.
+on:
+  push:
+    branches: [claude/cloud-environment-setup-k7cvox]
+    paths: [.github/workflows/probe-sources.yml]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: probe
+        run: |
+          set +e
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          curl -sL --max-time 60 -A "$UA" "https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX?date=20261015&type=ALLBUT0999&response=json" -o /tmp/mi.json -w "HTTP %{http_code} %{size_download}\n"
+          python3 -c "
+          import json; d=json.load(open('/tmp/mi.json')); print(d.get('stat'), d.get('date'))
+          for t in d.get('tables',[]):
+              print(t.get('title'), len(t.get('data') or []), t.get('fields'))
+              for r in (t.get('data') or [])[:2]: print('  ', r)
+          "
+          curl -sL --max-time 60 -A "$UA" "https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date=20261015&type=ALLBUT0999" -o /tmp/mi2.json -w "old HTTP %{http_code} %{size_download}\n"; head -c 300 /tmp/mi2.json; echo

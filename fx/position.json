@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-24 23:32:53",
+ "generated_at_utc": "2026-11-25 22:41:00",
  "problems": [],
  "sources": [
   {
@@ -12,142 +12,142 @@
   "USD_TWD": {
    "name": "美元兌台幣",
    "pair": "USD/TWD",
-   "latest": 32.9797,
-   "date": "2026-11-24",
+   "latest": 33.1867,
+   "date": "2026-11-25",
    "windows": {
     "1y": {
-     "from": "2025-11-24",
-     "percentile": 98.1,
-     "high": 33.0279,
+     "from": "2025-11-25",
+     "percentile": 100.0,
+     "high": 33.1867,
      "low": 31.1048,
-     "mean": 31.8196,
+     "mean": 31.8262,
      "n": 262
     },
     "3y": {
-     "from": "2023-11-24",
-     "percentile": 96.9,
+     "from": "2023-11-25",
+     "percentile": 99.5,
      "high": 33.2588,
      "low": 28.899,
-     "mean": 31.6959,
+     "mean": 31.6978,
      "n": 783
     },
     "5y": {
-     "from": "2021-11-24",
-     "percentile": 98.2,
+     "from": "2021-11-25",
+     "percentile": 99.7,
      "high": 33.2588,
      "low": 27.508,
-     "mean": 31.1337,
+     "mean": 31.1378,
      "n": 1305
     }
    },
-   "change_20d_pct": 1.73,
-   "change_60d_pct": 3.99,
-   "summary": "美元兌台幣 目前 32.9797，在近 3 年第 97 百分位（偏高）"
+   "change_20d_pct": 2.51,
+   "change_60d_pct": 4.51,
+   "summary": "美元兌台幣 目前 33.1867，在近 3 年第 100 百分位（偏高）"
   },
   "AUD_TWD": {
    "name": "澳幣兌台幣",
    "pair": "AUD/TWD",
-   "latest": 21.9012,
-   "date": "2026-11-24",
+   "latest": 21.9924,
+   "date": "2026-11-25",
    "windows": {
     "1y": {
-     "from": "2025-11-24",
-     "percentile": 19.1,
+     "from": "2025-11-25",
+     "percentile": 22.9,
      "high": 23.03,
-     "low": 20.3245,
-     "mean": 22.1886,
+     "low": 20.3432,
+     "mean": 22.1949,
      "n": 262
     },
     "3y": {
-     "from": "2023-11-24",
-     "percentile": 70.9,
+     "from": "2023-11-25",
+     "percentile": 73.7,
      "high": 23.03,
      "low": 18.842,
-     "mean": 21.1562,
+     "mean": 21.1576,
      "n": 783
     },
     "5y": {
-     "from": "2021-11-24",
-     "percentile": 82.5,
+     "from": "2021-11-25",
+     "percentile": 84.2,
      "high": 23.03,
      "low": 18.842,
-     "mean": 20.9424,
+     "mean": 20.9439,
      "n": 1305
     }
    },
-   "change_20d_pct": -3.89,
-   "change_60d_pct": -3.34,
-   "summary": "澳幣兌台幣 目前 21.9012，在近 3 年第 71 百分位（略高）"
+   "change_20d_pct": -3.73,
+   "change_60d_pct": -3.41,
+   "summary": "澳幣兌台幣 目前 21.9924，在近 3 年第 74 百分位（略高）"
   },
   "JPY100_TWD": {
    "name": "100 日圓兌台幣",
    "pair": "100 JPY/TWD",
-   "latest": 20.711,
-   "date": "2026-11-24",
+   "latest": 20.846,
+   "date": "2026-11-25",
    "windows": {
     "1y": {
-     "from": "2025-11-24",
-     "percentile": 97.3,
+     "from": "2025-11-25",
+     "percentile": 99.6,
      "high": 20.924,
      "low": 19.56,
-     "mean": 20.1095,
+     "mean": 20.1125,
      "n": 262
     },
     "3y": {
-     "from": "2023-11-24",
-     "percentile": 56.1,
+     "from": "2023-11-25",
+     "percentile": 60.0,
      "high": 22.79,
      "low": 19.53,
-     "mean": 20.7252,
+     "mean": 20.7247,
      "n": 783
     },
     "5y": {
-     "from": "2021-11-24",
-     "percentile": 33.6,
+     "from": "2021-11-25",
+     "percentile": 36.0,
      "high": 24.58,
      "low": 19.53,
-     "mean": 21.4749,
+     "mean": 21.4724,
      "n": 1305
     }
    },
-   "change_20d_pct": 0.9,
-   "change_60d_pct": 4.61,
-   "summary": "100 日圓兌台幣 目前 20.711，在近 3 年第 56 百分位（中間）"
+   "change_20d_pct": 1.73,
+   "change_60d_pct": 4.19,
+   "summary": "100 日圓兌台幣 目前 20.846，在近 3 年第 60 百分位（略高）"
   },
   "AUD_USD": {
    "name": "澳幣兌美元",
    "pair": "AUD/USD",
-   "latest": 0.6641,
-   "date": "2026-11-24",
+   "latest": 0.6627,
+   "date": "2026-11-25",
    "windows": {
     "1y": {
-     "from": "2025-11-24",
-     "percentile": 7.3,
+     "from": "2025-11-25",
+     "percentile": 5.7,
      "high": 0.7258,
-     "low": 0.6463,
-     "mean": 0.6973,
+     "low": 0.6475,
+     "mean": 0.6974,
      "n": 262
     },
     "3y": {
-     "from": "2023-11-24",
-     "percentile": 53.8,
+     "from": "2023-11-25",
+     "percentile": 52.2,
      "high": 0.7258,
      "low": 0.5962,
-     "mean": 0.6676,
+     "mean": 0.6677,
      "n": 783
     },
     "5y": {
-     "from": "2021-11-24",
-     "percentile": 43.4,
+     "from": "2021-11-25",
+     "percentile": 42.2,
      "high": 0.7579,
      "low": 0.5962,
      "mean": 0.6734,
      "n": 1305
     }
    },
-   "change_20d_pct": -5.52,
-   "change_60d_pct": -7.05,
-   "summary": "澳幣兌美元 目前 0.6641，在近 3 年第 54 百分位（中間）"
+   "change_20d_pct": -6.08,
+   "change_60d_pct": -7.57,
+   "summary": "澳幣兌美元 目前 0.6627，在近 3 年第 52 百分位（中間）"
   }
  }
 }

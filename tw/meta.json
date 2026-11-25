@@ -1,8 +1,8 @@
 {
- "generated_at_utc": "2026-11-24 10:53:20",
+ "generated_at_utc": "2026-11-25 10:29:28",
  "problems": [
-  "證交所最新資料日期 2026-11-23 不是今天 2026-11-24（可能尚未更新或休市）",
-  "為控制 tw/latest.csv 在 90KB 內，省略成交金額最小的 82 檔（非一般股票優先省略）"
+  "證交所最新資料日期 2026-11-24 不是今天 2026-11-25（可能尚未更新或休市）",
+  "為控制 tw/latest.csv 在 90KB 內，省略成交金額最小的 71 檔（非一般股票優先省略）"
  ],
  "sources": [
   {
@@ -18,10 +18,10 @@
    "url": "https://www.twse.com.tw/rwd/zh/fund/T86?date=YYYYMMDD&selectType=ALLBUT0999&response=json"
   }
  ],
- "date": "2026-11-23",
- "rows": 1312,
- "omitted": 82,
- "latest_csv_bytes": 89479,
+ "date": "2026-11-24",
+ "rows": 1323,
+ "omitted": 71,
+ "latest_csv_bytes": 89471,
  "units": {
   "close/high/low": "元",
   "volume": "張（1 張 = 1,000 股）",
@@ -48,7 +48,11 @@
      "note": "非月營收抓取期間（每月 10～16 日），tw/revenue.csv 維持上次內容",
      "last": {
       "updated": false,
-      "note": "非月營收抓取期間（每月 10～16 日），tw/revenue.csv 維持上次內容"
+      "note": "非月營收抓取期間（每月 10～16 日），tw/revenue.csv 維持上次內容",
+      "last": {
+       "updated": false,
+       "note": "非月營收抓取期間（每月 10～16 日），tw/revenue.csv 維持上次內容"
+      }
      }
     }
    }

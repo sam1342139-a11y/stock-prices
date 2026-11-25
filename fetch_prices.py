@@ -11,7 +11,7 @@ KEY = os.environ.get("TWELVEDATA_KEY", "").strip()
 
 def call_api(symbols):
     q = urllib.parse.urlencode({"symbol": ",".join(symbols), "interval": "1day",
-                                "outputsize": 6, "apikey": KEY})
+                                "outputsize": 10, "apikey": KEY})
     with urllib.request.urlopen("https://api.twelvedata.com/time_series?" + q, timeout=60) as r:
         return json.loads(r.read().decode("utf-8"))
 

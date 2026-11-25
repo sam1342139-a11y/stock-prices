@@ -9,3 +9,4 @@
 |---|---|---|
 | `2026-11-24_dashboard-actions.md` | 台股儀表板排程改用 GitHub Actions | 待開工 |
 | `2026-11-24_fcn-prices-earnings.md` | FCN 晨間用資料檔：收盤價檢查、法說會、新聞初篩、台股財報、週報、email 通知 | 程式完成，等實跑 |
+| `2026-11-25_price-mismatch.md` | 11/25 收盤價對不上（SNDK 拆股）：個別代號 mismatch、拆合股偵測、第二來源、排程提早 | 程式完成，等合併 |

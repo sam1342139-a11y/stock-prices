@@ -1,8 +1,10 @@
 name: update-regime
-# 市場風險燈號：週二～六台灣 07:00（UTC 23:00，週一～五）
+# 市場風險燈號：週二～六台灣 06:05（UTC 22:05，週一～五），07:05 備援
 on:
   schedule:
-    - cron: '0 23 * * 1-5'
+    # 22:05 UTC main, 23:05 UTC backup (Taiwan 06:05 / 07:05)
+    - cron: '5 22 * * 1-5'
+    - cron: '5 23 * * 1-5'
   workflow_dispatch:
 permissions:
   contents: write

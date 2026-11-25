@@ -85,6 +85,18 @@ def watch(since):
             lines.append("%s：%s" % (f, p1))
         if f == "fcn/prices_checked.json" and v[1].get("status") == "fail" and v[0].get("status") != "fail":
             lines.append("美股收盤價檢查未通過（%s）：%s" % (v[1].get("asof"), "；".join(v[1].get("fail_reasons", []))))
+        if f == "fcn/prices_checked.json" and v[1].get("mismatch") and v[1].get("mismatch") != v[0].get("mismatch"):
+            for m in v[1]["mismatch"]:
+                ss = m.get("second_source") or {}
+                lines.append("美股收盤價對不上：%s %s 舊 %s → 新 %s（%+.2f%%）%s%s" % (
+                    m["ticker"], m["date"], m["old"], m["new"], m["diff_pct"],
+                    "，疑似拆合股 %s" % m["integer_multiple"] if m.get("integer_multiple") else "",
+                    "，Nasdaq %s（吻合%s）" % (ss.get("value"), ss.get("matches")) if ss.get("value") else ""))
+        if f == "fcn/prices_checked.json":
+            new_splits = {x["ticker"] for x in v[1].get("splits") or []} - {x["ticker"] for x in v[0].get("splits") or []}
+            for x in v[1].get("splits") or []:
+                if x["ticker"] in new_splits:
+                    lines.append("偵測到拆合股：%s %s，生效日 %s" % (x["ticker"], x["ratio"], x["effective_date"]))
     if lines:
         send("【stock-prices】" + lines[0][:40], "\n".join("・" + x for x in lines))
     else:

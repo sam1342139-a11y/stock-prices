@@ -1,8 +1,10 @@
 name: update-fx
-# 匯率位置：週二～六台灣 06:45（UTC 22:45，週一～五）
+# 匯率位置：週二～六台灣 05:55（UTC 21:55，週一～五），06:55 備援
 on:
   schedule:
-    - cron: '45 22 * * 1-5'
+    # 21:55 UTC main, 22:55 UTC backup (Taiwan 05:55 / 06:55)
+    - cron: '55 21 * * 1-5'
+    - cron: '55 22 * * 1-5'
   workflow_dispatch:
 permissions:
   contents: write

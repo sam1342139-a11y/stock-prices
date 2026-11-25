@@ -32,7 +32,7 @@ jobs:
           MAIL_TO: ${{ secrets.MAIL_TO }}
       - name: change mail
         if: github.event.workflow_run.conclusion == 'success'
-        run: python3 lib/notify.py watch "${{ github.event.workflow_run.created_at }}"
+        run: python3 lib/notify.py watch "${{ github.event.workflow_run.head_sha }}"
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}

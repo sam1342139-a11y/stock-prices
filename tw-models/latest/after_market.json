@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-24 16:34:02",
+ "generated_at_utc": "2026-11-25 11:25:29",
  "problems": [],
  "sources": [
   {
@@ -7,124 +7,124 @@
    "url": "https://openapi.twse.com.tw/"
   }
  ],
- "date": "2026-11-23",
+ "date": "2026-11-24",
  "taiex": {
-  "close": 36811.9,
-  "change_pct": 2.16
+  "close": 40122.3,
+  "change_pct": 8.99
  },
  "institutional": {
   "foreign": {
-   "today_yi": -289.5,
-   "sum5_yi": -1774.3,
-   "sum20_yi": -10421.5,
-   "streak_days": -6
+   "today_yi": -503.9,
+   "sum5_yi": -1897.2,
+   "sum20_yi": -10845.0,
+   "streak_days": -7
   },
   "trust": {
-   "today_yi": -41.5,
-   "sum5_yi": 56.8,
-   "sum20_yi": 2966.8,
-   "streak_days": -2
+   "today_yi": 97.6,
+   "sum5_yi": 192.6,
+   "sum20_yi": 2828.4,
+   "streak_days": 1
   },
   "dealer": {
-   "today_yi": -190.0,
-   "sum5_yi": -962.9,
-   "sum20_yi": -4523.0,
-   "streak_days": -6
+   "today_yi": -810.3,
+   "sum5_yi": -1616.1,
+   "sum20_yi": -5209.3,
+   "streak_days": -7
   },
   "total": {
-   "today_yi": -521.0,
-   "sum5_yi": -2680.3,
-   "sum20_yi": -11977.7
+   "today_yi": -1216.5,
+   "sum5_yi": -3320.8,
+   "sum20_yi": -13225.9
   }
  },
  "margin": {
-  "balance_yi": 4338.1,
-  "change_yi": -14.2,
-  "change_pct": -0.33,
-  "change20_pct": -31.56,
-  "index_change20_pct": -20.05
+  "balance_yi": 4535.1,
+  "change_yi": 197.0,
+  "change_pct": 4.54,
+  "change20_pct": -27.25,
+  "index_change20_pct": -12.96
  },
  "top": {
   "foreign_buy": [
    {
     "rank": 1,
-    "code": "3443",
-    "name": "創意",
-    "close": 5120.0,
-    "lots": 815,
-    "amt_yi": 41.7
+    "code": "2882",
+    "name": "國泰金",
+    "close": 104.5,
+    "lots": 12538,
+    "amt_yi": 13.1
    },
    {
     "rank": 2,
-    "code": "2603",
-    "name": "長榮",
-    "close": 234.5,
-    "lots": 9965,
-    "amt_yi": 23.4
+    "code": "5871",
+    "name": "中租-KY",
+    "close": 103.5,
+    "lots": 10654,
+    "amt_yi": 11.0
    },
    {
     "rank": 3,
-    "code": "2308",
-    "name": "台達電",
-    "close": 990.0,
-    "lots": 1043,
-    "amt_yi": 10.3
+    "code": "2881",
+    "name": "富邦金",
+    "close": 143.5,
+    "lots": 7042,
+    "amt_yi": 10.1
    },
    {
     "rank": 4,
-    "code": "2368",
-    "name": "金像電",
-    "close": 782.0,
-    "lots": 1224,
-    "amt_yi": 9.6
+    "code": "2610",
+    "name": "華航",
+    "close": 22.5,
+    "lots": 15908,
+    "amt_yi": 3.6
    },
    {
     "rank": 5,
-    "code": "2360",
-    "name": "致茂",
-    "close": 927.0,
-    "lots": 969,
-    "amt_yi": 9.0
+    "code": "2891",
+    "name": "中信金",
+    "close": 69.9,
+    "lots": 4501,
+    "amt_yi": 3.1
    },
    {
     "rank": 6,
-    "code": "7769",
-    "name": "鴻勁",
-    "close": 2910.0,
-    "lots": 304,
-    "amt_yi": 8.9
+    "code": "2880",
+    "name": "華南金",
+    "close": 47.5,
+    "lots": 5799,
+    "amt_yi": 2.8
    },
    {
     "rank": 7,
-    "code": "3661",
-    "name": "世芯-KY",
-    "close": 3560.0,
-    "lots": 229,
-    "amt_yi": 8.2
+    "code": "9904",
+    "name": "寶成",
+    "close": 25.5,
+    "lots": 9082,
+    "amt_yi": 2.3
    },
    {
     "rank": 8,
-    "code": "8046",
-    "name": "南電",
-    "close": 670.0,
-    "lots": 1218,
-    "amt_yi": 8.2
+    "code": "2912",
+    "name": "統一超",
+    "close": 207.0,
+    "lots": 1002,
+    "amt_yi": 2.1
    },
    {
     "rank": 9,
-    "code": "5871",
-    "name": "中租-KY",
-    "close": 96.6,
-    "lots": 7227,
-    "amt_yi": 7.0
+    "code": "5876",
+    "name": "上海商銀",
+    "close": 52.7,
+    "lots": 3725,
+    "amt_yi": 2.0
    },
    {
     "rank": 10,
-    "code": "3026",
-    "name": "禾伸堂",
-    "close": 330.0,
-    "lots": 2038,
-    "amt_yi": 6.7
+    "code": "2834",
+    "name": "臺企銀",
+    "close": 16.8,
+    "lots": 10116,
+    "amt_yi": 1.7
    }
   ],
   "foreign_sell": [
@@ -132,245 +132,245 @@
     "rank": 1,
     "code": "2330",
     "name": "台積電",
-    "close": 2030.0,
-    "lots": -11039,
-    "amt_yi": -224.1
+    "close": 2230.0,
+    "lots": -4098,
+    "amt_yi": -91.4
    },
    {
     "rank": 2,
-    "code": "2454",
-    "name": "聯發科",
-    "close": 3685.0,
-    "lots": -927,
-    "amt_yi": -34.2
+    "code": "2382",
+    "name": "廣達",
+    "close": 282.5,
+    "lots": -12734,
+    "amt_yi": -36.0
    },
    {
     "rank": 3,
-    "code": "0050",
-    "name": "元大台灣50",
-    "close": 87.0,
-    "lots": -37983,
-    "amt_yi": -33.0
+    "code": "3006",
+    "name": "晶豪科",
+    "close": 183.5,
+    "lots": -15508,
+    "amt_yi": -28.5
    },
    {
     "rank": 4,
-    "code": "2317",
-    "name": "鴻海",
-    "close": 206.0,
-    "lots": -14885,
-    "amt_yi": -30.7
+    "code": "3711",
+    "name": "日月光投控",
+    "close": 530.0,
+    "lots": -5077,
+    "amt_yi": -26.9
    },
    {
     "rank": 5,
-    "code": "1802",
-    "name": "台玻",
-    "close": 58.1,
-    "lots": -31450,
-    "amt_yi": -18.3
+    "code": "2303",
+    "name": "聯電",
+    "close": 97.1,
+    "lots": -18764,
+    "amt_yi": -18.2
    },
    {
     "rank": 6,
-    "code": "3189",
-    "name": "景碩",
-    "close": 467.5,
-    "lots": -3205,
-    "amt_yi": -15.0
+    "code": "2449",
+    "name": "京元電子",
+    "close": 172.5,
+    "lots": -8299,
+    "amt_yi": -14.3
    },
    {
     "rank": 7,
-    "code": "2345",
-    "name": "智邦",
-    "close": 1350.0,
-    "lots": -810,
-    "amt_yi": -10.9
+    "code": "2357",
+    "name": "華碩",
+    "close": 821.0,
+    "lots": -1590,
+    "amt_yi": -13.1
    },
    {
     "rank": 8,
-    "code": "3711",
-    "name": "日月光投控",
-    "close": 482.0,
-    "lots": -2244,
-    "amt_yi": -10.8
+    "code": "2412",
+    "name": "中華電",
+    "close": 164.5,
+    "lots": -7958,
+    "amt_yi": -13.1
    },
    {
     "rank": 9,
-    "code": "3008",
-    "name": "大立光",
-    "close": 3620.0,
-    "lots": -244,
-    "amt_yi": -8.8
+    "code": "6505",
+    "name": "台塑化",
+    "close": 80.3,
+    "lots": -16374,
+    "amt_yi": -13.1
    },
    {
     "rank": 10,
-    "code": "6415",
-    "name": "矽力*-KY",
-    "close": 296.0,
-    "lots": -2556,
-    "amt_yi": -7.6
+    "code": "6446",
+    "name": "藥華藥",
+    "close": 1150.0,
+    "lots": -1114,
+    "amt_yi": -12.8
    }
   ],
   "trust_buy": [
    {
     "rank": 1,
-    "code": "2330",
-    "name": "台積電",
-    "close": 2030.0,
-    "lots": 1294,
-    "amt_yi": 26.3
-   },
-   {
-    "rank": 2,
-    "code": "2454",
-    "name": "聯發科",
-    "close": 3685.0,
-    "lots": 534,
-    "amt_yi": 19.7
-   },
-   {
-    "rank": 3,
     "code": "2412",
     "name": "中華電",
     "close": 164.5,
-    "lots": 9708,
-    "amt_yi": 16.0
+    "lots": 13665,
+    "amt_yi": 22.5
+   },
+   {
+    "rank": 2,
+    "code": "2330",
+    "name": "台積電",
+    "close": 2230.0,
+    "lots": 918,
+    "amt_yi": 20.5
+   },
+   {
+    "rank": 3,
+    "code": "2382",
+    "name": "廣達",
+    "close": 282.5,
+    "lots": 4331,
+    "amt_yi": 12.2
    },
    {
     "rank": 4,
-    "code": "3661",
-    "name": "世芯-KY",
-    "close": 3560.0,
-    "lots": 289,
-    "amt_yi": 10.3
+    "code": "2027",
+    "name": "大成鋼",
+    "close": 48.15,
+    "lots": 24830,
+    "amt_yi": 12.0
    },
    {
     "rank": 5,
-    "code": "3653",
-    "name": "健策",
-    "close": 3685.0,
-    "lots": 248,
-    "amt_yi": 9.1
+    "code": "2892",
+    "name": "第一金",
+    "close": 39.8,
+    "lots": 20197,
+    "amt_yi": 8.0
    },
    {
     "rank": 6,
-    "code": "3665",
-    "name": "貿聯-KY",
-    "close": 1430.0,
-    "lots": 632,
-    "amt_yi": 9.0
+    "code": "2618",
+    "name": "長榮航",
+    "close": 48.6,
+    "lots": 14712,
+    "amt_yi": 7.2
    },
    {
     "rank": 7,
     "code": "2886",
     "name": "兆豐金",
-    "close": 50.0,
-    "lots": 17468,
-    "amt_yi": 8.7
+    "close": 55.0,
+    "lots": 12764,
+    "amt_yi": 7.0
    },
    {
     "rank": 8,
-    "code": "2890",
-    "name": "永豐金",
-    "close": 36.7,
-    "lots": 18466,
-    "amt_yi": 6.8
+    "code": "1216",
+    "name": "統一",
+    "close": 77.4,
+    "lots": 6490,
+    "amt_yi": 5.0
    },
    {
     "rank": 9,
-    "code": "2027",
-    "name": "大成鋼",
-    "close": 44.75,
-    "lots": 13576,
-    "amt_yi": 6.1
+    "code": "2317",
+    "name": "鴻海",
+    "close": 226.5,
+    "lots": 2098,
+    "amt_yi": 4.8
    },
    {
     "rank": 10,
-    "code": "2883",
-    "name": "凱基金",
-    "close": 29.6,
-    "lots": 19840,
-    "amt_yi": 5.9
+    "code": "3045",
+    "name": "台灣大",
+    "close": 125.5,
+    "lots": 3482,
+    "amt_yi": 4.4
    }
   ],
   "trust_sell": [
    {
     "rank": 1,
-    "code": "3443",
-    "name": "創意",
-    "close": 5120.0,
-    "lots": -542,
-    "amt_yi": -27.7
+    "code": "2882",
+    "name": "國泰金",
+    "close": 104.5,
+    "lots": -8422,
+    "amt_yi": -8.8
    },
    {
     "rank": 2,
-    "code": "2603",
-    "name": "長榮",
-    "close": 234.5,
-    "lots": -11368,
-    "amt_yi": -26.7
+    "code": "5871",
+    "name": "中租-KY",
+    "close": 103.5,
+    "lots": -5782,
+    "amt_yi": -6.0
    },
    {
     "rank": 3,
-    "code": "2327",
-    "name": "國巨*",
-    "close": 310.0,
-    "lots": -6239,
-    "amt_yi": -19.3
+    "code": "2880",
+    "name": "華南金",
+    "close": 47.5,
+    "lots": -7432,
+    "amt_yi": -3.5
    },
    {
     "rank": 4,
-    "code": "3037",
-    "name": "欣興",
-    "close": 558.0,
-    "lots": -2343,
-    "amt_yi": -13.1
+    "code": "2891",
+    "name": "中信金",
+    "close": 69.9,
+    "lots": -4742,
+    "amt_yi": -3.3
    },
    {
     "rank": 5,
-    "code": "2882",
-    "name": "國泰金",
-    "close": 95.0,
-    "lots": -12500,
-    "amt_yi": -11.9
+    "code": "2379",
+    "name": "瑞昱",
+    "close": 694.0,
+    "lots": -380,
+    "amt_yi": -2.6
    },
    {
     "rank": 6,
-    "code": "3189",
-    "name": "景碩",
-    "close": 467.5,
-    "lots": -2054,
-    "amt_yi": -9.6
+    "code": "2356",
+    "name": "英業達",
+    "close": 42.2,
+    "lots": -5958,
+    "amt_yi": -2.5
    },
    {
     "rank": 7,
-    "code": "2360",
-    "name": "致茂",
-    "close": 927.0,
-    "lots": -853,
-    "amt_yi": -7.9
+    "code": "2376",
+    "name": "技嘉",
+    "close": 278.0,
+    "lots": -882,
+    "amt_yi": -2.5
    },
    {
     "rank": 8,
-    "code": "8046",
-    "name": "南電",
-    "close": 670.0,
-    "lots": -1107,
-    "amt_yi": -7.4
+    "code": "3044",
+    "name": "健鼎",
+    "close": 486.5,
+    "lots": -445,
+    "amt_yi": -2.2
    },
    {
     "rank": 9,
-    "code": "2357",
-    "name": "華碩",
-    "close": 758.0,
-    "lots": -878,
-    "amt_yi": -6.7
+    "code": "2881",
+    "name": "富邦金",
+    "close": 143.5,
+    "lots": -1494,
+    "amt_yi": -2.1
    },
    {
     "rank": 10,
-    "code": "3532",
-    "name": "台勝科",
-    "close": 168.0,
-    "lots": -3995,
-    "amt_yi": -6.7
+    "code": "2912",
+    "name": "統一超",
+    "close": 207.0,
+    "lots": -1005,
+    "amt_yi": -2.1
    }
   ]
  },

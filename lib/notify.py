@@ -1,7 +1,7 @@
 """Email alerts sent straight from GitHub Actions (no AI). Credentials come only from GitHub Secrets.
 
   python3 lib/notify.py failure "<workflow name>" "<run url>"
-  python3 lib/notify.py watch "<since ISO UTC>"     # compare files committed after <since> with their previous version
+  python3 lib/notify.py watch "<base sha>"          # compare files changed since <base> (the commit the schedule started from)
 
 watch sends one mail only when something changed:
   - Taiwan regime overall_light changed (tw-models/latest/regime_tw.json)
@@ -27,16 +27,14 @@ def git(*a):
     return subprocess.run(["git", "-C", ROOT] + list(a), capture_output=True, text=True, env=dict(os.environ, TZ="UTC")).stdout.strip()
 
 
-def versions(path, since):
-    """(previous, current) JSON of path if its latest commit is after `since`; else None."""
-    log = git("log", "-n", "2", "--date=iso-strict-local", "--format=%H %cd", "--", path).splitlines()
-    if len(log) < 2:
-        return None
-    (h1, t1), (h0, _) = log[0].split(), log[1].split()
-    if t1[:19] < since[:19]:
+def versions(path, base):
+    """(version at `base`, version now) of path if a commit after `base` changed it; else None.
+    `base` is the commit the finished schedule started from (workflow_run.head_sha)."""
+    if not git("log", "--format=%H", "%s..HEAD" % base, "--", path):
         return None
     try:
-        return json.loads(git("show", "%s:%s" % (h0, path))), json.loads(git("show", "%s:%s" % (h1, path)))
+        old = json.loads(git("show", "%s:%s" % (base, path)) or "null") or {}
+        return old, json.loads(git("show", "HEAD:%s" % path))
     except ValueError:
         return None
 
@@ -60,12 +58,12 @@ def first_problem(d):
     return str(p[0]) if p else ""
 
 
-def watch(since):
+def watch(base):
     lines = []
-    v = versions("tw-models/latest/regime_tw.json", since)
+    v = versions("tw-models/latest/regime_tw.json", base)
     if v and v[0].get("overall_light") != v[1].get("overall_light"):
         lines.append("台股水位燈號：%s → %s（總分 %s，資料日 %s）" % (v[0].get("overall_light"), v[1].get("overall_light"), v[1].get("total"), v[1].get("date")))
-    v = versions("tw-models/latest/long.json", since)
+    v = versions("tw-models/latest/long.json", base)
     if v:
         a = {x["code"]: x["name"] for x in v[0].get("list", [])}
         b = {x["code"]: x["name"] for x in v[1].get("list", [])}
@@ -73,11 +71,11 @@ def watch(since):
             out = ["%s %s" % (c, a[c]) for c in sorted(set(a) - set(b))]
             inn = ["%s %s" % (c, b[c]) for c in sorted(set(b) - set(a))]
             lines.append("長期名單換股（訊號日 %s）：換入 %s；換出 %s" % (v[1].get("signal_date"), "、".join(inn) or "無", "、".join(out) or "無"))
-    v = versions("regime/regime.json", since)
+    v = versions("regime/regime.json", base)
     if v and LEVEL.get(v[1].get("level"), -1) > LEVEL.get(v[0].get("level"), 9):
         lines.append("美股市場風險燈號變差：%s → %s（總分 %s，%s）" % (v[0].get("level"), v[1].get("level"), v[1].get("total"), v[1].get("date_tw")))
     for f in CHECK_FILES:
-        v = versions(f, since)
+        v = versions(f, base)
         if not v:
             continue
         p1, p0 = first_problem(v[1]), first_problem(v[0])
@@ -93,9 +91,10 @@ def watch(since):
                     "，疑似拆合股 %s" % m["integer_multiple"] if m.get("integer_multiple") else "",
                     "，Nasdaq %s（吻合%s）" % (ss.get("value"), ss.get("matches")) if ss.get("value") else ""))
         if f == "fcn/prices_checked.json":
-            new_splits = {x["ticker"] for x in v[1].get("splits") or []} - {x["ticker"] for x in v[0].get("splits") or []}
+            key = lambda x: (x.get("ticker"), x.get("effective_date"))
+            new_splits = {key(x) for x in v[1].get("splits") or []} - {key(x) for x in v[0].get("splits") or []}
             for x in v[1].get("splits") or []:
-                if x["ticker"] in new_splits:
+                if key(x) in new_splits:
                     lines.append("偵測到拆合股：%s %s，生效日 %s" % (x["ticker"], x["ratio"], x["effective_date"]))
     if lines:
         send("【stock-prices】" + lines[0][:40], "\n".join("・" + x for x in lines))

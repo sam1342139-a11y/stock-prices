@@ -152,3 +152,4 @@
 - 用量守則寫進 CLAUDE.md；新增 docs/handoff/（交接文件），第一份是「儀表板排程改用 GitHub Actions」
 - 新增 FCN 晨間用資料檔：fcn/prices_checked.json、earnings/calendar.json、earnings/tw_financials.json、news/raw.json、tw-models/latest/weekly_report.md；notify 排程（email 通知）；docs/FCN_FEEDS.md
 - 收盤價檢查：個別代號對不上改列 mismatch（不整檔失敗）、近 30 天拆合股偵測、Nasdaq 第二來源；美股／總經／匯率／燈號排程提早並加備援；latest.json history 改為約 10 天
+- 拆合股：偵測範圍改為近約 90 天、新增永久紀錄 fcn/splits.json、還原後歷史價從 2026-06-22 起；email 通知改用排程起點版本比對（修正 11/25 未寄信）

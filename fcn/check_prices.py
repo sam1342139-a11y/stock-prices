@@ -5,7 +5,8 @@ Replaces the checks the morning Claude routine used to do by hand. Does not modi
   - final-value corrections: today's history vs the provisional prices of the previous run (git history)
   - a single ticker off by >0.5% does NOT fail the file: it goes to `mismatch` (with integer-multiple check,
     detected split, and a second source: Nasdaq historical quotes)
-  - splits in the last 30 days: Twelve Data raw (adjust=none) vs split-adjusted closes -> `splits`
+  - splits: detected over ~90 days (Twelve Data raw vs adjusted), kept forever in fcn/splits.json;
+    `splits` lists every split since 2026-06-22 with adjusted/raw closes from that date
   - day move beyond +-25% -> watch
   - trading days present in history but never published as asof -> fill_days
   - Cathay United Bank board rate (spot buy USD/AUD/JPY), best effort -> fx
@@ -25,7 +26,9 @@ TD = "https://api.twelvedata.com/time_series"
 NASDAQ_HIST = "https://api.nasdaq.com/api/quote/%s/historical?assetclass=%s&fromdate=%s&todate=%s&limit=40"
 ETFS = {"SOXX", "SPY", "SOXL"}
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
-SPLIT_DAYS, MATCH_PCT = 30, 0.1
+SPLIT_DETECT_BARS, MATCH_PCT = 65, 0.1   # ~65 trading days = about 90 calendar days
+HISTORY_START = "2026-06-22"            # FCN price history starts here: adjusted_history covers it all
+SPLITS_FILE = "fcn/splits.json"           # permanent split record (never pruned)
 FX_URL = "https://www.cathaybk.com.tw/cathaybk/personal/product/deposit/currency-billboard/"
 SOURCES = [{"name": "stock-prices latest.json（Twelve Data 收盤價）", "url": "https://github.com/sam1342139-a11y/stock-prices/blob/main/latest.json"},
            {"name": "Twelve Data time_series（adjust=none 原始價，用來偵測拆合股）", "url": TD},
@@ -58,7 +61,7 @@ def split_ratio(old, new):
     return None
 
 
-def td_series(symbols, outputsize, adjust=None):
+def td_series(symbols, outputsize, adjust=None, start_date=None):
     """Twelve Data closes {symbol: {date: close}}; groups of 7 per minute (free plan: 8 credits/min)."""
     key = os.environ.get("TWELVEDATA_KEY", "").strip()
     if not key:
@@ -69,6 +72,8 @@ def td_series(symbols, outputsize, adjust=None):
         q = {"symbol": ",".join(syms[i:i + 7]), "interval": "1day", "outputsize": outputsize}
         if adjust:
             q["adjust"] = adjust
+        if start_date:
+            q["start_date"] = start_date
         req = urllib.request.Request(TD + "?" + urllib.parse.urlencode(q), headers={"Authorization": "apikey " + key})
         data = json.loads(urllib.request.urlopen(req, timeout=60).read())
         if len(syms[i:i + 7]) == 1:
@@ -84,9 +89,9 @@ def split_label(k):
 
 
 def detect_splits(problems):
-    """Splits within SPLIT_DAYS: raw/adjusted ratio is k before the effective date and 1 from it on."""
+    """New splits within ~90 days: raw/adjusted ratio is k before the effective date and 1 from it on."""
     try:
-        raw = td_series(EXPECTED_SYMBOLS, SPLIT_DAYS, adjust="none")
+        raw = td_series(EXPECTED_SYMBOLS, SPLIT_DETECT_BARS, adjust="none")
     except Exception as e:
         problems.append("拆合股偵測：Twelve Data 原始價抓取失敗（%s）" % type(e).__name__)
         return []
@@ -98,7 +103,7 @@ def detect_splits(problems):
     if not cand:
         return []
     try:
-        adj = td_series(cand, SPLIT_DAYS)
+        adj = td_series(cand, SPLIT_DETECT_BARS)
     except Exception as e:
         problems.append("拆合股偵測：Twelve Data 還原價抓取失敗（%s）" % type(e).__name__)
         return []
@@ -110,14 +115,44 @@ def detect_splits(problems):
         before = [(d, k) for d, k in ratios if abs(k - 1) > 0.05]
         if not before:
             continue  # big move but no adjustment: not a split
-        k = before[0][1]
+        k = before[-1][1]
         lab = split_ratio(1, k)
         eff = next((d for d, x in ratios if d > before[-1][0] and abs(x - 1) <= 0.01), None)
         out.append({"ticker": s_, "ratio": split_label(k) if lab else "比例 %.4f（非整數倍）" % k, "factor": round(k, 4),
-                    "effective_date": eff, "last_date_before": before[-1][0],
-                    "adjusted_history": {d: round(a[d], 4) for d in sorted(a)},
-                    "raw_history": {d: round(r[d], 4) for d in sorted(r)}})
+                    "effective_date": eff, "last_date_before": before[-1][0]})
     return out
+
+
+def split_record(found, today):
+    """Merge newly detected splits into the permanent record fcn/splits.json; returns the full list."""
+    path = os.path.join(ROOT, SPLITS_FILE)
+    try:
+        rec = json.load(open(path, encoding="utf-8")).get("splits", [])
+    except (OSError, ValueError):
+        rec = []
+    have = {(x["ticker"], x["effective_date"]) for x in rec}
+    for x in found:
+        if (x["ticker"], x["effective_date"]) not in have:
+            rec.append(dict(x, detected_on=today))
+    rec.sort(key=lambda x: (x["effective_date"] or "", x["ticker"]))
+    C.write_json(SPLITS_FILE, {"splits": rec, "notes": [
+        "拆合股永久紀錄：每天偵測近約 90 天（65 個交易日），新發現的加進來，舊的不刪",
+        "ratio「1 拆 8」= 1 股變 8 股（拆股前價格 ÷ 8）；「8 合 1」= 8 股變 1 股（合股前價格 × 8）",
+        "factor = 原始價 ÷ 還原價（拆股前那段）；effective_date = 生效日（第一個用新股數交易的日子）"]},
+        [], [{"name": "Twelve Data time_series（原始價與還原價比對）", "url": TD}])
+    return rec
+
+
+def split_histories(rec, problems):
+    """Adjusted and raw closes from HISTORY_START for every recorded split since then."""
+    tick = sorted({x["ticker"] for x in rec if (x.get("effective_date") or "") >= HISTORY_START})
+    if not tick:
+        return {}, {}
+    try:
+        return td_series(tick, 5000, start_date=HISTORY_START), td_series(tick, 5000, adjust="none", start_date=HISTORY_START)
+    except Exception as e:
+        problems.append("拆合股歷史價抓取失敗（%s）" % type(e).__name__)
+        return {}, {}
 
 
 def nasdaq_close(ticker, date):
@@ -188,7 +223,12 @@ def main():
 
     # 2) final-value corrections vs the previous run's provisional prices.
     #    A single ticker off by >0.5% goes to `mismatch`; the file status stays ok (only that ticker should be held back).
-    splits = detect_splits(problems)
+    today_tw = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=8)).date().isoformat()
+    record = split_record(detect_splits(problems), today_tw)
+    adj_h, raw_h = split_histories(record, problems)
+    splits = [dict(x, adjusted_history={d: round(v, 4) for d, v in sorted(adj_h.get(x["ticker"], {}).items())},
+                   raw_history={d: round(v, 4) for d, v in sorted(raw_h.get(x["ticker"], {}).items())})
+              for x in record if (x.get("effective_date") or "") >= HISTORY_START]
     split_by = {x["ticker"]: x for x in splits}
     corrections, mismatch, compared_with = [], [], None
     sha, prev = previous_run(asof) if asof else (None, None)
@@ -243,7 +283,7 @@ def main():
         "notes": ["asof 當天的 prices 是暫定價，隔天以 history 的終值為準；corrections 是前一次暫定價改成終值的清單",
                   "status 為 fail（基本檢查沒過）時整批不要寫入；fail_reasons 說明原因",
                   "mismatch：前一次暫定價和這次終值差超過 0.5% 的個別代號，只有這些代號不要寫入，其他照常；integer_multiple 是整數倍（疑似拆合股），second_source 是 Nasdaq 交叉比對結果（matches：新值／舊值／都不吻合）",
-                  "splits：近 30 天偵測到的拆合股（ratio、effective_date 生效日），adjusted_history 是還原後的歷史價、raw_history 是原始價",
+                  "splits：2026-06-22 以後生效的所有拆合股（永久紀錄在 fcn/splits.json），adjusted_history／raw_history 是從 2026-06-22 起的還原價／原始價",
                   "fill_days：前一次到這次之間、history 有但沒被當作 asof 發布過的交易日",
                   "fx 抓不到時為 null，原因在 problems"]}, problems, SOURCES)
     print("prices_checked", asof, "fail" if fail else "ok", fail, problems)

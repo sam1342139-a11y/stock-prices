@@ -1,0 +1,33 @@
+{
+ "generated_at_utc": "2026-11-25 01:01:18",
+ "problems": [],
+ "sources": [
+  {
+   "name": "Twelve Data time_series（原始價與還原價比對）",
+   "url": "https://api.twelvedata.com/time_series"
+  }
+ ],
+ "splits": [
+  {
+   "ticker": "SOXX",
+   "ratio": "1 拆 3",
+   "factor": 3.0,
+   "effective_date": "2026-11-05",
+   "last_date_before": "2026-11-04",
+   "detected_on": "2026-11-25"
+  },
+  {
+   "ticker": "SNDK",
+   "ratio": "1 拆 8",
+   "factor": 8.0,
+   "effective_date": "2026-11-20",
+   "last_date_before": "2026-11-19",
+   "detected_on": "2026-11-25"
+  }
+ ],
+ "notes": [
+  "拆合股永久紀錄：每天偵測近約 90 天（65 個交易日），新發現的加進來，舊的不刪",
+  "ratio「1 拆 8」= 1 股變 8 股（拆股前價格 ÷ 8）；「8 合 1」= 8 股變 1 股（合股前價格 × 8）",
+  "factor = 原始價 ÷ 還原價（拆股前那段）；effective_date = 生效日（第一個用新股數交易的日子）"
+ ]
+}

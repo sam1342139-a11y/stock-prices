@@ -18,7 +18,7 @@
 | `corrections` | 終值修正清單（差 0.01～0.5%）：`ticker`、`date`、`old`（前一次暫定價）、`new`（終值） |
 | `mismatch_tickers` | 對不上的代號清單，**只有這些代號不要寫入**，其他照常 |
 | `mismatch` | 差超過 0.5% 或呈整數倍的個別代號：`ticker`、`date`、`old`、`new`、`diff_pct`（差距 %）、`integer_multiple`（整數倍，例如「8 倍」「1/8」，不是就 null）、`split`（近 30 天偵測到的拆合股：`ratio`、`effective_date`）、`second_source`（Nasdaq 交叉比對：`value`、`matches` = 新值／舊值／都不吻合） |
-| `splits` | 近 30 天偵測到的拆合股：`ticker`、`ratio`（例如「1 拆 8」）、`factor`、`effective_date`（生效日）、`last_date_before`（拆股前最後一天）、`adjusted_history`（還原後的歷史價，近 30 個交易日）、`raw_history`（原始價） |
+| `splits` | **2026-06-22 以後生效的所有拆合股**（來自永久紀錄 `fcn/splits.json`）：`ticker`、`ratio`（例如「1 拆 8」）、`factor`、`effective_date`（生效日）、`last_date_before`（拆股前最後一天）、`detected_on`、`adjusted_history`（**從 2026-06-22 起**的還原後歷史價）、`raw_history`（從 2026-06-22 起的原始價） |
 | `fill_days` | 前一次到這次之間，`history` 有、但沒被當作 asof 發布過的交易日：`date`、`prices` |
 | `watch` | 單日漲跌超過 ±25% 的「請留意」：`ticker`、`date`、`prev_close`、`close`、`change_pct` |
 | `history` | `latest.json` 的 history 原樣（約 6 個交易日） |
@@ -32,12 +32,17 @@
    - 差 >0.01 且 ≤0.5%：列入 `corrections`。
    - 差 >0.5%，或呈固定倍數（2、3、4、5、8、10…倍或其倒數，誤差 3% 內）：列入 `mismatch`，**只擋這一檔**，整檔仍是 `ok`。
    - 不是整數倍的，自動用 Nasdaq 歷史行情交叉比對，寫出哪個值吻合（相差 0.1% 內算吻合）。
-3. 拆合股偵測：每天抓 26 檔近 30 天的 Twelve Data **原始價**（adjust=none）；單日跳動超過 −40%／+67% 的代號，再抓還原價，比對兩者的比例找出拆合股比例和生效日。
+3. 拆合股偵測：每天抓 26 檔近約 90 天（65 個交易日）的 Twelve Data **原始價**（adjust=none）；單日跳動超過 −40%／+67% 的代號，再抓還原價，比對兩者的比例找出拆合股比例和生效日。新發現的寫進**永久紀錄 `fcn/splits.json`**（舊的不刪），並寄 email 通知。
 4. 單日漲跌超過 ±25%：列入 `watch`，不算失敗。
 
 **晨間用法（建議）**：讀這個檔 → `status` 是 `ok` 才寫入 → 跳過 `mismatch_tickers` 的代號 → 用 `corrections` 改前一天、`fill_days` 補缺的日子、`prices` 寫當天。`splits` 有資料時，用 `adjusted_history` 換掉該檔拆股前的舊價。
 
 **關於價格來源**：`latest.json` 的價格是 Twelve Data 的**拆股還原價**（預設），拆股後歷史價會被改寫成除以比例後的價格。這是 Twelve Data 的設計，`latest.json` 維持不變；拆股資訊改由 `splits` 提供。
+
+### 拆合股永久紀錄 `fcn/splits.json`
+- 和收盤價檢查同一次更新；每筆：`ticker`、`ratio`、`factor`、`effective_date`、`last_date_before`、`detected_on`。
+- 只會新增、不會刪除，超過 90 天的拆合股也會一直保留。
+- 目前紀錄：SOXX 1 拆 3（2026-11-05 生效）、SNDK 1 拆 8（2026-11-20 生效）。
 
 ## 二、法說會行事曆 `earnings/calendar.json`
 - **更新時間**：每天台灣 06:20（排程 `update-fcn-feeds`）；**程式**：`earnings/fetch_calendar.py`；**追蹤清單**：`earnings/watchlist.json`（要加代號就改這個檔）

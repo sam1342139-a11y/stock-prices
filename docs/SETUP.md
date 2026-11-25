@@ -18,12 +18,12 @@
 
 | 功能 | 執行時間（台灣） | 程式 | 輸出 |
 |---|---|---|---|
-| 每日美股收盤價 | 週二～六 06:30 | `fetch_prices.py` | `latest.json`（26 檔） |
+| 每日美股收盤價 | 週二～六 05:45（06:45 備援，前一次已成功就略過） | `fetch_prices.py` | `latest.json`（26 檔） |
 | FCN 燈號監控 | 股價抓完後自動接著執行 | `fcn-monitor/monitor.py` | 寄 Email |
-| 總經數據 | 週二～六 06:40 | `macro/fetch_macro.py` | `macro/macro.json` |
-| **匯率位置** | 週二～六 06:45 | `fx/fetch_fx.py` | `fx/position.json`、`fx/history/*.csv` |
+| 總經數據 | 週二～六 05:50（06:50 備援） | `macro/fetch_macro.py` | `macro/macro.json` |
+| **匯率位置** | 週二～六 05:55（06:55 備援） | `fx/fetch_fx.py` | `fx/position.json`、`fx/history/*.csv` |
 | 財報日曆 | **自動排程已停用**，只能手動執行 | `calendar/fetch_earnings.py` | `calendar/earnings.json` |
-| **市場風險燈號** | 週二～六 07:00 | `regime/fetch_regime.py` | `regime/regime.json`、`regime/history.csv`、`regime/spy_history.csv` |
+| **市場風險燈號** | 週二～六 06:05（07:05 備援） | `regime/fetch_regime.py` | `regime/regime.json`、`regime/history.csv`、`regime/spy_history.csv` |
 | **台股每日資料** | 平日 17:30（沒抓到最新日期，18:00 再試一次） | `tw/fetch_tw.py` | `tw/latest.csv`、`tw/revenue.csv`、`tw/meta.json` |
 | **台股模型資料＋水位燈號** | 平日 18:30（21:30、23:30 備援） | `tw-models/update_daily.py`、`fetch_us_market.py`、`regime_tw.py` | `tw-models/data/daily/`、`tw-models/latest/regime_tw.json` |
 | **盤後籌碼整理** | 平日 18:30 排程內 | `tw-models/after_market.py` | `tw-models/latest/after_market.json` |
@@ -38,7 +38,7 @@
 
 ### FCN 晨間用資料檔（fcn/）與 email 通知
 - `fcn/prices_checked.json`：`update-prices` 抓完 `latest.json` 後由 `fcn/check_prices.py` 檢查（終值修正、拆合股、±25% 請留意、國泰世華牌告匯率），欄位見 `docs/FCN_FEEDS.md`
-- `update-fcn-feeds` 排程（每天台灣 06:40）：`news/raw.json`（新聞標題）、`earnings/calendar.json`（法說會）、`earnings/tw_financials.json`（台股財報）
+- `update-fcn-feeds` 排程（每天台灣 06:20）：`news/raw.json`（新聞標題）、`earnings/calendar.json`（法說會）、`earnings/tw_financials.json`（台股財報）
 - `weekly-report` 排程（週一台灣 06:10）：`tw-models/latest/weekly_report.md`
 - `notify` 排程：其他排程跑完後，失敗或燈號轉色、長期換股、資料檢查未通過時寄 email（`lib/notify.py`）
 
@@ -107,7 +107,7 @@
 | `FINMIND_TOKEN` | FinMind API token（台股模型：每日市場層級資料） |
 
 ## Twelve Data 每日用量（免費方案上限 800 次／天、8 次／分鐘）
-股價 4 次（26 檔分批）＋ 總經匯率 1 次 ＋ 匯率位置 4 次 ＋ 風險燈號 2 次 ≈ 11 次／天（財報日曆已停用）
+股價 4 次（26 檔分批）＋ 拆合股偵測 4～5 次（26 檔原始價，有異常跳動的再抓還原價）＋ 總經匯率 1 次 ＋ 匯率位置 4 次 ＋ 風險燈號 2 次 ≈ 16 次／天（以點數算約 80 點，上限 800；財報日曆已停用）
 
 ## Claude 雲端環境「stock-prices」（只供 Claude 測試用）
 - 個人環境，允許連線：`api.twelvedata.com`、`fred.stlouisfed.org`、`home.treasury.gov`、`cdn.cboe.com`、`cdn-api.cboe.com`、`openapi.twse.com.tw`、`www.twse.com.tw`、`mopsov.twse.com.tw`、`mops.twse.com.tw`、`api.finmindtrade.com`（另允許套件庫）

@@ -4,18 +4,21 @@
 > 原則：只新增檔案，`latest.json` 等現有檔案的格式、路徑、更新時間都不變；不放任何客戶或持倉資料。
 
 ## 一、收盤價檢查檔 `fcn/prices_checked.json`
-- **更新時間**：和 `latest.json` 同一個排程（`update-prices`，平日 22:30 UTC＝台灣 06:30 起），`latest.json` 抓完後立刻產生。
+- **更新時間**：和 `latest.json` 同一個排程（`update-prices`，平日 21:45 UTC＝台灣 05:45 起，22:45 UTC 備援），`latest.json` 抓完後立刻產生。
 - **程式**：`fcn/check_prices.py`
 
 | 欄位 | 說明 |
 |---|---|
-| `status` | `ok`／`fail`。`fail` 時**不要寫入價格** |
+| `status` | `ok`／`fail`。只有**基本檢查**沒過才是 `fail`，這時整批不要寫入；個別代號對不上不會讓整檔失敗，見 `mismatch` |
 | `fail_reasons` | 失敗原因（中文），`ok` 時是空陣列 |
 | `asof` | 這次價格的日期（美股交易日） |
 | `fetched_at_utc` | `latest.json` 的抓價時間 |
 | `compared_with` | 拿來比對終值的前一次：`asof`、`commit` |
 | `prices` | 26 檔當日價格（暫定價，隔天以終值修正） |
-| `corrections` | 終值修正清單：`ticker`、`date`、`old`（前一次暫定價）、`new`（終值） |
+| `corrections` | 終值修正清單（差 0.01～0.5%）：`ticker`、`date`、`old`（前一次暫定價）、`new`（終值） |
+| `mismatch_tickers` | 對不上的代號清單，**只有這些代號不要寫入**，其他照常 |
+| `mismatch` | 差超過 0.5% 或呈整數倍的個別代號：`ticker`、`date`、`old`、`new`、`diff_pct`（差距 %）、`integer_multiple`（整數倍，例如「8 倍」「1/8」，不是就 null）、`split`（近 30 天偵測到的拆合股：`ratio`、`effective_date`）、`second_source`（Nasdaq 交叉比對：`value`、`matches` = 新值／舊值／都不吻合） |
+| `splits` | 近 30 天偵測到的拆合股：`ticker`、`ratio`（例如「1 拆 8」）、`factor`、`effective_date`（生效日）、`last_date_before`（拆股前最後一天）、`adjusted_history`（還原後的歷史價，近 30 個交易日）、`raw_history`（原始價） |
 | `fill_days` | 前一次到這次之間，`history` 有、但沒被當作 asof 發布過的交易日：`date`、`prices` |
 | `watch` | 單日漲跌超過 ±25% 的「請留意」：`ticker`、`date`、`prev_close`、`close`、`change_pct` |
 | `history` | `latest.json` 的 history 原樣（約 6 個交易日） |
@@ -27,14 +30,17 @@
 2. 終值修正：這次 `history` 裡前一次 asof 那天的價格，和前一次的暫定價逐檔比。
    - 差 ≤0.01：一致，不列。
    - 差 >0.01 且 ≤0.5%：列入 `corrections`。
-   - 差 >0.5%：`fail`。
-   - 呈固定倍數（2、3、4、5、10…倍或其倒數，誤差 3% 內）：`fail`，寫「疑似拆合股」與倍數。
-3. 單日漲跌超過 ±25%：列入 `watch`，不算失敗。
+   - 差 >0.5%，或呈固定倍數（2、3、4、5、8、10…倍或其倒數，誤差 3% 內）：列入 `mismatch`，**只擋這一檔**，整檔仍是 `ok`。
+   - 不是整數倍的，自動用 Nasdaq 歷史行情交叉比對，寫出哪個值吻合（相差 0.1% 內算吻合）。
+3. 拆合股偵測：每天抓 26 檔近 30 天的 Twelve Data **原始價**（adjust=none）；單日跳動超過 −40%／+67% 的代號，再抓還原價，比對兩者的比例找出拆合股比例和生效日。
+4. 單日漲跌超過 ±25%：列入 `watch`，不算失敗。
 
-**晨間用法（建議）**：讀這個檔 → `status` 是 `ok` 才寫入 → 用 `corrections` 改前一天、`fill_days` 補缺的日子、`prices` 寫當天。
+**晨間用法（建議）**：讀這個檔 → `status` 是 `ok` 才寫入 → 跳過 `mismatch_tickers` 的代號 → 用 `corrections` 改前一天、`fill_days` 補缺的日子、`prices` 寫當天。`splits` 有資料時，用 `adjusted_history` 換掉該檔拆股前的舊價。
+
+**關於價格來源**：`latest.json` 的價格是 Twelve Data 的**拆股還原價**（預設），拆股後歷史價會被改寫成除以比例後的價格。這是 Twelve Data 的設計，`latest.json` 維持不變；拆股資訊改由 `splits` 提供。
 
 ## 二、法說會行事曆 `earnings/calendar.json`
-- **更新時間**：每天台灣 06:40（排程 `update-fcn-feeds`）；**程式**：`earnings/fetch_calendar.py`；**追蹤清單**：`earnings/watchlist.json`（要加代號就改這個檔）
+- **更新時間**：每天台灣 06:20（排程 `update-fcn-feeds`）；**程式**：`earnings/fetch_calendar.py`；**追蹤清單**：`earnings/watchlist.json`（要加代號就改這個檔）
 - **範圍**：`latest.json` 的 26 檔＋台股 2330、2454、2317、2382、2303、3711。TSM＋2330、ASX＋3711 各合併成一筆；SPY、SOXX、SOXL 是 ETF，略過。
 - **來源**：美股用 Nasdaq 財報行事曆（每天掃 3 天前到 10 週後）；台股用公開資訊觀測站「法人說明會一覽表」（上個月到下個月）。
 
@@ -53,7 +59,7 @@
 查不到日期的代號寫在 `problems`，不估算。
 
 ## 三、新聞初篩 `news/raw.json`
-- **更新時間**：每天台灣 06:40；**程式**：`news/fetch_news.py`；**名稱對照**：`news/aliases.json`
+- **更新時間**：每天台灣 06:20；**程式**：`news/fetch_news.py`；**名稱對照**：`news/aliases.json`
 - **來源**：鉅亨網（美股、台股、外匯）、中央社財經 RSS、CNBC（Top News、Markets）RSS、MarketWatch RSS
 - **時間範圍**：前一個美股交易日（台灣 06:00 起）到產出時間；週一從上週五 06:00 起。
 
@@ -64,7 +70,7 @@
 | `window_tw`、`count`、`count_with_tickers` | 時間範圍與則數 |
 
 ## 四、台股財報數字 `earnings/tw_financials.json`
-- **更新時間**：每天台灣 06:40；**程式**：`earnings/tw_financials.py`；**範圍**：`earnings/watchlist.json` 的 `tw`
+- **更新時間**：每天台灣 06:20；**程式**：`earnings/tw_financials.py`；**範圍**：`earnings/watchlist.json` 的 `tw`
 - **來源**：FinMind（公開資訊觀測站申報的財報）
 - 每家公司 `quarters`（最近 8 季）：`period`、`revenue`（營收）、`gross_margin_pct`（毛利率）、`operating_margin_pct`（營業利益率）、`eps`、`inventory`（存貨）、`cogs`（營業成本）、`operating_cash_flow`（單季營業現金流，由年初累計數相減）、`inventory_qoq_pct`／`inventory_yoy_pct`（存貨季增／年增）、`inventory_days`（存貨週轉天數＝存貨÷當季營業成本×當季天數，**計算值**）、`inventory_days_qoq_pct`（天數季增）
 - `monthly_revenue`（最近 12 個月）：`month`、`revenue`、`yoy_pct`

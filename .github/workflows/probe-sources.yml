@@ -1,0 +1,20 @@
+name: probe-sources
+# TEMPORARY: second price source check. Will be removed before merge.
+on:
+  push:
+    branches: [claude/cloud-environment-setup-k7cvox]
+    paths: [.github/workflows/probe-sources.yml]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: probe
+        run: |
+          set +e
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          echo "=== nasdaq historical"; curl -s --max-time 40 -A "$UA" -H "Accept: application/json" "https://api.nasdaq.com/api/quote/SNDK/historical?assetclass=stocks&fromdate=2026-11-17&todate=2026-11-24&limit=10" | head -c 1500; echo
+          echo "=== nasdaq KLAC"; curl -s --max-time 40 -A "$UA" -H "Accept: application/json" "https://api.nasdaq.com/api/quote/KLAC/historical?assetclass=stocks&fromdate=2026-11-20&todate=2026-11-24&limit=5" | head -c 700; echo
+          echo "=== nasdaq SOXX etf"; curl -s --max-time 40 -A "$UA" -H "Accept: application/json" "https://api.nasdaq.com/api/quote/SOXX/historical?assetclass=etf&fromdate=2026-11-20&todate=2026-11-24&limit=5" | head -c 700; echo
+          echo "=== stooq"; curl -s --max-time 40 -A "$UA" "https://stooq.com/q/d/l/?s=sndk.us&i=d&d1=20261117&d2=20261124" | head -c 600; echo
+          echo "=== yahoo chart"; curl -s --max-time 40 -A "$UA" "https://query1.finance.yahoo.com/v8/finance/chart/SNDK?range=10d&interval=1d" | head -c 1500; echo
+          echo "=== nasdaq splits cal"; curl -s --max-time 40 -A "$UA" -H "Accept: application/json" "https://api.nasdaq.com/api/calendar/splits?date=2026-11-20" | head -c 800; echo

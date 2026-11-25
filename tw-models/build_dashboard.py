@@ -1,6 +1,7 @@
 """Builds the dashboard data file (public data only) that the dashboard routine uploads.
 
-Same content the routine used to assemble by hand, plus `closes`: every TWSE security's daily close
+Same content the routine used to assemble by hand, plus `stock_analysis` (33 large caps + 0050, with 7-day
+headlines from news/tw_stocks.json), `stock_news`, `us_regime` (regime/regime.json) and `closes`: every TWSE security's daily close
 since CLOSES_FROM (from tw/closes/*.csv), so the page can value the account on any past day itself.
 Usage: python3 tw-models/build_dashboard.py [out_path]     (default /tmp/tw_dashboard.json)
 """
@@ -37,9 +38,15 @@ def main():
            "swing": j("tw-models/latest/swing.json"), "long": j("tw-models/latest/long.json"),
            "core": j("tw-models/latest/core_satellite.json"),
            "nav": list(csv.DictReader(open(os.path.join(ROOT, "tw-models/paper/nav.csv"), encoding="utf-8")))}
-    for key, rel in (("screen", "tw-models/latest/old_screen.json"), ("after_market", "tw-models/latest/after_market.json")):
+    for key, rel in (("screen", "tw-models/latest/old_screen.json"), ("after_market", "tw-models/latest/after_market.json"),
+                     ("stock_analysis", "tw-models/latest/stock_analysis.json"), ("stock_news", "news/tw_stocks.json"),
+                     ("us_regime", "regime/regime.json")):
         if os.path.exists(os.path.join(ROOT, rel)):
             out[key] = j(rel)
+    # convenience: each analysed stock also carries its own 7-day headlines
+    if "stock_analysis" in out and "stock_news" in out:
+        for c, x in out["stock_analysis"].get("stocks", {}).items():
+            x["news"] = out["stock_news"].get("by_code", {}).get(c, [])
     out["closes"] = closes()
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, separators=(",", ":"))

@@ -109,6 +109,52 @@ def movers(problems):
     return days[-1], out
 
 
+TW_STOCKS = "news/tw_stocks.json"
+TW_KEEP_DAYS = 7
+
+
+def tw_stock_names():
+    """{code: name} of the 33 large caps + 0050 (public fixed list) from the committed model outputs."""
+    for rel, key in (("tw-models/latest/stock_analysis.json", "stocks"), ("tw-models/latest/old_screen.json", "list")):
+        try:
+            d = json.load(open(os.path.join(ROOT, rel), encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        rows = d[key].values() if isinstance(d[key], dict) else d[key]
+        names = {r["code"]: r.get("name") for r in rows if r.get("name")}
+        if names:
+            names.setdefault("0050", "元大台灣50")
+            return names
+    return {}
+
+
+def tw_stock_news(items, now, problems):
+    """Rolling 7-day headlines that mention one of the 33 large caps / 0050 (title + link only)."""
+    names = tw_stock_names()
+    if not names:
+        problems.append("讀不到 33 檔名單，台股個股新聞未更新")
+        return
+    pats = {c: re.compile(r"%s|\(%s-TW\)|(?<![0-9])%s(?![0-9])" % (re.escape(n), c, c)) for c, n in names.items()}
+    path = os.path.join(ROOT, TW_STOCKS)
+    try:
+        old = json.load(open(path, encoding="utf-8")).get("by_code", {})
+    except (OSError, ValueError):
+        old = {}
+    cutoff = (now - datetime.timedelta(days=TW_KEEP_DAYS)).strftime("%Y-%m-%d %H:%M")
+    by = {c: [x for x in old.get(c, []) if x["published_tw"] >= cutoff] for c in names}
+    for x in items:
+        if x["source"] not in ("鉅亨網 台股", "中央社 財經"):
+            continue
+        for c, p in pats.items():
+            if p.search(x["title"]) and all(y["url"] != x["url"] for y in by[c]):
+                by[c].append({k: x[k] for k in ("title", "url", "source", "published_tw")})
+    for c in by:
+        by[c] = sorted(by[c], key=lambda x: x["published_tw"], reverse=True)[:20]
+    C.write_json(TW_STOCKS, {"keep_days": TW_KEEP_DAYS, "names": names, "by_code": by,
+                             "notes": ["33 檔大型股＋0050 近 7 天的新聞標題（鉅亨網台股、中央社財經），只存標題與連結；用公司名稱或代號比對標題，可能有少數誤判"]},
+                 [], [{"name": "鉅亨網", "url": "https://news.cnyes.com/"}, {"name": "中央社 財經", "url": "https://www.cna.com.tw/list/aie.aspx"}])
+
+
 def main():
     now = datetime.datetime.now(TZ)
     since = window_start(now)
@@ -128,6 +174,7 @@ def main():
         t = match(x["title"])
         if t:
             x["tickers"] = t
+    tw_stock_news(uniq, now, problems)
     asof, mv = movers(problems)
     C.write_json("news/raw.json", {
         "window_tw": [since.strftime("%Y-%m-%d %H:%M"), now.strftime("%Y-%m-%d %H:%M")],

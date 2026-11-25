@@ -65,6 +65,12 @@ jobs:
       - name: 33-stock screen (daily)
         if: steps.chk.outputs.ready == 'true'
         run: python3 tw-models/models.py --screen
+      - name: per-stock analysis of the 33 large caps + 0050 (daily)
+        if: steps.chk.outputs.ready == 'true'
+        continue-on-error: true
+        run: python3 tw-models/stock_analysis.py
+        env:
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
       - name: swing / long lists (Fridays)
         if: steps.chk.outputs.ready == 'true' && steps.chk.outputs.lists == 'true'
         run: python3 tw-models/models.py --latest

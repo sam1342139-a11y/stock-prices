@@ -44,6 +44,7 @@
 
 ### 台股每日資料（tw/）
 - `tw/closes/YYYY-MM.csv`（`date,code,close`）：上市全部證券（含 ETF，不含權證）每日收盤價，來源證交所每日收盤行情（MI_INDEX）；`update-tw` 排程每天加一天，從 2026-10-01 起。給台股儀表板逐日算帳戶價值用；手動補抓：執行 `update-tw` 時填「收盤價補抓起始日」
+- `tw-models/stock_analysis.py`：33 檔大型股＋0050 個股分析（近一年收盤與均線、52 週高低、黃金分割、月營收、近 8 季 EPS 與利潤率、法人 20 日、本益比 5 年百分位），`update-tw-models` 每個交易日產生 `tw-models/latest/stock_analysis.json`；新聞標題由 `news/fetch_news.py` 存在 `news/tw_stocks.json`（近 7 天）
 - `tw-models/build_dashboard.py`：組出儀表板用的公開資料檔（水位燈號、名單、模擬資金、33 檔、盤後籌碼＋收盤價歷史），由儀表板排程上傳，不存進 GitHub
 - 來源：證交所 OpenAPI `STOCK_DAY_ALL`（日成交）、`BWIBBU_ALL`（本益比／殖利率／淨值比）、`T86`（三大法人）、`t187ap05_L`（月營收）
 - `tw/latest.csv` 欄位：`code,name,date,close,volume,high,low,pe,dy,pb,foreign,trust,dealer`
@@ -156,3 +157,4 @@
 - 收盤價檢查：個別代號對不上改列 mismatch（不整檔失敗）、近 30 天拆合股偵測、Nasdaq 第二來源；美股／總經／匯率／燈號排程提早並加備援；latest.json history 改為約 10 天
 - 拆合股：偵測範圍改為近約 90 天、新增永久紀錄 fcn/splits.json、還原後歷史價從 2026-06-22 起；email 通知改用排程起點版本比對（修正 11/25 未寄信）
 - 台股儀表板改造第一步：tw/closes/（上市全部證券每日收盤價，自 2026-10-01）與 tw-models/build_dashboard.py；儀表板新增「帳戶每日價值（新算法）」與舊快照並行比較
+- 股票交易助手資料：新增 33 檔＋0050 個股分析、個股新聞標題、美股燈號併入儀表板資料檔；docs/DASHBOARD_DATA.md

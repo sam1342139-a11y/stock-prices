@@ -158,3 +158,4 @@
 - 拆合股：偵測範圍改為近約 90 天、新增永久紀錄 fcn/splits.json、還原後歷史價從 2026-06-22 起；email 通知改用排程起點版本比對（修正 11/25 未寄信）
 - 台股儀表板改造第一步：tw/closes/（上市全部證券每日收盤價，自 2026-10-01）與 tw-models/build_dashboard.py；儀表板新增「帳戶每日價值（新算法）」與舊快照並行比較
 - 股票交易助手資料：新增 33 檔＋0050 個股分析、個股新聞標題、美股燈號併入儀表板資料檔；docs/DASHBOARD_DATA.md
+- 台股模型 v1.1 研究：tw-models/research/（v11.py、config_v11.json）、research-v11 排程（只在手動或改 RUN 檔時跑）、docs/RESEARCH_v1.1.md；正式規則 v1.0 不變

@@ -402,11 +402,12 @@ def report(o, grid):
     rows += [(n, v["stats"], avg({y: t for y, t in v["turnover_by_year"].items() if y in oos_years}) if "0050" not in n else None) for n, v in fx.items()]
     for n, st, t in rows:
         L.append("| %s | %s%% | %s%% | %s | %s |" % (n, st.get("cagr_pct"), st.get("mdd_pct"), st.get("sharpe"), "—" if t is None else "%s 倍" % t))
-    L += ["", "## 逐年報酬（%%）", "", "| 年 | v1.1 滾動 | 0050 | 波段 v1.0 | 等權大盤 | 長期 v1.0 |", "|---|---|---|---|---|---|"]
+    L += ["", "## 逐年報酬（%）", "", "| 年 | v1.1 滾動 | 0050 | 波段 v1.0 | 等權大盤 | 長期 v1.0 |", "|---|---|---|---|---|---|"]
     for y in oos_years:
         L.append("| %s | %s | %s | %s | %s | %s |" % (y, s["yearly"].get(y), e["yearly"].get(y), v10["yearly"].get(y),
                                                 fx["等權大盤（同股票池）"]["stats"]["yearly"].get(y), fx["長期 v1.0（診斷）"]["stats"]["yearly"].get(y)))
-    L += ["", "「等權大盤」和 0050 的差距，大致就是「沒有重壓台積電」造成的落差。", "",
+    L += ["", "「等權大盤」和 0050 的差距，大致就是「沒有重壓台積電」造成的落差。",
+          "長期 v1.0 要有 5 年歷史資料才開始選股，報酬為 0 的年份是還沒開始持股，所以它的年化報酬被低估，只能看開始持股後的逐年表現。", "",
           "## 參數敏感度（24 組各自 %s 起的成績）" % o["test_years"][0], "", "| 組合 | 年化 | 最大回撤 | 夏普 | 平均年週轉 |", "|---|---|---|---|---|"]
     for n, v in sorted(o["variants"].items(), key=lambda x: -x[1]["stats"].get("sharpe", 0)):
         L.append("| %s | %s%% | %s%% | %s | %s 倍 |" % (n, v["stats"].get("cagr_pct"), v["stats"].get("mdd_pct"), v["stats"].get("sharpe"), v["avg_turnover"]))

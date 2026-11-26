@@ -29,6 +29,7 @@
 | `lib/` | 各程式共用的小工具 | 要改請找 Claude |
 | `docs/SETUP.md` | **完整系統設定說明**（排程、資料來源、密鑰名稱、待辦），每次修改都會更新 | 要改請找 Claude |
 | `docs/REGIME.md` | 市場風險燈號的計分規則 | 要改請找 Claude |
+| `docs/RESEARCH_v1.1.md` | **台股模型 v1.1 研究報告**（滾動式驗證＋波段改版候選；只做研究，不影響正式規則） | ❌ 程式產生 |
 | `docs/DASHBOARD_DATA.md` | 股票交易助手頁面用的資料檔欄位說明（個股分析、美股燈號、收盤價等） | 要改請找 Claude |
 | `docs/FCN_FEEDS.md` | FCN 晨間用資料檔與 email 通知的欄位說明 | 要改請找 Claude |
 | `docs/DATA_CHECKS.md` | 資料合理性檢查的規則（數字異常時不發布、開 issue 通知） | 要改請找 Claude |

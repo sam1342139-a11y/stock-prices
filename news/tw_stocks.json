@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-25 23:10:47",
+ "generated_at_utc": "2026-11-26 23:14:25",
  "problems": [],
  "sources": [
   {
@@ -51,6 +51,30 @@
  "by_code": {
   "2330": [
    {
+    "title": "台股收盤／加權指數大漲956點收復3萬9台積電逆勢收黑",
+    "url": "https://news.cnyes.com/news/id/6673048",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-26 18:01"
+   },
+   {
+    "title": "台股重登39K  外資期貨、現貨仍齊作空並再自台積電提款近390億元",
+    "url": "https://news.cnyes.com/news/id/6672995",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-26 17:28"
+   },
+   {
+    "title": "〈台股盤後〉電子族群強勢反彈帶動收漲近千點 護盤指標股台積電收小跌",
+    "url": "https://news.cnyes.com/news/id/6672829",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-26 14:09"
+   },
+   {
+    "title": "〈台股開盤〉大盤由電子權值股帶動強勢反彈逾千點 台積電仍是多空指標",
+    "url": "https://news.cnyes.com/news/id/6672000",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-26 09:32"
+   },
+   {
     "title": "外資提款1236億元持續倒貨0050、台積電及鴻海 主動式ETF獲青睞",
     "url": "https://news.cnyes.com/news/id/6671701",
     "source": "鉅亨網 台股",
@@ -59,6 +83,12 @@
   ],
   "2454": [],
   "2317": [
+   {
+    "title": "鴻海攜北榮打造智慧醫療新場域 AI化療自動化系統亮相",
+    "url": "https://news.cnyes.com/news/id/6672936",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-26 16:43"
+   },
    {
     "title": "〈台股盤前要聞〉匯市爆63.62億美元創第三大、鴻海印度子公司遭控欠款",
     "url": "https://news.cnyes.com/news/id/6671817",
@@ -108,10 +138,47 @@
   "2886": [],
   "2884": [],
   "2892": [],
-  "2880": [],
+  "2880": [
+   {
+    "title": "〈台股盤前要聞〉富邦006208分割投票開跑、華南金前10月獲利284億元超過去年",
+    "url": "https://news.cnyes.com/news/id/6673295",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 04:10"
+   },
+   {
+    "title": "〈華南金法說〉央行不排除年底前升息！蕭玉美看AI與出口支撐動能 台幣震盪偏升",
+    "url": "https://news.cnyes.com/news/id/6673210",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-26 20:21"
+   },
+   {
+    "title": "〈華南金法說〉存股族看過來！總座承諾明年股利有望贏今年 7成配發率以現金為主",
+    "url": "https://news.cnyes.com/news/id/6673137",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-26 19:50"
+   }
+  ],
   "2885": [],
   "5880": [],
   "1216": [
+   {
+    "title": "主動統一台股增長ETF爆1.03億元違約交割",
+    "url": "https://www.cna.com.tw/news/afe/202611260276.aspx",
+    "source": "中央社 財經",
+    "published_tw": "2026-11-26 19:47"
+   },
+   {
+    "title": "統一實：明年鐵製品營運看美反傾銷終判　DR材拚今年底商轉",
+    "url": "https://www.cna.com.tw/news/afe/202611260267.aspx",
+    "source": "中央社 財經",
+    "published_tw": "2026-11-26 19:07"
+   },
+   {
+    "title": "統一超連10年拿TCSA大獎 立超商產業標竿",
+    "url": "https://news.cnyes.com/news/id/6672071",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-26 12:22"
+   },
    {
     "title": "鉅亨速報 - Factset 最新調查：統一超(2912-TW)目標價調降至255元，幅度約6.08%",
     "url": "https://news.cnyes.com/news/id/6671621",
@@ -120,6 +187,12 @@
    }
   ],
   "1303": [
+   {
+    "title": "外資連4賣仍大漲7%  南亞受惠高階AI材料攀升、法人持續調高目標價",
+    "url": "https://news.cnyes.com/news/id/6673237",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-26 20:55"
+   },
    {
     "title": "中傑-KY仍在印尼及印度擴產 估明年東南亞加上印度產能占比過半",
     "url": "https://news.cnyes.com/news/id/6671699",

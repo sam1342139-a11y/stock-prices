@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-25 23:13:31",
+ "generated_at_utc": "2026-11-26 23:17:05",
  "problems": [
   "AAPL：70 天內查不到財報或法說會日期（不估算）",
   "AMAT：70 天內查不到財報或法說會日期（不估算）",
@@ -30,7 +30,7 @@
    "url": "https://mops.twse.com.tw/mops/#/web/t100sb02_1"
   }
  ],
- "today_tw": "2026-11-26",
+ "today_tw": "2026-11-27",
  "recent_rule": "最近 3 天內（含今天，台灣時間）已召開或已公布",
  "recent": [],
  "upcoming": [

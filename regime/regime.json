@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-25 23:46:35",
+ "generated_at_utc": "2026-11-26 22:52:16",
  "problems": [],
  "sources": [
   {
@@ -31,20 +31,20 @@
    "url": "https://www.newyorkfed.org/research/capital_markets/ycfaq"
   }
  ],
- "date_tw": "2026-11-26",
+ "date_tw": "2026-11-27",
  "total": 5,
  "level": "黃",
  "max_possible": 14,
  "items_scored": 7,
  "rule": "每項 0 綠／1 黃／2 紅；總分 0～3 綠、4～6 黃、7 以上紅。規則見 docs/REGIME.md",
- "compared_with": "2026-11-25",
+ "compared_with": "2026-11-26",
  "turned_yellow": [],
  "turned_red": [],
  "items": {
   "vix": {
    "name": "VIX 恐慌指數",
-   "value": 26.36,
-   "date": "2026-11-24",
+   "value": 28.29,
+   "date": "2026-11-25",
    "score": 2,
    "color": "紅",
    "threshold": "<18 綠；18～25 黃；>25 紅",

@@ -16,11 +16,14 @@ fiscal_label = the company's own fiscal year / quarter, e.g. NVIDIA's quarter en
 Usage: python3 financials/us_fetch.py              -> every ticker in financials/watchlist.json "us"
        python3 financials/us_fetch.py NVDA CRWV    -> only these tickers (ad-hoc; the watchlist is not changed)
        add --debug to print which XBRL tag was used for each field
-SEC asks automated clients to identify themselves: the User-Agent names this project's public GitHub page.
+SEC asks automated clients to identify themselves (name + e-mail): the User-Agent uses the bot's generic
+GitHub no-reply address and this project's public page, no personal data.
 """
 import datetime, json, os, sys, time, urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
-UA = "stock-prices-data-bot (+https://github.com/sam1342139-a11y/stock-prices)"
+# SEC rejects a User-Agent without an e-mail address; this is the generic GitHub no-reply address the data bot
+# already commits with (no personal data), plus the project page.
+UA = "stock-prices-data-bot bot@users.noreply.github.com https://github.com/sam1342139-a11y/stock-prices"
 TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
 FACTS_URL = "https://data.sec.gov/api/xbrl/companyfacts/CIK%010d.json"
 KEEP_QUARTERS = 16

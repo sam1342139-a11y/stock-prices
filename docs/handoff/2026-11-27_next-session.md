@@ -9,7 +9,7 @@
 - FCN 系統不動；要改先做測試版、經使用者同意。
 
 ## 待辦（依優先）
-1. **財報資料檔第二階段（美股）**：見 `2026-11-27_financials.md`。SEC companyfacts（data.sec.gov），先試 NVDA、CRWV；格式同台股（`docs/FINANCIALS.md`），單位百萬美元，Q4＝全年−前三季（標註計算值），`fiscal_label` 用公司會計年度（輝達 FY）。SEC 的 User-Agent 用專案 GitHub 網址，不放個人資料。另開一張申請單。
+1. **財報資料檔第二階段（美股）**：**暫停**，見 `2026-11-27_financials-us.md`（SEC 回 403）。原說明見 `2026-11-27_financials.md`。SEC companyfacts（data.sec.gov），先試 NVDA、CRWV；格式同台股（`docs/FINANCIALS.md`），單位百萬美元，Q4＝全年−前三季（標註計算值），`fiscal_label` 用公司會計年度（輝達 FY）。SEC 的 User-Agent 用專案 GitHub 網址，不放個人資料。另開一張申請單。
 2. **舊台股儀表板並行結束**：使用者看過「帳戶每日價值」同意後，停用排程裡抓持股股價、記快照的部分（見 `2026-11-24_dashboard-actions.md`）。目前等使用者／理專助手通知。
 3. **v1.1 研究**：結論是沒贏 0050 和 v1.0，等使用者決定下一步（`2026-11-26_model-v11-research.md`）。
 4. 晨間測試版接上新檔案由使用者／理專助手安排；「晨間能否用 curl 直接讀 GitHub」需他們在測試版試。

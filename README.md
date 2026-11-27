@@ -17,6 +17,7 @@
 | `.github/workflows/update-macro.yml` | 總經數據的自動排程 | 要改請找 Claude |
 | `earnings/` | **法說會行事曆**（calendar.json）與**台股財報數字**（tw_financials.json）；追蹤清單 watchlist.json 可自行加代號，說明見 `docs/FCN_FEEDS.md` | 只改 watchlist.json |
 | `news/` | **新聞初篩**（raw.json）：每天早上的新聞標題清單，只存標題與連結 | ❌ 系統自動更新 |
+| `financials/` | **財報資料檔**（格式同 CoreWeave 圖表頁）：台股 `financials/tw/<代號>.json`，追蹤清單 watchlist.json；說明見 `docs/FINANCIALS.md` | 只改 watchlist.json |
 | `fcn/` | **FCN 晨間用資料**：`prices_checked.json`（收盤價檢查結果，晨間更新直接讀）、`splits.json`（拆合股永久紀錄），說明見 `docs/FCN_FEEDS.md` | ❌ 系統自動更新 |
 | `fcn-monitor/` | **FCN 每日燈號監控**：算出每檔商品離敲出、敲入的距離，寄 Email 通知；商品條件存在 GitHub 密鑰，詳見資料夾內的 README | 要改請找 Claude |
 | `.github/workflows/fcn-monitor.yml` | FCN 燈號監控的自動排程（每日股價抓完後接著執行） | 要改請找 Claude |
@@ -29,6 +30,7 @@
 | `lib/` | 各程式共用的小工具 | 要改請找 Claude |
 | `docs/SETUP.md` | **完整系統設定說明**（排程、資料來源、密鑰名稱、待辦），每次修改都會更新 | 要改請找 Claude |
 | `docs/REGIME.md` | 市場風險燈號的計分規則 | 要改請找 Claude |
+| `docs/RESEARCH_v1.1.md` | **台股模型 v1.1 研究報告**（滾動式驗證＋波段改版候選；只做研究，不影響正式規則） | ❌ 程式產生 |
 | `docs/DASHBOARD_DATA.md` | 股票交易助手頁面用的資料檔欄位說明（個股分析、美股燈號、收盤價等） | 要改請找 Claude |
 | `docs/FCN_FEEDS.md` | FCN 晨間用資料檔與 email 通知的欄位說明 | 要改請找 Claude |
 | `docs/DATA_CHECKS.md` | 資料合理性檢查的規則（數字異常時不發布、開 issue 通知） | 要改請找 Claude |
@@ -44,7 +46,7 @@
 
 ## ⏰ 自動更新時間
 
-- **台灣時間每週二到週六早上**：05:45 美股股價 → 05:50 總經數據 → 05:55 匯率位置 → 06:05 市場風險燈號（各有一次備援，晚一小時）；06:20 新聞、法說會、台股財報
+- **台灣時間每週二到週六早上**：05:45 美股股價 → 05:50 總經數據 → 05:55 匯率位置 → 06:05 市場風險燈號（各有一次備援，晚一小時）；05:20 新聞、法說會、台股財報（06:20 備援）
 - **台股**：平日 17:30（沒抓到當天資料，18:00 再試一次）
 - 完整時間表見 `docs/SETUP.md`。
 - 想立刻手動更新：GitHub 上方點 **Actions** → 左邊點 **update-prices** → 右邊點 **Run workflow**。

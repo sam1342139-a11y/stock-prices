@@ -1,0 +1,26 @@
+{
+ "_說明": "台股模型 v1.1 研究參數（只做研究，不影響 v1.0 正式規則 tw-models/config.json）。所有規則在跑之前固定，跑完不改。",
+ "start": "2014-01-02",
+ "test_from_year": 2016,
+ "select_by": "sharpe",
+ "select_by_alt": "lowest_std",
+ "top_n": 8,
+ "rank_freq": "month",
+ "momentum": {
+  "vam21": "近 21 日報酬 ÷ 近 21 日日報酬標準差",
+  "vam60_5": "近 60 日報酬（扣最近 5 日）÷ 同期日報酬標準差"
+ },
+ "low_vol_filter": {"lookback_days": 60, "exclude_top_pct": 30},
+ "exits": {
+  "monthly": "只在每月換股日出場（跌出前 8 名就賣）",
+  "atr2": "每月換股日跌出前 8 名就賣；另外收盤跌破「進場價 − 2 × ATR(20)」隔天開盤賣出",
+  "v10": "每月換股日跌出前 8 名就賣；另外沿用 v1.0 出場 A：收盤比進場價跌 8%、跌破 20 日均線、持有滿 20 個交易日"
+ },
+ "atr_days": 20,
+ "atr_mult": 2,
+ "regime_filter": {
+  "no_new_on_red": "水位紅燈（總分 ≥ 6）時不開新倉，已持有的照出場規則處理",
+  "v10_top3": "水位紅燈時只留前 3 名（v1.0 規則）"
+ },
+ "grid_size": 24
+}

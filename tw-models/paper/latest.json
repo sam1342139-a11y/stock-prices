@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-26 16:31:28",
+ "generated_at_utc": "2026-11-27 11:20:09",
  "problems": [],
  "sources": [
   {
@@ -12,7 +12,7 @@
   }
  ],
  "start": "2026-11-23",
- "date": "2026-11-25",
+ "date": "2026-11-26",
  "version": "v1.0",
  "initial_capital": 1000000,
  "rule": "每組 100 萬元；訊號用收盤後資料、隔天開盤成交；成本與回測相同；七三組合與長期每季（1、4、7、10 月 15 日後第一個交易日）換股",
@@ -20,45 +20,66 @@
  "portfolios": {
   "core_satellite": {
    "name": "七三組合（0050 70%＋長期 30%）",
-   "nav": 957232,
-   "return_pct": -4.28,
+   "nav": 978927,
+   "return_pct": -2.11,
    "max_drawdown_pct": -4.57,
    "cash": 0,
    "holdings": [
     {
      "code": "0050",
      "name": "元大台灣50",
-     "value": 659842,
+     "value": 678475,
      "entry_date": "2026-11-24",
-     "return_pct": -5.82
+     "return_pct": -3.16
     },
     {
      "code": "1210",
      "name": "大成",
-     "value": 38501,
+     "value": 38575,
      "entry_date": "2026-11-24",
-     "return_pct": 2.58
+     "return_pct": 2.78
     },
     {
      "code": "2912",
      "name": "統一超",
-     "value": 37921,
+     "value": 38012,
      "entry_date": "2026-11-24",
-     "return_pct": 1.03
+     "return_pct": 1.28
     },
     {
      "code": "9925",
      "name": "新保",
-     "value": 37796,
+     "value": 37891,
      "entry_date": "2026-11-24",
-     "return_pct": 0.7
+     "return_pct": 0.96
     },
     {
      "code": "2105",
      "name": "正新",
-     "value": 37330,
+     "value": 37727,
      "entry_date": "2026-11-24",
-     "return_pct": -0.54
+     "return_pct": 0.52
+    },
+    {
+     "code": "2010",
+     "name": "春源",
+     "value": 37375,
+     "entry_date": "2026-11-24",
+     "return_pct": -0.42
+    },
+    {
+     "code": "1402",
+     "name": "遠東新",
+     "value": 37112,
+     "entry_date": "2026-11-24",
+     "return_pct": -1.12
+    },
+    {
+     "code": "3596",
+     "name": "智易",
+     "value": 36918,
+     "entry_date": "2026-11-24",
+     "return_pct": -1.64
     },
     {
      "code": "2820",
@@ -66,27 +87,6 @@
      "value": 36841,
      "entry_date": "2026-11-24",
      "return_pct": 0.45
-    },
-    {
-     "code": "2010",
-     "name": "春源",
-     "value": 36764,
-     "entry_date": "2026-11-24",
-     "return_pct": -2.05
-    },
-    {
-     "code": "1402",
-     "name": "遠東新",
-     "value": 36410,
-     "entry_date": "2026-11-24",
-     "return_pct": -2.99
-    },
-    {
-     "code": "3596",
-     "name": "智易",
-     "value": 35828,
-     "entry_date": "2026-11-24",
-     "return_pct": -4.54
     }
    ],
    "trades": 0,
@@ -94,31 +94,38 @@
   },
   "long": {
    "name": "長期名單 100%",
-   "nav": 993306,
-   "return_pct": -0.67,
+   "nav": 1003509,
+   "return_pct": 0.35,
    "max_drawdown_pct": -2.1,
    "cash": 0,
    "holdings": [
     {
      "code": "1210",
      "name": "大成",
-     "value": 128337,
+     "value": 128584,
      "entry_date": "2026-11-24",
-     "return_pct": 2.58
+     "return_pct": 2.78
     },
     {
      "code": "2912",
      "name": "統一超",
-     "value": 126402,
+     "value": 126707,
      "entry_date": "2026-11-24",
-     "return_pct": 1.03
+     "return_pct": 1.28
     },
     {
      "code": "9925",
      "name": "新保",
-     "value": 125987,
+     "value": 126305,
      "entry_date": "2026-11-24",
-     "return_pct": 0.7
+     "return_pct": 0.96
+    },
+    {
+     "code": "2105",
+     "name": "正新",
+     "value": 125758,
+     "entry_date": "2026-11-24",
+     "return_pct": 0.52
     },
     {
      "code": "2820",
@@ -128,32 +135,25 @@
      "return_pct": 0.45
     },
     {
-     "code": "2105",
-     "name": "正新",
-     "value": 124434,
-     "entry_date": "2026-11-24",
-     "return_pct": -0.54
-    },
-    {
      "code": "2010",
      "name": "春源",
-     "value": 122546,
+     "value": 124584,
      "entry_date": "2026-11-24",
-     "return_pct": -2.05
+     "return_pct": -0.42
     },
     {
      "code": "1402",
      "name": "遠東新",
-     "value": 121367,
+     "value": 123706,
      "entry_date": "2026-11-24",
-     "return_pct": -2.99
+     "return_pct": -1.12
     },
     {
      "code": "3596",
      "name": "智易",
-     "value": 119426,
+     "value": 123059,
      "entry_date": "2026-11-24",
-     "return_pct": -4.54
+     "return_pct": -1.64
     }
    ],
    "trades": 0,
@@ -161,17 +161,17 @@
   },
   "etf_0050": {
    "name": "0050 100%",
-   "nav": 941826,
-   "return_pct": -5.82,
+   "nav": 968422,
+   "return_pct": -3.16,
    "max_drawdown_pct": -5.82,
    "cash": 0,
    "holdings": [
     {
      "code": "0050",
      "name": "元大台灣50",
-     "value": 941826,
+     "value": 968422,
      "entry_date": "2026-11-24",
-     "return_pct": -5.82
+     "return_pct": -3.16
     }
    ],
    "trades": 0,
@@ -180,9 +180,9 @@
  },
  "monthly_return_pct": {
   "2026-11": {
-   "core_satellite": -4.28,
-   "long": -0.67,
-   "etf_0050": -5.82
+   "core_satellite": -2.11,
+   "long": 0.35,
+   "etf_0050": -3.16
   }
  },
  "note": "模擬資金，非真實帳戶；模型依公開資料與固定規則產生，回測與模擬不代表未來，非投資建議。"

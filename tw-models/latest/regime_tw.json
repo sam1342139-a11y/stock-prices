@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-26 16:30:17",
+ "generated_at_utc": "2026-11-27 11:18:55",
  "problems": [],
  "sources": [
   {
@@ -15,7 +15,7 @@
    "url": "https://api.twelvedata.com/time_series"
   }
  ],
- "date": "2026-11-25",
+ "date": "2026-11-26",
  "total": 9,
  "max_total": 10,
  "overall_light": "紅",
@@ -27,27 +27,25 @@
  "reference_exposure_label": "參考水位（回測擇時效果不明顯）",
  "timing_note": "樣本外（2024～今）水位調整 97.6% vs 固定比例 97.2%，擇時效果與固定持股比例幾乎相同；見 docs/BACKTEST_regime_tw.md",
  "rule": "每項 0 綠／1 黃／2 紅；總分 0～2 參考水位 80～100%，3～5 分 50～70%，6 分以上 20～40%。規則見 docs/TW_MODELS.md",
- "worsened_vs_previous_day": [
-  "美元兌台幣近 20 日"
- ],
+ "worsened_vs_previous_day": [],
  "items": {
   "taiex_ma200": {
    "name": "加權指數 vs 200 日均線",
    "score": 2,
    "color": "紅",
-   "value": -8.25,
-   "date": "2026-11-25",
+   "value": -6.03,
+   "date": "2026-11-26",
    "threshold": "綠：在 200 日均線之上且均線上升（20 日內上升超過 0.1%）；黃：在均線之上但走平或下降，或低於均線 0～3%；紅：低於均線超過 3%",
-   "taiex": 38195.4,
-   "ma200": 41628.22,
-   "ma200_20d_change_pct": 2.73
+   "taiex": 39151.8,
+   "ma200": 41663.66,
+   "ma200_20d_change_pct": 2.59
   },
   "foreign_20d": {
    "name": "外資近 20 日累計買賣超",
    "score": 2,
    "color": "紅",
-   "value": -12241.1,
-   "date": "2026-11-25",
+   "value": -12044.7,
+   "date": "2026-11-26",
    "threshold": "綠：> 0；黃：-1650 億～0；紅：< -1650 億（門檻由 2019–2023 第 10 百分位校正）",
    "unit": "億元"
   },
@@ -55,29 +53,29 @@
    "name": "融資近 20 日變化 vs 指數",
    "score": 1,
    "color": "黃",
-   "value": -31.34,
-   "date": "2026-11-25",
+   "value": -31.46,
+   "date": "2026-11-26",
    "threshold": "紅：指數跌且融資增加；綠：指數漲且融資增加不超過 2%；其餘（兩者同向等）黃",
-   "index_20d_pct": -18.79
+   "index_20d_pct": -15.56
   },
   "usdtwd_20d": {
    "name": "美元兌台幣近 20 日",
    "score": 2,
    "color": "紅",
-   "value": 1.73,
-   "date": "2026-11-24",
+   "value": 2.51,
+   "date": "2026-11-25",
    "threshold": "綠：台幣升值超過 1%（美元兌台幣下跌）；黃：±1% 內；紅：台幣貶值超過 1%",
-   "usdtwd": 32.9797
+   "usdtwd": 33.1867
   },
   "soxx_ma200": {
    "name": "SOXX vs 200 日均線",
    "score": 2,
    "color": "紅",
-   "value": -20.19,
-   "date": "2026-11-24",
+   "value": -20.61,
+   "date": "2026-11-25",
    "threshold": "綠：高於 200 日均線超過 2%；黃：均線上下 2% 內；紅：低於均線超過 2%",
-   "soxx": 128.62,
-   "ma200": 161.15
+   "soxx": 127.98,
+   "ma200": 161.2
   }
  },
  "footer": "模型依公開資料與固定規則產生，回測不代表未來，非投資建議。"

@@ -1,8 +1,6 @@
 {
- "generated_at_utc": "2026-11-27 22:43:26",
- "problems": [
-  "AUD/USD 抓取失敗：HTTP Error 429: Too Many Requests"
- ],
+ "generated_at_utc": "2026-11-27 23:38:29",
+ "problems": [],
  "sources": [
   {
    "name": "Twelve Data Time Series（日收盤）",
@@ -119,37 +117,37 @@
   "AUD_USD": {
    "name": "澳幣兌美元",
    "pair": "AUD/USD",
-   "latest": 0.6633,
-   "date": "2026-11-26",
+   "latest": 0.6649,
+   "date": "2026-11-27",
    "windows": {
     "1y": {
-     "from": "2025-11-26",
-     "percentile": 5.7,
+     "from": "2025-11-27",
+     "percentile": 7.6,
      "high": 0.7258,
-     "low": 0.6518,
+     "low": 0.653,
      "mean": 0.6975,
      "n": 262
     },
     "3y": {
-     "from": "2023-11-26",
-     "percentile": 52.9,
+     "from": "2023-11-27",
+     "percentile": 55.0,
      "high": 0.7258,
      "low": 0.5962,
      "mean": 0.6676,
-     "n": 784
+     "n": 785
     },
     "5y": {
-     "from": "2021-11-26",
-     "percentile": 42.9,
+     "from": "2021-11-27",
+     "percentile": 44.8,
      "high": 0.7579,
      "low": 0.5962,
      "mean": 0.6733,
      "n": 1305
     }
    },
-   "change_20d_pct": -5.69,
-   "change_60d_pct": -7.89,
-   "summary": "澳幣兌美元 目前 0.6633，在近 3 年第 53 百分位（中間）"
+   "change_20d_pct": -5.46,
+   "change_60d_pct": -7.7,
+   "summary": "澳幣兌美元 目前 0.6649，在近 3 年第 55 百分位（中間）"
   }
  }
 }

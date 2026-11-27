@@ -1,7 +1,9 @@
 name: update-financials
-# Quarterly financial statements for the financials watchlist (financials/watchlist.json) -> financials/tw/<code>.json
+# Quarterly financial statements for the financials watchlist (financials/watchlist.json)
+#   -> financials/tw/<code>.json (FinMind) and financials/us/<TICKER>.json (SEC EDGAR companyfacts)
 # Daily 18:50 Taiwan (10:50 UTC); statements change only when companies file, monthly revenue around the 10th.
-# Manual run: type codes (e.g. "2603 2002") to fetch extra companies once, without changing the watchlist.
+# Manual run: type codes (e.g. "2603 2002" / "AMD TSM") to fetch extra companies once, without changing the watchlist.
+# If only one of the two boxes is filled, the other market is skipped on that run.
 on:
   schedule:
     - cron: '50 10 * * *'
@@ -9,6 +11,10 @@ on:
     inputs:
       codes:
         description: '臨時查詢的台股代號（空白分隔，留空＝追蹤清單）'
+        required: false
+        default: ''
+      us_codes:
+        description: '臨時查詢的美股代號（空白分隔，例如 AMD TSM）'
         required: false
         default: ''
 concurrency:
@@ -22,11 +28,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Taiwan statements
+        if: ${{ github.event.inputs.us_codes == '' || github.event.inputs.codes != '' }}
         env:
           FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
           CODES: ${{ github.event.inputs.codes }}
         run: python3 financials/tw_fetch.py $CODES
+      - name: US statements (SEC)
+        if: ${{ always() && (github.event.inputs.codes == '' || github.event.inputs.us_codes != '') }}
+        env:
+          CODES: ${{ github.event.inputs.us_codes }}
+        run: python3 financials/us_fetch.py $CODES
       - name: save result
+        if: ${{ always() }}
         run: |
           git config user.name "data-bot"
           git config user.email "bot@users.noreply.github.com"

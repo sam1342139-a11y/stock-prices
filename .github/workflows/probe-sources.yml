@@ -1,0 +1,20 @@
+name: probe-sources
+# TEMPORARY: test financials/us_fetch.py on GitHub (SEC is blocked in the dev container). Delete before merge.
+on:
+  push:
+    branches: [claude/quirky-fermat-h74byi]
+    paths: [financials/us_fetch.py, .github/workflows/probe-sources.yml]
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 financials/us_fetch.py --debug NVDA CRWV
+      - run: |
+          git config user.name "data-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add financials/us
+          git commit -m "probe: US financials test output" || exit 0
+          git push

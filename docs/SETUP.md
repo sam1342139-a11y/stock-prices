@@ -38,7 +38,7 @@
 
 ### FCN 晨間用資料檔（fcn/）與 email 通知
 - `fcn/prices_checked.json`：`update-prices` 抓完 `latest.json` 後由 `fcn/check_prices.py` 檢查（終值修正、拆合股、±25% 請留意、國泰世華牌告匯率），欄位見 `docs/FCN_FEEDS.md`
-- `update-fcn-feeds` 排程（每天台灣 06:20）：`news/raw.json`（新聞標題）、`earnings/calendar.json`（法說會）、`earnings/tw_financials.json`（台股財報）
+- `update-fcn-feeds` 排程（每天台灣 05:20，06:20 備援）：`news/raw.json`（新聞標題）、`earnings/calendar.json`（法說會）、`earnings/tw_financials.json`（台股財報）
 - `weekly-report` 排程（週一台灣 06:10）：`tw-models/latest/weekly_report.md`
 - `notify` 排程：其他排程跑完後，失敗或燈號轉色、長期換股、資料檢查未通過時寄 email（`lib/notify.py`）
 

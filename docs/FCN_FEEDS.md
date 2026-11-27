@@ -45,7 +45,7 @@
 - 目前紀錄：SOXX 1 拆 3（2026-11-05 生效）、SNDK 1 拆 8（2026-11-20 生效）。
 
 ## 二、法說會行事曆 `earnings/calendar.json`
-- **更新時間**：每天台灣 06:20（排程 `update-fcn-feeds`）；**程式**：`earnings/fetch_calendar.py`；**追蹤清單**：`earnings/watchlist.json`（要加代號就改這個檔）
+- **更新時間**：每天台灣 05:20（06:20 備援）（排程 `update-fcn-feeds`）；**程式**：`earnings/fetch_calendar.py`；**追蹤清單**：`earnings/watchlist.json`（要加代號就改這個檔）
 - **範圍**：`latest.json` 的 26 檔＋台股 2330、2454、2317、2382、2303、3711。TSM＋2330、ASX＋3711 各合併成一筆；SPY、SOXX、SOXL 是 ETF，略過。
 - **來源**：美股用 Nasdaq 財報行事曆（每天掃 3 天前到 10 週後）；台股用公開資訊觀測站「法人說明會一覽表」（上個月到下個月）。
 
@@ -64,7 +64,7 @@
 查不到日期的代號寫在 `problems`，不估算。
 
 ## 三、新聞初篩 `news/raw.json`
-- **更新時間**：每天台灣 06:20；**程式**：`news/fetch_news.py`；**名稱對照**：`news/aliases.json`
+- **更新時間**：每天台灣 05:20（06:20 備援）；**程式**：`news/fetch_news.py`；**名稱對照**：`news/aliases.json`
 - **來源**：鉅亨網（美股、台股、外匯）、中央社財經 RSS、CNBC（Top News、Markets）RSS、MarketWatch RSS
 - **時間範圍**：前一個美股交易日（台灣 06:00 起）到產出時間；週一從上週五 06:00 起。
 
@@ -75,7 +75,7 @@
 | `window_tw`、`count`、`count_with_tickers` | 時間範圍與則數 |
 
 ## 四、台股財報數字 `earnings/tw_financials.json`
-- **更新時間**：每天台灣 06:20；**程式**：`earnings/tw_financials.py`；**範圍**：`earnings/watchlist.json` 的 `tw`
+- **更新時間**：每天台灣 05:20（06:20 備援）；**程式**：`earnings/tw_financials.py`；**範圍**：`earnings/watchlist.json` 的 `tw`
 - **來源**：FinMind（公開資訊觀測站申報的財報）
 - 每家公司 `quarters`（最近 8 季）：`period`、`revenue`（營收）、`gross_margin_pct`（毛利率）、`operating_margin_pct`（營業利益率）、`eps`、`inventory`（存貨）、`cogs`（營業成本）、`operating_cash_flow`（單季營業現金流，由年初累計數相減）、`inventory_qoq_pct`／`inventory_yoy_pct`（存貨季增／年增）、`inventory_days`（存貨週轉天數＝存貨÷當季營業成本×當季天數，**計算值**）、`inventory_days_qoq_pct`（天數季增）
 - `monthly_revenue`（最近 12 個月）：`month`、`revenue`、`yoy_pct`

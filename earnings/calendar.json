@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-26 23:17:05",
+ "generated_at_utc": "2026-11-27 22:11:48",
  "problems": [
   "AAPL：70 天內查不到財報或法說會日期（不估算）",
   "AMAT：70 天內查不到財報或法說會日期（不估算）",
@@ -7,6 +7,7 @@
   "ARM：70 天內查不到財報或法說會日期（不估算）",
   "ASML：70 天內查不到財報或法說會日期（不估算）",
   "AMZN：70 天內查不到財報或法說會日期（不估算）",
+  "CRWD：70 天內查不到財報或法說會日期（不估算）",
   "GOOG：70 天內查不到財報或法說會日期（不估算）",
   "INTC：70 天內查不到財報或法說會日期（不估算）",
   "KLAC：70 天內查不到財報或法說會日期（不估算）",
@@ -30,7 +31,7 @@
    "url": "https://mops.twse.com.tw/mops/#/web/t100sb02_1"
   }
  ],
- "today_tw": "2026-11-27",
+ "today_tw": "2026-11-28",
  "recent_rule": "最近 3 天內（含今天，台灣時間）已召開或已公布",
  "recent": [],
  "upcoming": [
@@ -157,7 +158,8 @@
    "time": "14:00",
    "confirmed": "公司已公告",
    "detail": "線上法說會 (1)公布本公司2026年第3季財務報告及2026年第4季業績展望。(2)參加方式：請參見https://investor.tsmc.com/chinese/quarterly-results/2026/q3",
-   "source": "https://mops.twse.com.tw/mops/#/web/t100sb02_1"
+   "source": "https://mops.twse.com.tw/mops/#/web/t100sb02_1",
+   "merged_with": "TSM"
   },
   {
    "ticker": "2317",
@@ -410,19 +412,6 @@
    "confirmed": "公司已公告",
    "detail": "香港香格里拉酒店 本公司受邀參加BofA證券所舉辦之2026 Asia Internet & AI Conference就本公司目前之營運概況，作回顧及展望說明。",
    "source": "https://mops.twse.com.tw/mops/#/web/t100sb02_1"
-  },
-  {
-   "ticker": "CRWD",
-   "name": "CrowdStrike Holdings, Inc.",
-   "market": "美股",
-   "period": "財報季末 Oct/2026",
-   "event": "財報",
-   "date": "2026-11-23",
-   "date_us": "2026-11-23",
-   "time": "公司未提供時間",
-   "confirmed": "預估",
-   "eps_forecast": "$0",
-   "source": "https://www.nasdaq.com/market-activity/earnings"
   },
   {
    "ticker": "2382",

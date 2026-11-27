@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-26 23:14:25",
+ "generated_at_utc": "2026-11-27 22:09:03",
  "problems": [],
  "sources": [
   {
@@ -51,6 +51,18 @@
  "by_code": {
   "2330": [
    {
+    "title": "〈台股開盤〉台積電扮演撐盤神山 領台股盤中一度漲逾300點收復10日線",
+    "url": "https://news.cnyes.com/news/id/6673590",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 11:18"
+   },
+   {
+    "title": "台積電德州廠減稅案獲州審計長支持估省3.54億美元、12月10日聽證",
+    "url": "https://news.cnyes.com/news/id/6673430",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 08:00"
+   },
+   {
     "title": "台股收盤／加權指數大漲956點收復3萬9台積電逆勢收黑",
     "url": "https://news.cnyes.com/news/id/6673048",
     "source": "鉅亨網 台股",
@@ -83,6 +95,18 @@
   ],
   "2454": [],
   "2317": [
+   {
+    "title": "鴻海大語言模型FoxBrain 臺灣主權AI評測奪全球第二",
+    "url": "https://news.cnyes.com/news/id/6674029",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 19:50"
+   },
+   {
+    "title": "鴻海增持雲智匯獲越南放行首批股權預計12月3日交割",
+    "url": "https://news.cnyes.com/news/id/6673864",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 17:00"
+   },
    {
     "title": "鴻海攜北榮打造智慧醫療新場域 AI化療自動化系統亮相",
     "url": "https://news.cnyes.com/news/id/6672936",
@@ -122,6 +146,24 @@
   ],
   "2882": [
    {
+    "title": "〈國泰金法說〉明年股利5元起跳？李長庚笑回「期望更高」 財務長曝配發率參考區間",
+    "url": "https://news.cnyes.com/news/id/6673843",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 17:49"
+   },
+   {
+    "title": "〈國泰金法說〉看到「00981A違約交割上億」嚇一跳 李長庚急查：國泰證實虧僅1157元",
+    "url": "https://news.cnyes.com/news/id/6673726",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 17:25"
+   },
+   {
+    "title": "〈國泰金法說〉國壽9、10月提前大減碼股票 股市震盪下淨值比仍穩守11.2%以上",
+    "url": "https://news.cnyes.com/news/id/6673788",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 16:16"
+   },
+   {
     "title": "國泰金獲台灣企業永續獎14項肯定 將永續融入核心職能",
     "url": "https://news.cnyes.com/news/id/6671731",
     "source": "鉅亨網 台股",
@@ -136,8 +178,40 @@
   ],
   "2891": [],
   "2886": [],
-  "2884": [],
-  "2892": [],
+  "2884": [
+   {
+    "title": "鉅亨速報 - Factset 最新調查：玉山金(2884-TW)目標價調升至47元，幅度約3.3%",
+    "url": "https://news.cnyes.com/news/id/6673551",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 10:10"
+   }
+  ],
+  "2892": [
+   {
+    "title": "第一金：目標股利配發率6成以上　評估證券壽險子公司增資",
+    "url": "https://www.cna.com.tw/news/afe/202611270255.aspx",
+    "source": "中央社 財經",
+    "published_tw": "2026-11-27 20:56"
+   },
+   {
+    "title": "〈第一金法說〉築底訊號出現？估房市將逐步止跌回穩 明年房貸穩健成長5%",
+    "url": "https://news.cnyes.com/news/id/6674058",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 20:11"
+   },
+   {
+    "title": "〈第一金法說〉央行年底升息？一銀估台灣按兵不動 惟Fed明年Q1前有望升息2次",
+    "url": "https://news.cnyes.com/news/id/6674022",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 19:44"
+   },
+   {
+    "title": "〈第一金法說〉現金股利配發保底6成！一銀喊台股修正是買點 明年SWAP上看127億",
+    "url": "https://news.cnyes.com/news/id/6673984",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 18:47"
+   }
+  ],
   "2880": [
    {
     "title": "〈台股盤前要聞〉富邦006208分割投票開跑、華南金前10月獲利284億元超過去年",
@@ -200,9 +274,41 @@
     "published_tw": "2026-11-25 17:22"
    }
   ],
-  "2002": [],
+  "2002": [
+   {
+    "title": "中鋼自結前10月稅前淨利49.13億元　較去年同期轉盈",
+    "url": "https://www.cna.com.tw/news/afe/202611270245.aspx",
+    "source": "中央社 財經",
+    "published_tw": "2026-11-27 20:30"
+   },
+   {
+    "title": "中鋼10月營業利益月增28%、稅前盈餘6.11億元 多國鋼廠盤價穩中有升",
+    "url": "https://news.cnyes.com/news/id/6673898",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 18:44"
+   }
+  ],
   "2327": [],
-  "2345": [],
+  "2345": [
+   {
+    "title": "〈智邦法說〉AI重點筆記2026/11/27",
+    "url": "https://news.cnyes.com/news/id/6673829",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 16:25"
+   },
+   {
+    "title": "〈智邦法說〉領先同業出貨1.6T全液冷交換器 明年灣區設研發中心卡位光通訊與800V商機",
+    "url": "https://news.cnyes.com/news/id/6673825",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 16:20"
+   },
+   {
+    "title": "〈智邦法說〉明年新加坡、達拉斯新廠齊發 三大策略面對AI資本支出放緩疑慮",
+    "url": "https://news.cnyes.com/news/id/6673820",
+    "source": "鉅亨網 台股",
+    "published_tw": "2026-11-27 16:16"
+   }
+  ],
   "2357": [
    {
     "title": "華碩Maestro拓展 Physical AI應用場域 2026台灣醫療展亮相",

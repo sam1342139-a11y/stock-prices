@@ -17,6 +17,7 @@
 | `.github/workflows/update-macro.yml` | 總經數據的自動排程 | 要改請找 Claude |
 | `earnings/` | **法說會行事曆**（calendar.json）與**台股財報數字**（tw_financials.json）；追蹤清單 watchlist.json 可自行加代號，說明見 `docs/FCN_FEEDS.md` | 只改 watchlist.json |
 | `news/` | **新聞初篩**（raw.json）：每天早上的新聞標題清單，只存標題與連結 | ❌ 系統自動更新 |
+| `financials/` | **財報資料檔**（格式同 CoreWeave 圖表頁）：台股 `financials/tw/<代號>.json`，追蹤清單 watchlist.json；說明見 `docs/FINANCIALS.md` | 只改 watchlist.json |
 | `fcn/` | **FCN 晨間用資料**：`prices_checked.json`（收盤價檢查結果，晨間更新直接讀）、`splits.json`（拆合股永久紀錄），說明見 `docs/FCN_FEEDS.md` | ❌ 系統自動更新 |
 | `fcn-monitor/` | **FCN 每日燈號監控**：算出每檔商品離敲出、敲入的距離，寄 Email 通知；商品條件存在 GitHub 密鑰，詳見資料夾內的 README | 要改請找 Claude |
 | `.github/workflows/fcn-monitor.yml` | FCN 燈號監控的自動排程（每日股價抓完後接著執行） | 要改請找 Claude |

@@ -11,3 +11,4 @@
 | `2026-11-24_fcn-prices-earnings.md` | FCN 晨間用資料檔：收盤價檢查、法說會、新聞初篩、台股財報、週報、email 通知 | 程式完成，等實跑 |
 | `2026-11-25_price-mismatch.md` | 11/25 收盤價對不上（SNDK 拆股）：個別代號 mismatch、拆合股偵測、第二來源、排程提早 | 程式完成，等合併 |
 | `2026-11-25_stock-assistant-data.md` | 股票交易助手整理：個股分析資料、美股燈號、篩選規則對照（E1～E4） | 試跑通過 |
+| `2026-11-27_financials.md` | 財報資料檔（台股 FinMind、美股 SEC；格式同 CoreWeave 圖表頁） | 台股完成，美股待做 |

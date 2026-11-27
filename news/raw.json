@@ -1,5 +1,5 @@
 {
- "generated_at_utc": "2026-11-27 22:09:03",
+ "generated_at_utc": "2026-11-27 23:12:42",
  "problems": [],
  "sources": [
   {
@@ -25,18 +25,88 @@
  ],
  "window_tw": [
   "2026-11-27 06:00",
-  "2026-11-28 06:08"
+  "2026-11-28 07:12"
  ],
  "count": 138,
  "count_with_tickers": 14,
- "movers_rule": "26 檔在 2026-11-25 單日漲跌超過 5%（latest.json 最後兩天收盤）",
+ "movers_rule": "26 檔在 2026-11-27 單日漲跌超過 5%（latest.json 最後兩天收盤）",
  "movers": [
   {
    "ticker": "SNDK",
-   "date": "2026-11-25",
-   "prev_close": 77.95,
-   "close": 73.51,
-   "change_pct": -5.7
+   "date": "2026-11-27",
+   "prev_close": 73.51,
+   "close": 85.36,
+   "change_pct": 16.12
+  },
+  {
+   "ticker": "SOXL",
+   "date": "2026-11-27",
+   "prev_close": 32.02,
+   "close": 36.57,
+   "change_pct": 14.21
+  },
+  {
+   "ticker": "LITE",
+   "date": "2026-11-27",
+   "prev_close": 476.58,
+   "close": 514.63,
+   "change_pct": 7.98
+  },
+  {
+   "ticker": "MU",
+   "date": "2026-11-27",
+   "prev_close": 601.25,
+   "close": 646.95,
+   "change_pct": 7.6
+  },
+  {
+   "ticker": "BE",
+   "date": "2026-11-27",
+   "prev_close": 152.89,
+   "close": 163.02,
+   "change_pct": 6.63
+  },
+  {
+   "ticker": "ASX",
+   "date": "2026-11-27",
+   "prev_close": 29.49,
+   "close": 31.34,
+   "change_pct": 6.27
+  },
+  {
+   "ticker": "ARM",
+   "date": "2026-11-27",
+   "prev_close": 161.51,
+   "close": 171.55,
+   "change_pct": 6.22
+  },
+  {
+   "ticker": "ENTG",
+   "date": "2026-11-27",
+   "prev_close": 128.37,
+   "close": 135.99,
+   "change_pct": 5.94
+  },
+  {
+   "ticker": "INTC",
+   "date": "2026-11-27",
+   "prev_close": 54.47,
+   "close": 57.4,
+   "change_pct": 5.38
+  },
+  {
+   "ticker": "NBIS",
+   "date": "2026-11-27",
+   "prev_close": 84.99,
+   "close": 89.46,
+   "change_pct": 5.26
+  },
+  {
+   "ticker": "TSLA",
+   "date": "2026-11-27",
+   "prev_close": 380.14,
+   "close": 400.0,
+   "change_pct": 5.22
   }
  ],
  "items": [
